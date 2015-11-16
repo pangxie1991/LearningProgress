@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>JavaScript-条件</title>
 </head>
 <body>
-    <p>我不得不说这个Github还是挺难用的</p>
+    <script>
+        var i = 10;
+        if(i<10){
+            document.write("今天不去107")
+        }else if(i>10) {
+            document.write("今天不去109")
+        }else{
+            document.write("带好纸巾")
+        }
+        document.write("<br/>");
+        document.write("<br/>");
+        switch (i) {
+            case 10:     //跟的是i的数值，而且以冒号结尾
+                document.write("i=10");
+                break;   //跳出当前
+            case 20:
+                document.write("i=20");
+                break;
+            default :
+                document.write("条件都不满足")
+        }
+    </script>
 </body>
 </html>

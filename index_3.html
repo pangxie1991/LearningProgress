@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style type="text/css">
+        .div{
+            width: 200px;
+            height: 200px;
+            background-color: crimson;
+        }
+    </style>
+</head>
+<body onload="msg()">
+    <button onclick="demo()">按钮</button>
+    <br/>
+    <br/>
+    <div class="div" onmouseover="onOver(this)" onmouseout="onOut(this)">Begins</div>
+    <!--this 关键字是指向当前的函数所在的元素-->
+    <br/>
+    <br/>
+    <form>
+        <input type="text" onchange="changeDemo(this)">
+        <br/>
+        <br/>
+        <input type="text" onselect=alert('选我选我')>
+        <br/>
+        <br/>
+        <input type="text" onfocus="changeDemo(this)">
+    </form>
+    <script>
+        function demo(){
+            alert("Stay in the trees!");
+        }
+        function onOver(ooj){
+            ooj.innerHTML = "Stay in the trees!";
+        }
+        function onOut(ooj){
+            ooj.innerHTML = "I told you";
+        }
+        function changeDemo(bg){
+            bg.style.background="#ffccff";
+        }
+        function msg(){
+            alert("你真的要走吗？");
+        }
+    </script>
+</body>
+</html>
