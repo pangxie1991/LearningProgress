@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objects-date</title>
+</head>
+<body onload="startTime()">
+    <script>
+        var date0 = new Date;
+        var date1 = new Date;
+        date1.setFullYear(1991,7,16);
+        document.write(date0);
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(date0.getFullYear());
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(date0.getTime());
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(date1);
+        document.write("<br/>");
+        document.write("<br/>");
+    </script>
+<!--时钟-->
+    <script>
+        function checkTime(i){
+            if (i < 10) {
+                i = "0"+i;
+            }
+            return i ;
+        }
+        function startTime(){
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById("time").innerHTML = h+":"+m+":"+s;
+            /* 递归调用叼叼叼，每500ms加载一次*/
+            t = setTimeout(function (){
+                startTime();
+            },500);
+        }
+    </script>
+    <div id="time"></div>
+</body>
+</html>

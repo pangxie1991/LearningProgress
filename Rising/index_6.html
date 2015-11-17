@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objects-Array</title>
+</head>
+<body>
+    <script>
+        var myArray = ["MY","YW","LYQ","BQD","YH","XRB","ZLM","LMH","WJZ","BQ"];
+        var myArray1 = [237,202,216,962,566,2009];
+        var a = myArray.concat(myArray1);//数组的合并
+        var b = myArray.sort();
+        var c = myArray1.sort(function (a,b){
+            return b-a;                          //字符串数组只能正序排列
+        });
+        var d = myArray.push("YLY");        //末尾追加的操作是直接对对象进行的，之后输出的值（d的值）是数组变化后的长度
+        var e = myArray.reverse();          //转置操作同样也是直接对对象生效。
+        document.write(a);
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(b);
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(c);
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(d);
+        document.write("<br/>");
+        document.write("<br/>");
+        document.write(e);
+        document.write("<br/>");
+        document.write("<br/>");
+    </script>
+</body>
+</html>
