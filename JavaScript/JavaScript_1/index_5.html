@@ -5,11 +5,12 @@
     <title>DOM Objects control HTML</title>
 </head>
 <body>
-    <div id="div" class="div1">测试<p>00</p>效果</div>
+    <div id="div" class="div1">测试<p id="pid1">00</p>效果</div>
     <p name="pn">测试效果</p>
     <p name="pn">测试效果</p>
     <p name="pn">测试效果</p>
     <a id="aid" title="得到了A标签的属性">Hello</a>
+    <br/>
     <script>
         function getTagName(){
             var pnode = document.getElementsByTagName("p");
@@ -21,9 +22,10 @@
         function getAttr(){
             var dnode = document.getElementById("div");
             var attr = dnode.getAttribute("class");
-            alert(attr);                                             //标签的属性操作，定位只能getElement进行，getElements默认得到的是一个数组，需要加[x]进行指定。
+            alert(attr);
         }
 //        getAttr();
+        /*标签的属性操作，定位可以直接getElement进行，getElements默认得到的是一个数组，需要加[x]进行指定。*/
         function setAttr(){
             var anode = document.getElementById("aid");
             anode.setAttribute("href","http://baidu.com");
@@ -42,7 +44,33 @@
             alert(div.nodeName);
         }
 //        getParentNode();
-
+        function creatNode(){
+            var body = document.body;
+            var input = document.createElement("input");
+            input.type = "button";
+            input.value = "按钮";
+            body.appendChild(input);               //在目标父节点的末尾插入一个新的节点
+        }
+//        creatNode();
+        function insertNode(){
+            var div1 = document.getElementById("div");
+            var node = document.getElementById("pid1");
+            var button = document.createElement("button");
+            button.innerHTML = "按钮";
+            div1.insertBefore(button,node);        //在指定父节点的指定子节点之前插入一个元素
+        }
+//        insertNode();
+        function deletNode(){
+            var div2 = document.getElementById("div");
+            div.removeChild(div.childNodes[1]);
+        }
+        deletNode();
+        function getSize(){
+            var width = document.documentElement.offsetWidth||document.body.offsetWidth;
+            var height = document.documentElement.scrollHeight||document.body.scrollHeight;
+            alert(width+","+height);
+        }
+        getSize();
     </script>
 </body>
 </html>

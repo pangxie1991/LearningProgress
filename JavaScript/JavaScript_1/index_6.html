@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Objects</title>
+</head>
+<body>
+    <button id="btn" onclick="btnclick()">按钮</button>
+    <script>
+        window.document.write("宽度："+window.innerWidth+",高度："+window.innerHeight);
+        function btnclick(){
+            window.open("index.html","windowname","height=200,width= 200,top = 100,left=100,toolbar = no,menubar = no");
+            /*打开新窗口一共有三个参数，地址，名字，属性*/
+//            window.close();                                       //窗口直接关闭
+        }
+    </script>
+</body>
+</html>
