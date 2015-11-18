@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CSS3_box</title>
+    <style>
+        .div4{
+            background-color: #ffccff;
+            display: inline;
+            width: 300px;
+        }
+        span{
+            background-color: aquamarine;
+            display: block;
+        }
+        .div1{
+            background-color: #ffccff;
+            display: inline-block;
+            /*内联显示类型是无法设置宽高的*/
+            width: 300px;
+            height: 200px;
+        }
+        table{
+            border: solid 3px #ffccff;
+            display: inline-table;
+            /*使表格显示为inline模式*/
+        }
+        td{
+            border: solid 1px #ffccff;
+        }
+        .div2{
+            display: list-item;
+            list-style-type: circle;
+            margin-left: 30px;
+            /*不加左边距看不到效果*/
+        }
+    </style>
+</head>
+<body>
+    <div class="div4">DIV 元素</div>
+    <div class="div4">DIV 元素</div>
+    <span>Span元素</span>
+    <span>Span元素</span>
+    <div class="div1">DIV元素带类别</div>
+    你好
+    <table>
+        <tr>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+            <td>A</td>
+        </tr>
+    </table>
+    再见
+    <br/>
+    <div class="div3">测试1</div>
+    <div class="div3">测试2</div>
+    <div class="div2">测试3</div>
+    <div class="div2">测试4</div>
+    <div class="div2">测试5</div>
+    <div class="div2">测试6</div>
+</body>
+</html>

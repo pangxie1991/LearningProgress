@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CSS文字和字体</title>
+    <style>
+        @font-face {
+            font-family: TNR;
+            /*ttf:t otf:o*/
+            src:url("font/times.ttf") format("truetype")
+        }
+        @font-face {
+            font-family: AAA;
+            src:local("Arial")
+        }
+        #p1{
+            font-size: 30px;
+            text-shadow: 5px 5px 3px #ffccff;
+        }
+        #p2{
+            font-family: TNR;
+            font-size: 16px;
+        }
+        #p3{
+            font-size: 16px;
+        }
+        #p4{
+            font-size: 16px;
+            font-family: AAA;
+        }
+        /*font-size-adjust,适配因为样式改变而造成的大小变化*/
+        #p5{
+            font-family: TNR;
+            font-size: 16px;
+            font-size-adjust:0.57
+        }
+        #p6{
+            font-size: 16px;
+        }
+        #p7{
+            font-size: 16px;
+            font-family: AAA;
+            font-size-adjust:0.57
+        }
+    </style>
+</head>
+<body>
+    <!--text:shadow:length-X length-Y length-shadow color -->
+    <div id="main">
+        <p id="p1">测试效果</p>
+    </div>
+    <!--word-break:normal/keep-all:半角空格和连字符/breake-all:单词间换行-->
+    <div id="body">
+        <p id="p2">This is my web page!</p>
+        <p id="p3">This is my web page!</p>
+        <p id="p4">This is my web page!</p>
+        <p id="p5">Aspect</p>
+        <p id="p6">Aspect</p>
+        <p id="p7">Aspect</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+p{
+    width: 200px;
+}
+.p1{
+    line-height: normal;
+}
+.p2{
+    line-height: 200%;
+}
+.p3{
+    line-height: 50%;
+}
+.p4,.p5,.p6{
+    font-size: 30px;
+}
+.p4{
+    cursor: alias;
+}
+.p5{
+    cursor: all-scroll;
+}
+.p6{
+    cursor: crosshair;
+}
+li{
+    display: inline;
+}

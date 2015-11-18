@@ -1,0 +1,84 @@
+*{
+    margin: 0px;
+}
+#t1{
+     border-collapse: collapse;
+     width: 400px;
+ }
+#t1 td,#t1 th{
+    border: 1px solid coral;
+    padding: 5px;
+}
+#t1 th{
+    text-align: right;
+    background-color:crimson ;
+    color: #FFFFFF;
+}
+#t1 tr.tr1 td{
+    color: black;
+    background-color: aquamarine;
+}
+p{
+    width: 200px;
+    border-radius: 10px;
+    background-color: aqua;
+    border: 2px solid crimson;
+    text-align: center;
+    font-size:20px;
+}
+.div1{
+    background-color: aquamarine;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    box-shadow:5px 5px 5px #ffccff;
+}
+.div2{
+    width: 90%;
+    height: 100px;
+    background-color: aquamarine;
+    border: 2px solid crimson;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 10px;
+}
+.a{
+    width: 80%;
+    height: 400px;
+    margin: 100px auto;
+    background-color: #ffccff;
+    border-style: groove;
+    padding: 20px;
+}
+.b{
+    width: 80%;
+    height: 300px;
+    margin: 30px auto;
+    background-color: aquamarine;
+    border-style: groove;
+    padding: 20px;
+}
+.c{
+    width: 80%;
+    height: 200px;
+    margin: 30px auto;
+    background-color:crimson;
+    border-style: groove;
+    padding: 20px;
+}
+.d{
+    width: 80%;
+    height: 100px;
+    margin: 30px auto;
+    background-color:lightblue;
+    border-style: groove;
+    padding: 20px;
+}
+.div3{
+    margin: 100px;
+    background-color: crimson;
+}
+.div4{
+    margin: 200px;
+    background-color: crimson;
+}

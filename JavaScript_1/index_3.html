@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Event</title>
+</head>
+<body>
+    <div id="div1">
+        <button id="btn1" onclick="demo()">按钮1</button>
+        <br/>
+        <br/>
+        <button id="btn2">按钮2</button>
+        <br/>
+        <br/>
+        <button id="btn3">按钮3</button>
+        <br/>
+        <br/>
+        <button id="btn4">按钮4</button>
+        <br/>
+        <br/>
+        <button id="btn5">按钮5</button>
+        <br/>
+        <br/>
+        <a id="aid" href="http://baidu.com">百度</a>
+    </div>
+    <script>
+        function demo(){
+            alert("测试效果你好啊");
+        }
+        function demo1(){
+            alert("DOM0级事件你好啊");
+        }
+        function demo2(){
+            alert("DOM2级事件你好啊");
+        }
+        function demo3() {
+            alert("多浏览器支持方案你好啊");
+        }
+        function showType(event){
+            alert(event.type);
+        }
+        function showTarget(event){
+            alert(event.target);
+        }
+        function demoA(event){
+            event.preventDefault();
+        }
+        //HTML事件处理是在html文件里直接调用函数
+        var btn2 = document.getElementById("btn2");
+        btn2.onclick = demo;
+        btn2.onclick = demo1;
+        //dom的0级处理是以上形式，只执行最后一个效果
+        var btn3 = document.getElementById("btn3");
+        btn3.addEventListener("click",demo);
+        btn3.addEventListener("click",demo1);
+        btn3.addEventListener("click",demo2);
+        btn3.removeEventListener("click",demo1);
+        //dom的2级事件处理效果可以复用。
+        var btn4 = document.getElementById("btn4");
+        if(btn4.addEventListener){
+            btn4.addEventListener("click",demo3);
+        }else if(btn4.attachEvent){
+            btn4.attachEvent("onclick",demo3);
+        }else{
+            btn4.onclick = demo3;
+        }
+        var btn5 = document.getElementById("btn5");
+        var btn_5 = document.getElementById("btn5");
+        btn5.addEventListener("click",showType);
+        btn_5.addEventListener("mouseout",showTarget);
+        var aid = document.getElementById("aid");
+        aid.addEventListener("click",demoA);
+    </script>
+</body>
+</html>

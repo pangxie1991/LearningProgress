@@ -1,0 +1,24 @@
+.container{
+    column-width:250px;
+    -webkit-column-width:250px;
+    column-gap: 5px;
+    -webkit-column-gap: 5px;
+    width: 90%;
+    height: auto;
+    margin: 0px auto;
+}
+.container div{
+    width: 250px;
+    margin: 5px 0px;
+    margin-top: 0px;
+}
+img{
+    width: 250px;
+    height: auto;
+}
+.container p{
+    margin-left: 20px;
+    margin-bottom: 10px;
+    background-color: #ffccff;
+    float: left;
+}

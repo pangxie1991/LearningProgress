@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Background</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        [class*=div]{
+            width: 200px;
+            height: 100px;
+            margin: 20px;
+            color: red;
+            text-align: center;
+            border: dashed 15px aquamarine;
+            padding: 30px;
+            font-size: 30px;
+            font-weight: bold;
+            background-image: url(12.jpg);
+        }
+        .div0{
+            background-clip: border-box;
+            background-origin: border-box;
+        }
+        .div1{
+            background-clip: padding-box;
+            background-origin: padding-box;
+        }
+        .div2{
+            background-clip: content-box;
+            background-origin: content-box;
+        }
+        .img3{
+            background-image:url(BG.png),url(12.jpg) ;
+            background-repeat: repeat-x,no-repeat;
+            background-position:100%,50%,center,center ;
+            width: 500px;
+            height: 500px;
+            margin-left: 50px;
+            border: solid 2px #ffccff;
+        }
+        .bod{
+            background-color: #ffccff;
+            border: solid 3px aqua;
+            width: 200px;
+            height: 100px;
+            margin: 40px;
+            border-radius: 50px 10px 50px 10px ;
+            /*左上-顺时针-左下*/
+            overflow: hidden;
+        }
+        .imgbod{
+            height: 100px;
+            width: 200px;
+            margin: 40px;
+            border: 1em;
+            -webkit-border-image: url(border.png) 27 round;
+        }
+    </style>
+</head>
+<body>
+    <div class="div0">Sample1</div>
+    <div class="div1">Sample2</div>
+    <div class="div2">Sample3</div>
+    <div class="img3">Sample4</div>
+    <div class="bod">Sample4</div>
+    <div class="imgbod">Sample4</div>
+
+</body>
+</html>

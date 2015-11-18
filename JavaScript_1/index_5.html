@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Objects control HTML</title>
+</head>
+<body>
+    <div id="div" class="div1">测试<p>00</p>效果</div>
+    <p name="pn">测试效果</p>
+    <p name="pn">测试效果</p>
+    <p name="pn">测试效果</p>
+    <a id="aid" title="得到了A标签的属性">Hello</a>
+    <script>
+        function getTagName(){
+            var pnode = document.getElementsByTagName("p");
+            alert(pnode.length);
+            var p = pnode[2];
+            p.innerHTML = "点击就变";
+        }
+//        getTagName();
+        function getAttr(){
+            var dnode = document.getElementById("div");
+            var attr = dnode.getAttribute("class");
+            alert(attr);                                             //标签的属性操作，定位只能getElement进行，getElements默认得到的是一个数组，需要加[x]进行指定。
+        }
+//        getAttr();
+        function setAttr(){
+            var anode = document.getElementById("aid");
+            anode.setAttribute("href","http://baidu.com");
+            var attr1 = anode.getAttribute("href");
+            alert(attr1);
+        }
+//        setAttr();
+        function getChildNode(){
+            var childNode = document.getElementsByTagName("body")[0].childNodes;
+            alert(childNode.length);
+            alert(childNode[1].nodeType);
+        }
+//        getChildNode();
+        function getParentNode(){
+            var div = document.getElementsByTagName("p")[0].parentNode;
+            alert(div.nodeName);
+        }
+//        getParentNode();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+.main{
+    border: 1px solid aqua;
+    width: auto;
+    height: auto;
+    float: left;
+    text-align: center;
+    margin: 10px;
+}
+img{
+    margin: 5px;
+    border: 1px solid aqua;
+    opacity: 0.5;
+}
+.text{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+body{
+    width: 70%;
+    margin: 20px auto;
+    height: auto;
+    background-color: #ffccff;
+}
+.container{
+    margin: 0px auto;
+}

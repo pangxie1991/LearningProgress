@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CSS选择器进阶</title>
+    <link rel="stylesheet" href="MyStyle_4.css" type="text/css">
+    <style>
+        [title~="title"]{
+            font-size: 40px;
+        }
+        p strong{
+            font-size: 40px;
+        }
+        p i{
+            color: brown;
+        }
+    </style>
+</head>
+<body>
+    <p class="p1">这是一个测试效果</p>
+    <p class="p2">这是一个测试效果</p>
+    <p class="p1 p2">这是一个测试效果</p>
+    <!--类选择器结合使用-->
+    <p title="title">第二个测试效果</p>
+    <p title="ti">第二个测试效果</p>
+    <p title="t">第二个测试效果</p>
+    <p title="title hello">第二个测试效果</p>
+    <!--部分属性选择器-->
+    <p>
+        This is my <strong>w<i>e</i>b</strong> page.
+    </p>
+    <!--后代选择器-内部样式表 后代选择器可以跨代-->
+    <div>测试效果<strong>3</strong></div>
+    <div>测试<i>效果<a>4</a></i></div>
+    <!--子元素选择器-外部样式表，使用准确的递进关系-->
+    <div>
+        <ul>
+            <li>兄弟选择器</li>
+            <li>兄弟选择器</li>
+            <li>兄弟选择器</li>
+        </ul>
+        <ul>
+            <li>兄弟选择器</li>
+        </ul>
+        <ol>
+            <li>测试1</li>
+            <li>测试1</li>
+            <li>测试1</li>
+        </ol>
+    </div>
+    <!--需要有前置兄弟，老大不能获得效果，需要相同父关系-->
+    <p></p>
+</body>
+</html>

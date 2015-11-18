@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选择器进阶2</title>
+    <style>
+        .ul1 li:first-child{
+            color: crimson;
+        }
+        .ul1 li:last-child{
+            color: lightblue;
+        }
+        .ul1 li:nth-child(3){
+            background-color: #ffccff;
+        }
+        .ul1 li:nth-last-child(5){
+            background-color: chartreuse;
+        }
+        .ul1 li:nth-last-child(odd){
+            font-size: 30px;
+        }
+        .ul2 li:nth-child(odd){
+            background-color: #ffccff;
+        }
+        .ul3 li:nth-of-type(odd){
+            background-color: #ffccff;
+        }
+        .ul4 li:nth-child(4n+1){
+            background-color: antiquewhite;
+        }
+        .ul4 li:nth-child(4n+2){
+            background-color: #ffccff;
+        }
+        .ul4 li:nth-child(4n+3){
+            background-color: chartreuse;
+        }
+        .ul4 li:nth-child(4n+4){
+            background-color: aqua;
+        }
+        .ul5 li:only-child{
+            background-color: #ffccff;
+        }
+    </style>
+</head>
+<body>
+    <h2>列表</h2>
+    <ul class="ul1">
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果5</li>
+        <li>测试效果6</li>
+    </ul>
+    <h2>对比列表</h2>
+    <ul class="ul2">
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <p>测试效果p</p>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果5</li>
+        <li>测试效果6</li>
+    </ul>
+    <h2>效果列表</h2>
+    <ul class="ul3">
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <p>测试效果p</p>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果5</li>
+        <li>测试效果6</li>
+    </ul>
+    <h2>一个简单循环特效</h2>
+    <ul class="ul4">
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+        <li>测试效果1</li>
+        <li>测试效果2</li>
+        <li>测试效果3</li>
+        <li>测试效果4</li>
+    </ul>
+    <h2>独子列表</h2>
+    <ul class="ul5">
+        <li>测试效果</li>
+    </ul>
+    <h2>非独子列表</h2>
+    <ul class="ul5">
+        <li>测试效果</li>
+        <li>测试效果</li>
+        <li>测试效果</li>
+        <li>测试效果</li>
+    </ul>
+</body>
+</html>

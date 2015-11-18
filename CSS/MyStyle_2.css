@@ -1,0 +1,38 @@
+/*body{*/
+    /*color: crimson;*//*}*/
+#p1{
+    text-align: right;
+}
+h3{
+    text-indent: -2em;
+}
+div{
+    padding-left: 2em;
+}
+#p1{
+    text-transform: capitalize;
+}
+#p2{
+    text-transform: lowercase;
+}
+#p3{
+    text-transform: uppercase;
+}
+#p4{
+    text-shadow: 5px 5px 3px crimson;
+}
+#p5{
+    width: 300px;
+    text-wrap: normal;
+}
+#div2{
+    text-align: center;
+}
+#div2 p,a{
+    font-size: 40px;
+    font-family: cursive;
+}
+/*@font-face {*/
+    /*font-family: myfont;*/
+    /*url();*/
+/*}*/

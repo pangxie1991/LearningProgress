@@ -1,0 +1,14 @@
+body{
+    background-image:url("BG.jpg");
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-size: 200px 300px;
+    background-clip: 20px 30px;
+    /*background-position: center top;*/
+    /*其实是有XY坐标的*/
+}
+p{
+    width: 150px;
+    padding: 3px;
+    background-image:url("XH.jpg");
+}

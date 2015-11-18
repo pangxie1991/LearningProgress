@@ -1,0 +1,14 @@
+body{
+    background-color: lightgrey;
+}
+ul li{
+    font-size: 20px;
+    list-style-image: url("w655.png")
+
+}
+ul.ul1{
+    list-style-position: inside;
+}
+ul.ul2{
+    list-style-position: outside;
+}

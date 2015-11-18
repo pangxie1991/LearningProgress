@@ -1,0 +1,28 @@
+.p1{
+     font-size: 40px;
+ }
+.p2{
+    font-style:italic;
+}
+.p1.p2{
+    color: aqua;
+}
+[title]{
+    font-style: italic;
+}
+div>strong{
+    font-size: 40px;
+}
+div>i>a{
+    font-size: 30px;
+}
+div>a{
+    color: red;
+}
+li+li{
+    font-size: 40px;
+    color: red;
+}
+ol li+li{
+    font-style: italic;
+}

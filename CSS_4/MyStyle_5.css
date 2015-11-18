@@ -1,0 +1,82 @@
+div{
+    width: 200px;
+    height: 200px;
+    border: 10px solid #ffccff;
+    background-color: lightblue;
+    margin: 10px;
+    float: left;
+    position: relative;
+}
+#div1{
+    /*-webkit-animation-delay: 2s;*/
+    /*-webkit-animation-name: anim;*/
+    /*-webkit-animation-timing-function: linear;*/
+    /*-webkit-animation-iteration-count: infinite;*/
+    /*-webkit-animation-duration: 5s;*/
+    /*-webkit-animation-direction: alternate;*/
+    -webkit-animation: anim 5s ease-in alternate infinite;
+}
+@keyframes anim{
+    0%{
+        border:10px solid #ffccff;
+        background-color:lightblue;
+        left: 0px;
+        top:0px
+      }
+    25%{
+        border:10px solid #ffaadd;
+        background-color:#a7ade5;
+        left: 200px;
+        top: 0px
+       }
+    50%{
+        border:10px solid #ff88aa;
+        background-color:#9d82e4;
+        left: 200px;
+        top:200px
+       }
+    75%{
+        border:10px solid #ff6688;
+        background-color:#9456e3;
+        left: 0px;
+        top: 200px
+       }
+    100%{
+        border:10px solid #ff4444;
+        background-color:#8a2be2;
+        left: 0px;
+        top: 0px
+        }
+}
+@-webkit-keyframes anim{
+    0%{
+        border:10px solid #ffccff;
+        background-color:lightblue;
+        left: 0px;
+        top:0px
+    }
+    25%{
+        border:10px solid #ffaadd;
+        background-color:#a7ade5;
+        left: 200px;
+        top: 0px
+    }
+    50%{
+        border:10px solid #ff88aa;
+        background-color:#9d82e4;
+        left: 200px;
+        top:200px
+    }
+    75%{
+        border:10px solid #ff6688;
+        background-color:#9456e3;
+        left: 0px;
+        top: 200px
+    }
+    100%{
+        border:10px solid #ff4444;
+        background-color:#8a2be2;
+        left: 0px;
+        top: 0px
+    }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选择器进阶1</title>
+    <style>
+        [id*=div]{
+            color: aqua;
+        }
+        /*属性值包含div*/
+        [id^=div]{
+            color: crimson;
+        }
+        /*属性值以div开始*/
+        [id$=my]{
+            color: chartreuse;
+        }
+        /*属性值以my结尾*/
+        p:first-line{
+            color: crimson;
+        }
+        /*p的第一行*/
+        p:first-letter{
+            color: chartreuse;
+        }
+        /*p的第一个字母*/
+        li:before{
+            content: "我就是有点";
+            font-size: 10px;
+            color: darkgray;
+        }
+        /*指定元素前置一些内容*/
+        li:after{
+            content: ",但是我并不骄傲。";
+            font-size: 10px;
+            color: darkgray;
+        }
+        /*指定元素后置一些内容*/
+        :root{
+            background-color: antiquewhite;
+        }
+        /*根标签-<html>*/
+        div *:not(h3){
+            color: crimson;
+        }
+        /*父集中去掉指定子集后的合集*/
+        :empty{
+            background-color: crimson;
+        }
+        /*所有为空的元素-为空表示不能包含字符*/
+        :target{
+            background-color: #ffccff;
+        }
+        /*页内跳转指示特效*/
+    </style>
+</head>
+<body>
+    <div id="div1">测试效果1</div>
+    <div id="div2">测试效果2</div>
+    <div id="div3">测试效果3</div>
+    <div id="div4my">测试效果4</div>
+    <div id="mydiv5">测试效果5</div>
+    <p>
+        这是一个测试效果
+        <br/>
+        这是一个测试效果
+    </p>
+    <ul>
+        <li>敏感</li>
+        <li>细腻</li>
+        <li>洞察</li>
+        <li>拼搏</li>
+    </ul>
+    <div>
+        <h1>啦啦啦啦1</h1>
+        <h2>啦啦啦啦2</h2>
+        <h3>啦啦啦啦p</h3>
+    </div>
+    <table border="2px">
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td></td>
+            <td>C</td>
+        </tr>
+        <tr>
+            <td>Ⅰ</td>
+            <td>Ⅱ</td>
+            <td></td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+    <a href="#div1">1</a>
+    <a href="#div2">2</a>
+    <a href="#div3">3</a>
+</body>
+</html>

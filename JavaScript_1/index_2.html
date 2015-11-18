@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DOM初步</title>
+    <style type="text/css">
+        div{
+            width: 200px;
+            height: 150px;
+            background-color: #ffccff;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p id="pid">这是一个测试效果</p>
+    <a id="aid" href="#">测试效果</a>
+    <div id="div1">测试效果</div>
+    <br/>
+    <button id="btn" onclick="demo()">按钮</button>
+    <br/>
+    <br/>
+    <button id="btn1">按钮2333</button>
+    <script>
+        function demo(){
+            var n = document.getElementById("pid");
+            n.innerHTML = "能被按钮改变的世界";
+//          document.getElementById("pid").innerHTML = "能被按钮改变的世界";
+            document.getElementById("aid").href = "http://baidu.com";
+            document.getElementById("aid").innerHTML = "百度";
+//          document.getElementsByTagName("p");  会寻找相同元素中的第一个;
+            document.getElementById("div1").style.background = "#ccc";
+        }
+        document.getElementById("btn").addEventListener("click",function change(){
+            document.getElementById("div1").style.color = "#fff"          //句柄的好处-1.添加多个不会互相覆盖。2.在需要修改时只需要修改JS文件
+        })
+        var a = document.getElementById("btn1");
+        a.addEventListener("click",Hello);
+        a.addEventListener("click",World);
+//        a.removeEventListener("click",Hello);
+        function Hello(){
+            alert("Hello");
+        }
+        function World(){
+            alert("World");
+        }
+        /*句柄才是在开发是常用的函数执行方式，不选择在HTML标签下使用类似"onclick="这种形式*/
+    </script>
+</body>
+</html>

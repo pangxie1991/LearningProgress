@@ -1,0 +1,31 @@
+#container{
+    width: 650px;
+    height: 900px;
+    background-color: gold;
+}
+#ft1{
+    width: 150px;
+    height: 150px;
+    background-color: crimson;
+    float: left;
+    /*position: absolute;*/
+}
+/*浮动类似于半绝对定位*/
+#ft2{
+    width: 250px;
+    height: 250px;
+    background-color: aqua;
+    float: left;
+    /*position: absolute;*/
+}
+#ft3{
+    width: 350px;
+    height: 350px;
+    background-color:#ffccff ;
+    float: left;
+    /*position: absolute;*/
+}
+#text{
+    clear: left;
+    /*设置本元素的某个或者所有侧面是否允许其他浮动元素*/
+}

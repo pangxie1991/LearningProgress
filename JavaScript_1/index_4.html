@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Objects</title>
+</head>
+<body>
+<!--创建对象-->
+    <script>
+        people = new Object();
+        people.name = "Fancy";
+        people.age = "24";
+        document.write("name:"+people.name+"   "+" 年龄："+people.age);
+        human = {name:"pangzhi",age:"23"};
+        document.write("<br/>");
+        document.write("name:"+human.name+"   "+" 年龄："+human.age);
+        function ren(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        son = new ren("凡辞","unknown")
+        document.write("<br/>");
+        document.write("name:"+son.name+"   "+" 年龄："+son.age);
+//内置对象String相关属性和操作
+        var str = "Hello World!你好！";
+        var str1 = "fancy,icarus,pangzhi"
+        var s = str1.split(",");
+        document.write("<br/>");
+        document.write("字符串长度为："+str.length);   //中英文的计量方法一样
+        document.write("<br/>");
+        document.write("返回的是所查询关键字的位置："+str.indexOf("好"));   //字符串查询关键字，返回位置，从0开始，不存在则返回-1
+        document.write("<br/>");
+        document.write("内容匹配："+str.match("World"));   //字符串匹配，存在则打印此字符串，不存在则返回null
+        document.write("<br/>");
+        document.write("内容替换："+str.replace("你好！","你看到了一片虚空"));   //字符串替换，并打印替换后的结果
+        document.write("<br/>");
+        document.write("大小写转换："+str.toUpperCase());   //字符串大小写控制，修改全部。
+        document.write("<br/>");
+        document.write("大小写转换："+str.toUpperCase());   //字符串大小写控制，修改全部。
+        document.write("<br/>");
+        document.write("字符串转换成数组:"+s[1]);   //字符串转化成数组后可以进行输出
+        document.write("字符串转换成数组:"+str.split(" ")[1]);   //效果同上
+        document.write("<br/>");
+//内置对象date相关属性和操作
+        var date = new Date();
+        document.write(date);
+    </script>
+</body>
+</html>

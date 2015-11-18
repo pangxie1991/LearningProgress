@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CSS选择器进阶</title>
+    <style>
+        input[name="age"]:hover{
+            background-color: #ffccff;
+        }
+        input[name="age"]:focus{
+            background-color: aqua;
+        }
+        input[name="age"]:active{
+            background-color: chartreuse;
+        }
+        input[type="checkbox"]:checked{
+            outline: 2px solid #ffccff;
+        }
+        #text:enabled{
+            background-color: #ffccff;
+        }
+        #text:disabled{
+            background-color: #000000;
+        }
+        /*通用兄弟-指定同一父元素的某个元素之后的所有其他某个种类的兄弟元素使用样式*/
+        #li1~p,#li1~h1{
+            background-color: #ffccff;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="age">
+    <input type="text" name="age">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <input type="checkbox" name="1">学习
+    <input type="checkbox" name="2">实验
+    <input type="checkbox" name="3">休闲
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <script>
+        function radio_change(){
+            var radio1 = document.getElementById("radio1");
+            var radio2 = document.getElementById("radio2");
+            var text = document.getElementById("text");
+            if(radio1.checked){
+                text.disabled="";
+            }else{
+                text.disabled="disable"
+                text.value=""
+            }
+        }
+    </script>
+    <input type="radio" id="radio1" name="radio" onchange="radio_change()">可用
+    <input type="radio" id="radio1" name="radio" onchange="radio_change()">不可用
+    <input type="text" id="text" name="text" disabled>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <ul>
+        <li>测试效果</li>
+        <li>测试效果</li>
+        <li>测试效果</li>
+        <p>测试效果P</p>
+        <li id="li1">测试效果</li>
+        <a href="#">测试效果A</a>
+        <li>测试效果-<p>测试效果P</p></li>
+        <li>测试效果-<p>测试效果P</p></li>
+        <p>测试效果P</p>
+        <h1>测试效果H</h1>
+        <li>测试效果</li>
+    </ul>
+</body>
+</html>

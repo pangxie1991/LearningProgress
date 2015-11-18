@@ -1,0 +1,24 @@
+*{
+    margin: 0px;
+}
+.div1{
+    width: 70%;
+    height: 1000px;
+    background-color: lightgrey;
+    margin-left: auto;
+    margin-right: auto;
+    /*使用margin进行左右对齐以及居中的操作*/
+    /*position: absolute;*/
+    /*使用position进行左右对齐*/
+    /*left: 0px;*/
+    /*float: right;*/
+    /*使用float进行左右对齐*/
+}
+.div2{
+    height: 30%;
+    width: 30%;
+    margin: auto;
+    /*margin:350px auto;*/
+    /*auto只能进行居中操作，不能调整上下居中，顺序是上右下左*/
+    background-color: aqua;
+}

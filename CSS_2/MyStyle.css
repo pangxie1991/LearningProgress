@@ -1,0 +1,42 @@
+#location1{
+    width: 100px;
+    height: 100px;
+    background-color:#ffccff;
+    position: relative;
+    left: 50px;
+    top:30px;
+    z-index: 2;
+}
+/*#location1{*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*background-color:#ffccff;*/
+    /*position: absolute;*/
+    /*left: 200px;*/
+    /*top: 200px;*/
+/*}*/
+/*#location1{*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*background-color:#ffccff;*/
+    /*position:fixed;*/
+    /*left: 20px;*/
+    /*top: 20px;*/
+/*}*/
+/*#location1{*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*background-color:#ffccff;*/
+    /*position:static;*/
+    /*left: 200px;*/
+    /*top: 200px;*/
+/*}*/
+#location2{
+    width: 100px;
+    height: 100px;
+    background-color:crimson;
+    position: relative;
+    left: 15px;
+    top:8px;
+    z-index: 1;
+}

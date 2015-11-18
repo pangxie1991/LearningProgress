@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>变形出发！</title>
+    <style>
+        div{
+            width: 200px;
+            height: 150px;
+            background-color: #ffccff;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .div0{
+            transform: rotate(50deg);
+        }
+        .div1{
+            transform: scale(0.5);
+        }
+        .div2{
+            transform: skew(45deg,0deg);
+        }
+        .div3{
+            transform: translate(240px,40px);
+        }
+        .div4{
+            transform: translate(200px,100px) scale(2) rotate(45deg);
+            /*依次执行，所以顺序很关键*/
+        }
+        .div5{
+            margin-top: 200px;
+        }
+        .div6{
+            transform: rotate(45deg);
+            transform-origin: right bottom;
+            /*默认以中心点为基准进行旋转*/
+            /*基准点转换操作适用于四种效果。*/
+        }
+    </style>
+</head>
+<body>
+    <div class="div0">Sample</div>
+    <div class="div1">Sample</div>
+    <div class="div2">Sample</div>
+    <div class="div3">Sample</div>
+    <div class="div4">Sample</div>
+    <div class="div5">Sample</div>
+    <div class="div6">Sample</div>
+</body>
+</html>
