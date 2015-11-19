@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Browser-Objects-Location</title>
+</head>
+<body>
+    <!--window.location用于获得当前页面的URL，并把浏览器重新定向到新的页面-->
+    <!--.hostname/.pathname/.port/.protocol/.href/.assign()-->
+    <button onclick="getLocation()">按钮</button>
+    <p id="pid"></p>
+    <script>
+        function getLocation(){
+//            document.getElementById("pid").innerHTML = window.location.hostname;
+//            document.getElementById("pid").innerHTML = window.location.pathname;
+//            document.getElementById("pid").innerHTML = window.location.port;
+//            document.getElementById("pid").innerHTML = window.location.protocol;
+//            document.getElementById("pid").innerHTML = window.location.href;
+            location.assign("http://www.baidu.com");     //类似跳转的效果
+        }
+    </script>
+</body>
+</html>

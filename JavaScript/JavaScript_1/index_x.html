@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Browser-Objects-Screen</title>
+</head>
+<body>
+    <!--window.screen包含有关用户屏幕的信息-->
+    <!--.availWidth/.availHeight/.width/.height-->
+    <button onclick="getScreen()">按钮</button>
+    <p id="pid"></p>
+    <script>
+        function getScreen(){
+            document.getElementById("pid").innerHTML = "可用高度："+screen.availHeight+" 可用宽度："+screen.availWidth+" 高度："+screen.height+" 宽度："+screen.width;
+        }
+    </script>
+</body>
+</html>

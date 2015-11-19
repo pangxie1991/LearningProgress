@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Browser-Objects-History</title>
+</head>
+<body>
+    <!--window。history包含浏览器的历史url集合-->
+    <!--history.back()/history.forward()/history.go(number)-->
+    <button id="btn" onclick="historyTest()">按钮</button>
+    <br/>
+    <a href="index.html">跳转链接</a>
+    <br/>
+    <form>
+        <input id="username" type="text">
+        <button onclick="">确认</button>
+    </form>
+    <script>
+        function historyTest(){
+            var name = document.getElementById("username").value;
+            if (name == "hello"){
+                history.go(-1);              //正数n相当于前进n次
+            }else{
+                history.go(1);
+            }
+//            history.back();
+//            history.forward();
+        }
+    </script>
+</body>
+</html>
