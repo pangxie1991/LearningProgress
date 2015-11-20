@@ -14,9 +14,8 @@
     border: 1px solid #ccc;
     box-shadow: 0 0 5px #ccc ;
     border-radius: 5px;
-    float: inherit;
 }
 .box_image img{
-    width: 350px;
+    width: 250px;
     height: auto;
 }
