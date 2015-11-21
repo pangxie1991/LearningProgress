@@ -13,12 +13,22 @@
         console.log(pat.test(str)); //   将结果打印到日志  true
         console.log(pat.exec("oh hello world"));    //  null
         console.log(pat.exec("oh my hello world"));    //  my   返回的会是一个数组Arr
-        var str = "Visit Hunger";
+        var str0 = "Visit Hunger";
         var patt = /hunger/i;                       //i是正则表达式的常用属性，代表忽略大小写。
-        console.log(str.match(patt));  //全局匹配
-        var str1="hello Hunger valley! I am Hunger";
-        var patt3=/Hunger/g;
-        console.log(str1.match(patt3));  //不区分大小写，全局匹配 var str="hello
+        console.log(str0.match(patt));  //忽略大小写
+        var str1="hello Hunger valley! I am hunger";
+        var patt3=/Hunger/gi;
+        console.log(str1.match(patt3));  //全局匹配+忽略大小写
+        var str2="1 plus 2 equal 33";
+        console.log(str2.match(/\d+/));   //[1]                   "\d+"中d代表数字，+代表联合
+        console.log(str2.match(/\d+/g));  //[1,2,33]               全局匹配
+        var str3="Hello JI! Hunger: oh I am hunger";
+        console.log(str3.replace(/Hunger/, "valley"));           //替换
+        console.log(str3.replace(/hunger/ig, "huger"));
+        var str4 = "Hello Hunger   , oh I am Hunger";
+        console.log(str4.split(""));                           //将字符串以单个符号为单位分割成数组，包括空
+        console.log(str4.split(" "));                           //将字符串以空格为分割点分割为数组，并包含空格
+        console.log(str4.split(/\s+/));                      //将字符串以空格为分割点分割为数组，并不包含空格
     </script>
 </body>
 </html>
