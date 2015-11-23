@@ -1,0 +1,22 @@
+meter{
+    width: 480px;
+    border: 1px solid #000;
+    display: block;
+    position: relative;
+}
+.meter{
+    border: 1px solid #000;
+    display: block;
+    position: relative;
+    width: 480px;
+}
+.fill{
+    background-color: #693;
+    width: 81.53%;
+}
+.label{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
