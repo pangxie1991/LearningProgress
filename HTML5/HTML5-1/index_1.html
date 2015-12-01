@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>window.open在HTML5中的改进</title>
+    <script src="jquery.min.js" type="javascript"></script>
+    <script>
+        $("a.test").click(function(event){
+            event.preventDefault();
+            window.open(this.getAttribute('href'));
+        });
+        $("a.test2").click(function(test){
+            test.preventDefault();
+        })
+    </script>
+</head>
+<body>
+    <a href='#'
+       onclick="window.open('help/holiday_pay.html','WinName' ,'width = 300 ,height = 300');">
+        Holiday pay
+    </a>
+    <a href="help/holiday_pay.html" class="test2"
+       onclick="window.open(this.href,'WinName','width=300,height=300');">
+        Holiday pay
+    </a>
+    <!-- window.open("地址" "名字" "参数") -->
+    <a class="test" href="help/holiday_pay.html">Holiday pay</a>
+</body>
+</html>
