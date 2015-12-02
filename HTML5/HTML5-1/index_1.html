@@ -3,16 +3,6 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>window.open在HTML5中的改进</title>
-    <script src="jquery.min.js" type="javascript"></script>
-    <script>
-        $("a.test").click(function(event){
-            event.preventDefault();
-            window.open(this.getAttribute('href'));
-        });
-        $("a.test2").click(function(test){
-            test.preventDefault();
-        })
-    </script>
 </head>
 <body>
     <a href='#'
@@ -23,7 +13,33 @@
        onclick="window.open(this.href,'WinName','width=300,height=300');">
         Holiday pay
     </a>
-    <!-- window.open("地址" "名字" "参数") -->
-    <a class="test" href="help/holiday_pay.html">Holiday pay</a>
+    <a href="help/holiday_pay.html" class="popup">Holiday pay</a>
+    <a href="help/holiday_pay.html"
+       data-width = "300"
+       data-height = "300"
+       title="Holiday Pay"
+       class="pouple">Holiday pay</a>
+    <script src="javascript/jquery-1.11.3.min.js"></script>
+    <script>
+        $("a.popup").click(function(event){
+            event.preventDefault();
+            window.open(this.getAttribute("href"),"popup","width=300,height=300");
+        });
+        //  jQuery 语句最后要加分号，而且其内置函数语句也要写全。
+        //  window.open (地址，名字，参数)
+        $("a.pouple").click(function(event){
+            event.preventDefault();
+            var link = this;
+            var href = link.getAttribute("href");
+            var height = link.getAttribute("data-height");
+            var width = link.getAttribute("data-width");
+            /* 通过getAttribute（"string"）的方式来获得页面中的属性 可以使用 var height = link.dataset.height来进行回退*/
+            window.open(href,"pouple","height=" + height +",width=" + width + "");
+            /* 参数的添加形式和最后的一对双引号暂时还看不懂 */
+        });
+        $("a.test2").click(function(event){
+            event.preventDefault();
+        });
+    </script>
 </body>
 </html>
