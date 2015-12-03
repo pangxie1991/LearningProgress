@@ -14,6 +14,7 @@
         Holiday pay
     </a>
     <a href="help/holiday_pay.html" class="popup">Holiday pay</a>
+    <a href="help/holiday_pay.html" class="popp" onclick="window.open(this.href,'WinName','width=300,height=300');">Holiday pay</a>
     <a href="help/holiday_pay.html"
        data-width = "300"
        data-height = "300"
@@ -35,11 +36,17 @@
             var width = link.getAttribute("data-width");
             /* 通过getAttribute（"string"）的方式来获得页面中的属性 可以使用 var height = link.dataset.height来进行回退*/
             window.open(href,"pouple","height=" + height +",width=" + width + "");
-            /* 参数的添加形式和最后的一对双引号暂时还看不懂 */
+            /*   参数的添加形式
+              *  "height=" + height +",width=" + width + "" = "height=valueof(height),width=valueof(width)"*/
         });
         $("a.test2").click(function(event){
             event.preventDefault();
         });
+        var popp = document.getElementById("popp");
+        popp.click(function (event){
+            event.preventDefault();
+        });
+        /* 通过原生JS来写阻止默认事件暂时未知 */
     </script>
 </body>
 </html>
