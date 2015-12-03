@@ -21,3 +21,6 @@ input{
 input:focus{
     background-color: #ffe;
 }
+.simpleColorContainer, .simpleColorDisplay{
+    float: left;
+}
