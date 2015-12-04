@@ -2,3 +2,10 @@
 .idea/*
 .idea*
 \.idea*
+
+
+#npm
+.node_modules/*
+
+#grunt
+Gruntfile.js
