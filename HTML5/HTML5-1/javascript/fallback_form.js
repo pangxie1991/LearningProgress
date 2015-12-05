@@ -5,6 +5,8 @@ var applyColorPicker = function (){
     $('input[type=color]').simpleColor();
 };
 
+
+/*
 function fallback (path,onload) {
     var script = document.createElement('script');
     script.src = path;
@@ -22,7 +24,29 @@ function fallback (path,onload) {
     }
 }
 
+a function to load a selected js written by fancy
+
 if (!Modernizr.inputtypes.color) {
     fallback("javascript/jquery.simple-color.js",applyColorPicker);
     applyColorPicker();
+}
+
+fallback of inputtypes.color with the function above
+
+*/
+
+Modernizr.load(
+    {
+        test: Modernizr.color,
+        nope: "javascript/jquery.simple-color.js",
+        callback: function(url, result){
+            if (!result){
+                applyColorPicker();
+            }
+        }
+    }
+);
+
+if (!Modernizr.autofocus){
+    $('input[autofocus]').focus();
 }

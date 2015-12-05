@@ -8,8 +8,8 @@ module.exports = function(grunt) {
                 "dest" : "javascript/modernizr.js",
                 "parseFiles": true,
                 "customTests": [],
-                "devFile": "/PATH/TO/modernizr-dev.js",
-                "outputFile": "/PATH/TO/modernizr-output.js",
+                "devFile": "javascript/modernizr-dev.js",
+                "outputFile": "javascript/modernizr-output.js",
                 "tests": [
                     // Tests
                 ],
