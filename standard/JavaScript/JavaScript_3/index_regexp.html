@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>正则表达式</title>
+</head>
+<body>
+    <script>
+        var patt1 = new RegExp("hello");
+        var patt2 = /world/ ;
+        var pat = /my/;
+        var str = "this is my code...";
+        console.log(pat.test(str)); //   将结果打印到日志  true
+        console.log(pat.exec("oh hello world"));    //  null
+        console.log(pat.exec("oh my hello world"));    //  my   返回的会是一个数组Arr
+        var str0 = "Visit Hunger";
+        var patt = /hunger/i;                       //i是正则表达式的常用属性，代表忽略大小写。
+        console.log(str0.match(patt));  //忽略大小写
+        var str1="hello Hunger valley! I am hunger";
+        var patt3=/Hunger/gi;
+        console.log(str1.match(patt3));  //全局匹配+忽略大小写
+        var str2="1 plus 2 equal 33";
+        console.log(str2.match(/\d+/));   //[1]                   "\d+"中d代表数字，+代表联合
+        console.log(str2.match(/\d+/g));  //[1,2,33]               全局匹配
+        var str3="Hello JI! Hunger: oh I am hunger";
+        console.log(str3.replace(/Hunger/, "valley"));           //替换
+        console.log(str3.replace(/hunger/ig, "huger"));
+        var str4 = "Hello Hunger   , oh I am Hunger";
+        console.log(str4.split(""));                           //将字符串以单个符号为单位分割成数组，包括空
+        console.log(str4.split(" "));                           //将字符串以空格为分割点分割为数组，并包含空格
+        console.log(str4.split(/\s+/));                      //将字符串以空格为分割点分割为数组，并不包含空格
+        var str5="Is this all there iis? 2000：Yes,it iis! ";
+        console.log(str5.match(/[a-h]/g));                  //查找所有在a-h之间的字母
+        console.log(str5.match(/[^a-h]/g));                 //查找所有不在a-h之间的字母   [0-9]   [A-z]   [adcg]
+        console.log(str5.match(/is|all|ere/ig));                 //查找所有给定的组合
+        console.log(str5.match(/a.l|e.e|e.i/g));                 //查找所有可能的组合  .代表任意单词字符，除了空格和换行符
+        console.log(str5.match(/\w/g));                 //查找所有单词字符（字母-数字-下划线）   \d 数字  \s 空白字符（空格 tab 换行 回车）
+        console.log(str5.match(/\W/g));                 //查找所有非单词字符（空格-换行符-标点-符号）  \D 非数字  \S 非空白字符
+        console.log(str5.match(/\bis/ig));                 //  \b为单词边界匹配，\bis表示以is开头
+        console.log(str5.match(/is\b/ig));                 //  \b为单词边界匹配，is\b表示以is结尾
+        console.log(str5.match(/\Bis/ig));                 //  \B表示非单词边界
+        //\n表示查找换行符".\n"
+        console.log(str5.match(/i+/ig));                    //i+ 查找至少含有一个i的字符串
+        console.log(str5.match(/i*/ig));                    //i* 查找至少含零个或者多个i的字符串
+        console.log(str5.match(/i?/ig));                    //i? 查找至少含零个或者一个i的字符串
+        console.log(str5.match(/i{2}/ig));                    //i{x} 查找含x个i的字符串
+        console.log(str5.match(/i{1,2}/ig));                    //i{x,y} 查找含x或y个i的字符串
+        console.log(str5.match(/i{1,}/ig));                    //i{x,} 查找至少含x个i的字符串
+        var str6="Is this his";
+        var patt6=/is$/ig;
+        document.write(str6.match(patt6));
+        var str7="Is this his";
+        var patt7=/^Is/g;
+        document.write(str7.match(patt7));
+        /*
+        常见正则：
+        汉字： [\u4e00-\u9fa5]
+        手机号： 1[0-9]{10}
+        邮箱： (\S)+[@]{1}(\S)+[.]{1}(\w)+
+        */
+    </script>
+</body>
+</html>
