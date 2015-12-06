@@ -11,5 +11,8 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-modernizr": "^1.0.1"
+  },
+  "dependencies": {
+    "customizr": "^1.0.0-alpha"
   }
 }
