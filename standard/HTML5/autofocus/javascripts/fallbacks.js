@@ -3,7 +3,7 @@ bad book sample
 ***/
 
 
-if (!Modernizr.input.au                              tofocus){
+if (!Modernizr.input.autofocus){
     $('input[autofocus]').focus();
 }
 
