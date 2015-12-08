@@ -6,3 +6,5 @@ if (!Modernizr.input.placeholder){
 }
 
 
+console.log("Hello,Ubuntu!");
+
