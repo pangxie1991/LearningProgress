@@ -50,7 +50,15 @@ Modernizr.load(
 );
 
 */
-
+//function appendjs (src) {
+//    var js = document.createElement("script");
+//    js.src = src;
+//    document.body.appendChild(js);
+//}
+//if (!Modernizr.inputtypes.color){
+//    appendjs("javascript/jquery.simple-color.js");
+//    $('input[type=color]').simpleColor();
+//}
 
 if (!Modernizr.input.autofocus){
     $('input[autofocus]').focus();
@@ -62,4 +70,5 @@ if (!Modernizr.inputtypes.color){
            $('input[type=color]').simpleColor();
         });
 }
+
 
