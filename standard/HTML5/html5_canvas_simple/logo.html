@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Canvas</title>
+    <!--[if lte IE]>
+    <!--<script>excanvas.js</script>-->
+    <!--[endif]-->
+</head>
+<body>
+    <canvas id="logo" width="900px" height="80px">
+        <h1>AwesomeCo</h1>
+    </canvas>
+    <script>
+        var canvas = document.getElementById("logo"),
+            text_logo = document.getElementsByTagName("h1")[0];
+        if (canvas.getContext) {
+            var context = canvas.getContext("2d");
+        } else {
+            var p_fallback = document.createElement("p"),
+                text_fallback = document.createTextNode("浏览器不支持CANVAS元素");
+            p_fallback.appendChild(text_fallback);
+            document.body.insertBefore(p_fallback,canvas);
+            document.body.removeChild(canvas);
+        }
+        // gradient
+        var gradient = context.createLinearGradient(0,0,0,40);
+        gradient.addColorStop(0, '#3300FF');
+        gradient.addColorStop(1, '#FF0000');
+        // begin to draw
+        context.fillStyle = gradient;                  //fill color
+        context.strokeStyle = gradient;                //stroke color
+        // string
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(0,40);
+        context.lineTo(30,0);
+        context.lineTo(60,40);
+        context.lineTo(290,40);
+        context.stroke();
+        context.closePath();
+        // word
+        context.font = "italic 40px 'Arial'";
+        context.fillText("AwesomeCo",60,36);
+        // save then move the origin point
+        context.save();
+        context.translate(20,20);
+        // draw the triangles
+        context.fillRect(0,0,20,20);
+        context.fillStyle = "#FFFFFF";
+        context.strokeStyle = "#FFFFFF";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(0,20);
+        context.lineTo(10,0);
+        context.lineTo(20,20);
+        context.lineTo(0,20);
+        context.fill();
+        context.closePath();
+        context.restore();
+    </script>
+</body>
+</html>

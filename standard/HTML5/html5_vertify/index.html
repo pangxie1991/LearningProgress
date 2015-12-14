@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H5_vertify_input_without_js</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+</head>
+<body>
+<form action="/signup" id="create_account" method="post">
+    <fieldset id="signup">
+        <legend>Create New Account</legend>
+        <ol>
+            <li>
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" autofocus="true" required name="first_name" placeholder="John">
+            </li>
+            <li>
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Smith"> 
+            </li>
+            <li>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required placeholder="user@example.com">
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="" autocomplete="off" placeholder="8-10 characters"
+                       pattern="^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[\W]).*$"
+                       title="Password must be 8 or more characters with at least one number,an uppercase letter,and one special character">
+            </li>
+            <li>
+                <label for="password_confirmation">Password Confirmation</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" value="" autocomplete="off" placeholder="Type your password again"
+                       pattern="^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[\W]).*$"
+                       title="Password confirmation must be 8 or more characters with at least one number,an uppercase letter,and one special character">
+            </li>
+            <li>
+                <input type="submit" value="Submit">
+            </li>
+        </ol>
+    </fieldset>
+</form>
+</body>
+</html>

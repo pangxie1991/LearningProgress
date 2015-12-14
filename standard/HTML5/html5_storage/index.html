@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H5 Web Storage</title>
+    <link rel="stylesheet" href="css/mian.css">
+    <script src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <p><strong>Preferences</strong></p>
+        <form action="save_prefs" id="preferences" method="post" accept-charset="utf-8">
+            <fieldset id="color" class="">
+                <legend>Colors</legend>
+                <ol>
+                    <li>
+                        <label for="background_color">Background Color</label>
+                        <input type="color" name="background_color" id="background_color" value="" class="color">
+                    </li>
+                    <li>
+                        <label for="text_color">Text Color</label>
+                        <input type="color" name="text_color" id="text_color" class="color" value="">
+                    </li>
+                    <li>
+                        <label for="text_size">Text Size</label>
+                        <select name="text_size" id="text_size">
+                            <option value="16">16px</option>
+                            <option value="20">20px</option>
+                            <option value="24">24px</option>
+                            <option value="32">32px</option>
+                        </select>
+                    </li>
+                </ol>
+            </fieldset>
+
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
