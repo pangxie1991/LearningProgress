@@ -1,0 +1,31 @@
+header,
+footer {
+  width: 960px;
+  height: 100px;
+  margin: 5px auto;
+  background-color: aqua;
+}
+.container {
+  width: 960px;
+  margin: 10px auto;
+  height: 600px;
+  background-color: #c0c0c0;
+}
+.left {
+  width: 180px;
+  height: 600px;
+  float: left;
+  background-color: crimson;
+}
+.main {
+  width: 580px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: crimson;
+}
+.right {
+  width: 180px;
+  height: 600px;
+  background-color: crimson;
+  float: right;
+}
