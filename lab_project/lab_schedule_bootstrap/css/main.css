@@ -1,0 +1,16 @@
+.page-header{
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.sub{
+    margin-top: 0;
+}
+
+#name_panel .btn-default.active,#project_panel .btn-default.active,#time_panel .btn-default.active{
+    background-color: #5cb85c;
+}
+
+.btn-group{
+    margin-bottom: 10px;
+}
