@@ -19,21 +19,18 @@
 </head>
 
 <body>
-<div class="container">
-    <header class="page-header">
-        <div class="row">
-            <div class="img-responsive logo col-sm-2">
-                <img class="center-block" src="img/XH.jpg" alt="校徽" width="100px">
-            </div>
-            <div class="banner col-md-7">
-                <h3 class="text-center">厦门大学微纳光电子研究室<br/>
-                    <small>Laboratory of Micro/Nano-Optoelectronics,Xiamen University</small>
-                </h3>
-            </div>
+    <div class="row page-header">
+        <div class="img-responsive logo col-sm-2">
+            <img class="center-block" src="img/XH.jpg" alt="校徽" width="100px">
         </div>
-    </header>
+        <div class="banner col-md-7">
+            <h3 class="text-center">厦门大学微纳光电子研究室<br/>
+                <small>Laboratory of Micro/Nano-Optoelectronics,Xiamen University</small>
+            </h3>
+        </div>
+    </div>                    <!--我来组成头部 -->
+<div class="container">
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                         aria-expanded="false" aria-controls="navbar">
@@ -42,7 +39,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">实验预约系统</a>
+                <a class="navbar-brand" href="#">预约系统</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -56,9 +53,15 @@
                     <li class="active"><a href="#">实验日程</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
-    <div class="panel panel-default">
+    </nav>              <!--导航条 -->
+    <div class="jumbotron">
+        <h1>Hello, world!</h1>
+
+        <p>...</p>
+
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    </div>                  <!--显示窗口 -->
+    <div class="panel panel-default row collapse.in" id="reservation">
         <div class="panel-heading">
             <h3 class="panel-title">Name</h3>
         </div>
@@ -113,12 +116,22 @@
         <div class="panel-body">
             <form class="form-inline" id="project_panel">
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default">
+                    <label class="btn btn-default" data-toggle="collapse" data-target="#selection_of_sputtering">
                         <input type="checkbox" autocomplete="off"> 磁控溅射
                     </label>
                 </div>
+
                 <br>
 
+                <div class="collapse" id="selection_of_sputtering">
+                    <div class="well">
+                        <div class="form-group">
+                            <label for="sputtering_metal">溅射</label>
+                            <input type="text" class="form-control" id="sputtering_metal" placeholder="NiAgNiAu">
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
                         <input type="checkbox" autocomplete="off"> 光刻
@@ -194,16 +207,20 @@
                             <div class="input-group date form_time" data-date="" data-date-format="hh:ii"
                                  data-link-field="dtp_input4" data-link-format="hh:ii">
                                 <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-time"></span></span>
                             </div>
                             <label for="dtp_input4" class="control-label">到</label>
 
                             <div class="input-group date form_time" data-date="" data-date-format="hh:ii"
                                  data-link-field="dtp_input5" data-link-format="hh:ii">
                                 <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-time"></span></span>
                             </div>
                             <input type="hidden" id="dtp_input4" value=""/><br/>
                             <input type="hidden" id="dtp_input5" value=""/><br/>
@@ -231,7 +248,8 @@
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd"
                                  data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                                 <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                             </div>
@@ -240,7 +258,8 @@
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd"
                                  data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
                                 <input class="form-control" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                             </div>
@@ -261,13 +280,12 @@
                 <button type="submit" class="btn btn-info">确认</button>
             </form>
         </div>
-    </div>
+    </div>                <!--预约界面 -->
 </div>
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.11.3.min.js"><\/script>')</script>
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
-<script src="js/main.js"></script>
 <script type="text/javascript">
     $('.form_date').datetimepicker({
         weekStart: 1,
@@ -289,6 +307,7 @@
         forceParse: 0
     });
 </script>
+<script src="js/main.js"></script>
 </body>
 
 </html>

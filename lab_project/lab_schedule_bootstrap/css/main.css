@@ -1,10 +1,15 @@
+/*body{*/
+    /*padding-top: 50px;*/
+/*}*/
+
 .page-header{
     margin-top: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
-.sub{
-    margin-top: 0;
+nav{
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 #name_panel .btn-default.active,#project_panel .btn-default.active,#time_panel .btn-default.active{
