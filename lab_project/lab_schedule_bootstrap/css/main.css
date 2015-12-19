@@ -19,3 +19,8 @@ nav{
 .btn-group{
     margin-bottom: 10px;
 }
+
+.jumbotron{
+    margin-left: -15px;
+    margin-right: -15px;
+}
