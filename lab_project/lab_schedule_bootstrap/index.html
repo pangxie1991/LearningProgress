@@ -62,44 +62,51 @@
             <form class="form-inline" id="project_panel">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default" data-toggle="collapse" data-target="#input_of_sputtering">
-                        <input type="checkbox" autocomplete="off"> 磁控溅射
+                        <input type="checkbox" autocomplete="off">
+                        <span>磁控溅射</span>
                     </label>
                 </div>
                 <br>
-
                 <div class="collapse" id="input_of_sputtering">
                     <div class="well">
                         <div class="form-group">
                             <label for="sputtering_metal">溅射</label>
-                            <input type="text" class="form-control" id="sputtering_metal" placeholder="NiAgNiAu">
+                            <input type="text" class="form-control" id="sputtering_metal" placeholder="NiAgNiAu" value="">
                         </div>
                     </div>
                 </div>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 光刻
+                        <input type="checkbox" autocomplete="off">
+                        <span>光刻</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> ICP
+                        <input type="checkbox" autocomplete="off">
+                        <span>ICP</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 激光剥离
+                        <input type="checkbox" autocomplete="off">
+                        <span>激光剥离</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 退火
+                        <input type="checkbox" autocomplete="off">
+                        <span>退火</span>
                     </label>
                 </div>
                 <br>
 
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 107测试
+                        <input type="checkbox" autocomplete="off">
+                        <span>107测试</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 微机电
+                        <input type="checkbox" autocomplete="off">
+                        <span>微机电</span>
                     </label>
                     <label class="btn btn-default" data-toggle="collapse" data-target="#input_of_experiment">
-                        <input type="checkbox" autocomplete="off"> 其他外出实验
+                        <input type="checkbox" autocomplete="off">
+                        <span>其他外出实验</span>
                     </label>
                 </div>
                 <br>
@@ -108,26 +115,47 @@
                     <div class="well">
                         <div class="form-group">
                             <label for="experiment_name">实验地点</label>
-                            <input type="text" class="form-control" id="experiment_name" placeholder="又去哪里潇洒啊">
+                            <input type="text" class="form-control" id="experiment_name" value="">
                         </div>
                     </div>
                 </div>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 上课
+                        <input type="checkbox" autocomplete="off">
+                        <span>上课</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 医院
+                        <input type="checkbox" autocomplete="off">
+                        <span>医院</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 请假
+                        <input type="checkbox" autocomplete="off">
+                        <span>请假</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 外出
+                        <input type="checkbox" autocomplete="off">
+                        <span>外出</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 讲座
+                        <input type="checkbox" autocomplete="off">
+                        <span>讲座</span>
                     </label>
+                </div>
+                <br>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default" data-toggle="collapse" data-target="#input_of_others">
+                        <input type="checkbox" autocomplete="off">
+                        <span>其他事宜</span>
+                    </label>
+                </div>
+                <br>
+                <div class="collapse" id="input_of_others">
+                    <div class="well">
+                        <div class="form-group">
+                            <label for="otherthings">备注</label>
+                            <input type="text" class="form-control" id="otherthings" value="">
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -197,7 +225,7 @@
                     <div class="well">
                         <div class="form-group">
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd"
-                                 data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                 data-link-field="dtp_input2" data-link-format="yyyy.mm.dd">
                                 <input class="form-control" size="16" type="text" value="" readonly>
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-remove"></span></span>
@@ -207,7 +235,7 @@
                             <label for="dtp_input2" class="control-label">到</label>
 
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd"
-                                 data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
+                                 data-link-field="dtp_input3" data-link-format="yyyy.mm.dd">
                                 <input class="form-control" size="16" type="text" value="" readonly>
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-remove"></span></span>
@@ -228,43 +256,56 @@
             <form class="form-inline" id="name_panel">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 吴谨照
+                        <input type="checkbox" autocomplete="off">
+                        <span>左海杰</span>
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="checkbox" autocomplete="off">
+                        <span>吴谨照</span>
                     </label>
                 </div>
                 <br>
 
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 赖萌华
+                        <input type="checkbox" autocomplete="off">
+                        <span>赖萌华</span>
                     </label>
                 </div>
                 <br>
 
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 梅洋
+                        <input type="checkbox" autocomplete="off">
+                        <span>梅洋</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 于欢
+                        <input type="checkbox" autocomplete="off">
+                        <span>于欢</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 杨文
+                        <input type="checkbox" autocomplete="off">
+                        <span>杨文</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 卜庆典
+                        <input type="checkbox" autocomplete="off">
+                        <span>卜庆典</span>
                     </label>
                 </div>
                 <br>
 
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 李颖倩
+                        <input type="checkbox" autocomplete="off">
+                        <span>李颖倩</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 周伦茂
+                        <input type="checkbox" autocomplete="off">
+                        <span>周伦茂</span>
                     </label>
                     <label class="btn btn-default">
-                        <input type="checkbox" autocomplete="off"> 许荣彬
+                        <input type="checkbox" autocomplete="off">
+                        <span>许荣彬</span>
                     </label>
                 </div>
             </form>
@@ -274,7 +315,8 @@
         </div>
         <div class="panel-body">
             <form action="" class="form-inline">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#confirm_window">Confirm</button>
+                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#confirm_window">Confirm
+                </button>
                 <button type="button" class="btn btn-danger">Back</button>
             </form>
         </div>
@@ -293,10 +335,27 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">预约确认</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <table class="table">
+                        <tr>
+                            <td>Project:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Date:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Time:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Name:</td>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
