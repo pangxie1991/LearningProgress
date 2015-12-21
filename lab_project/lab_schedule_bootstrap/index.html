@@ -325,6 +325,28 @@
         <h1>……</h1>
 
         <p>...</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Projects</th>
+                    <th>Names</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th rowspan = "1">上午</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th rowspan="1">下午</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
 
         <p><a class="btn btn-info btn-lg" href="#" role="button" data-toggle="collapse"
               data-target="#reservation">新的预约</a></p>
@@ -338,33 +360,40 @@
                     <h4 class="modal-title" id="myModalLabel">预约确认</h4>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
-                        <tr>
-                            <td>Project:</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Date:</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Time:</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Name:</td>
-                            <td></td>
-                        </tr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>新的预约</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Projects:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Date:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Time:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </div>               <!--确认窗口 -->
-
+    </div>      <!--确认窗口 -->
 </div>
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.11.3.min.js"><\/script>')</script>

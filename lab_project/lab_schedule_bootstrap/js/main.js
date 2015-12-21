@@ -52,15 +52,28 @@ $("#reservation .btn[data-target='#confirm_window']").click(function () {
         }
     }
     if ($("#project_panel label:eq(0)").hasClass("active")){
-        project_string += "磁控溅射："+$("#input_of_sputtering input").val()+" & ";
+        if (project_length>1){
+            project_string += "磁控溅射："+$("#input_of_sputtering input").val()+" & ";
+        }else{
+            project_string += "磁控溅射："+$("#input_of_sputtering input").val();
+        }
+
         j+=1;
     }
     if ($("#project_panel label:eq(8)").hasClass("active")){
-        project_string += $("#input_of_experiment input").val()+" & ";
+        if (project_length>1){
+            project_string += $("#input_of_experiment input").val()+" & ";
+        }else{
+            project_string += $("#input_of_experiment input").val();
+        }
         j+=1;
     }
     if ($("#project_panel label:eq(15)").hasClass("active")){
-        project_string += $("#input_of_others input").val()+" & ";
+        if (project_length>1){
+            project_string += $("#input_of_others input").val()+" & ";
+        }else{
+            project_string += $("#input_of_others input").val();
+        }
         j+=1;
     }
     for (i = 0; i<project_length;i++){
@@ -72,26 +85,25 @@ $("#reservation .btn[data-target='#confirm_window']").click(function () {
             project_string += " & ";
         }
     }
-    $(".modal-body tr:eq(0)").children()[1].innerHTML = project_string;
-    $(".modal-body tr:eq(3)").children()[1].innerHTML = name_string;
+    $(".modal-body tr:eq(1)").children()[1].innerHTML = project_string;
+    $(".modal-body tr:eq(4)").children()[1].innerHTML = name_string;
     if ($("#time_panel label.btn:eq(4)").hasClass("active")) {
-        $(".modal-body tr:eq(1)").children()[1].innerHTML = getDateString(0);
+        $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(0);
     }if ($("#time_panel label.btn:eq(5)").hasClass("active")){
-        $(".modal-body tr:eq(1)").children()[1].innerHTML = getDateString(1);
+        $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(1);
     }if ($("#time_panel label.btn:eq(6)").hasClass("active")){
-        $(".modal-body tr:eq(1)").children()[1].innerHTML = $("#dtp_input2").val()+" 到 "+$("#dtp_input3").val();
+        $(".modal-body tr:eq(2)").children()[1].innerHTML = $("#dtp_input2").val()+" 到 "+$("#dtp_input3").val();
     }
     if ($("#time_panel label.btn:eq(0)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = "9:00~11:00";
+        $(".modal-body tr:eq(3)").children()[1].innerHTML = "9:00~11:00";
     }if ($("#time_panel label.btn:eq(1)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = "14:30~17:00";
+        $(".modal-body tr:eq(3)").children()[1].innerHTML = "14:30~17:00";
     }if ($("#time_panel label.btn:eq(2)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = "全天";
+        $(".modal-body tr:eq(3)").children()[1].innerHTML = "全天";
     }if ($("#time_panel label.btn:eq(3)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = $("#dtp_input4").val()+"~"+$("#dtp_input5").val();
+        $(".modal-body tr:eq(3)").children()[1].innerHTML = $("#dtp_input4").val()+"~"+$("#dtp_input5").val();
     }
 })
 
-$(".modal-body tr:eq(2) td:eq(1)").innerHTML = "AAAAAAA";
 
 
