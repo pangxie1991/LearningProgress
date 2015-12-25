@@ -87,21 +87,30 @@ $("#reservation .btn[data-target='#confirm_window']").click(function () {
     }
     $(".modal-body tr:eq(1)").children()[1].innerHTML = project_string;
     $(".modal-body tr:eq(4)").children()[1].innerHTML = name_string;
-    if ($("#time_panel label.btn:eq(4)").hasClass("active")) {
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(0);
-    }if ($("#time_panel label.btn:eq(5)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(1);
-    }if ($("#time_panel label.btn:eq(6)").hasClass("active")){
-        $(".modal-body tr:eq(2)").children()[1].innerHTML = $("#dtp_input2").val()+" 到 "+$("#dtp_input3").val();
+    switch (true) {
+        case $("#time_panel label.btn:eq(4)").hasClass("active"):
+            $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(0);
+            break;
+        case $("#time_panel label.btn:eq(5)").hasClass("active"):
+            $(".modal-body tr:eq(2)").children()[1].innerHTML = getDateString(1);
+            break;
+        case $("#time_panel label.btn:eq(6)").hasClass("active"):
+            $(".modal-body tr:eq(2)").children()[1].innerHTML = $("#dtp_input2").val()+" 到 "+$("#dtp_input3").val();
+            break;
     }
-    if ($("#time_panel label.btn:eq(0)").hasClass("active")){
-        $(".modal-body tr:eq(3)").children()[1].innerHTML = "9:00~11:00";
-    }if ($("#time_panel label.btn:eq(1)").hasClass("active")){
-        $(".modal-body tr:eq(3)").children()[1].innerHTML = "14:30~17:00";
-    }if ($("#time_panel label.btn:eq(2)").hasClass("active")){
-        $(".modal-body tr:eq(3)").children()[1].innerHTML = "全天";
-    }if ($("#time_panel label.btn:eq(3)").hasClass("active")){
-        $(".modal-body tr:eq(3)").children()[1].innerHTML = $("#dtp_input4").val()+"~"+$("#dtp_input5").val();
+    switch (true){
+        case $("#time_panel label.btn:eq(0)").hasClass("active"):
+            $(".modal-body tr:eq(3)").children()[1].innerHTML = "9:00~11:00";
+            break;
+        case $("#time_panel label.btn:eq(1)").hasClass("active"):
+            $(".modal-body tr:eq(3)").children()[1].innerHTML = "14:30~17:00";
+            break;
+        case $("#time_panel label.btn:eq(2)").hasClass("active"):
+            $(".modal-body tr:eq(3)").children()[1].innerHTML = "全天";
+            break;
+        case $("#time_panel label.btn:eq(3)").hasClass("active"):
+            $(".modal-body tr:eq(3)").children()[1].innerHTML = $("#dtp_input4").val()+"~"+$("#dtp_input5").val();
+            break;
     }
 })
 
