@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>indexedDB</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="container">
+    <section id="sidebar">
+        <input type="button" id="new_button" value="New note">
+        <input type="button" id="delete_all_button" value="Delete all">
+        <ul id="notes" aria-live="polite">
+
+        </ul>
+    </section>
+    <section id="main" aria-live="polite">
+        <form>
+            <ol>
+                <li>
+                    <label for="title">Title</label>
+                    <input type="text" id="title">
+                </li>
+                <li>
+                    <label for="note">Note</label>
+                    <textarea id="note"></textarea>
+                </li>
+                <li>
+                    <input type="submit" value="Save" id="save_button">
+                    <input type="submit" value="Delete" id="delete_button">
+                </li>
+            </ol>
+        </form>
+    </section>
+</div>
+<script src="../js/jquery-1.11.3.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

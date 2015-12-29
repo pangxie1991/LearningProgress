@@ -105,5 +105,20 @@ $("#reservation .btn[data-target='#confirm_window']").click(function () {
     }
 })
 
+var db = null;
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB ;
+var connectToDB = function () {
+    var version = 1,
+        request = window.indexedDB.open("awesomenotes",version);
+    request.onsuccess = function (event){
+        db = event.target.result;
+        fetchNotes ();
+    };
+    request.onerror = function (event){
+        alert(event.debug[1].message);
+    }
+};
+
+
 
 
