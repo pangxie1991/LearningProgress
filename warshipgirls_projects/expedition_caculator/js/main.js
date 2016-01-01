@@ -70,7 +70,7 @@
     window.expeditionAll = expeditionAll;
 })();       //expedition object to an array
 
-function radioLogic(btngroup, selection) {
+function radioLogic(btngroup, selection, target) {
     btngroup.click(function (event) {
         var button = $(this),
             num = $(this).index();
@@ -79,6 +79,7 @@ function radioLogic(btngroup, selection) {
             btngroup.removeClass("active");
             selection.children().empty();
             selection.attr("disabled",'');
+            target.hide();
         } else {
             btngroup.removeClass("active");
             button.addClass("active");
@@ -87,11 +88,14 @@ function radioLogic(btngroup, selection) {
             for (var i = 0; i < 4; i++) {
                 selection.children().eq(i).append((num + 1) + "-" + (i + 1) + ": " + expeditionAll[num * 4 + i].name);
             }
+            target.show();
         }
     });
 }
 $(document).ready(function () {
     var btngroup_1 = $('#firstfleet>button'),
-        selection_1 = $('#firstfleet').nextAll('select');
-    radioLogic(btngroup_1, selection_1);
+        selection_1 = $('#firstfleet').nextAll('select'),
+        target_1 = $('#target');
+    radioLogic(btngroup_1, selection_1,target_1);
+    target_1.hide();
 });
