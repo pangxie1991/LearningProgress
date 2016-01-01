@@ -2,6 +2,8 @@
  * Created by Fancy on 2015/12/27 0027.
  */
 
+var picked = [];
+
 (function () {
     function expedition(chapter, code, name, fule, ammunition, steel, aluminum, experience, grade, number, require, time, reward, probability) {
         this.chapter = chapter;
@@ -70,32 +72,70 @@
     window.expeditionAll = expeditionAll;
 })();       //expedition object to an array
 
-function radioLogic(btngroup, selection, target) {
+function refreshData (){
+    var tr = $('#displaywindow>tbody>tr');
+
+}
+
+function display (){
+    var total = $('#displaywindow'),
+        head = $('#displaywindow>thead'),
+        body = $('#displaywindow>tbody'),
+        tr = $('#displaywindow>tbody>tr');
+    switch (picked.length){
+        case 1:
+            head.show();
+            tr.eq(0).show();
+            break;
+        case 2:
+            tr.eq(1).show();
+            break;
+        case 3:
+            tr.eq(2).show();
+            break;
+        case 4:
+            tr.eq(3).show();
+            console.log("test");
+            break;
+    }
+}
+
+function radioLogic(btngroup, target, target_btn) {
     btngroup.click(function (event) {
         var button = $(this),
             num = $(this).index();
         event.preventDefault();
         if ($(this).hasClass("active")) {
             btngroup.removeClass("active");
-            selection.children().empty();
-            selection.attr("disabled",'');
             target.hide();
         } else {
             btngroup.removeClass("active");
             button.addClass("active");
-            selection.removeAttr("disabled");
-            selection.children().empty();
             for (var i = 0; i < 4; i++) {
-                selection.children().eq(i).append((num + 1) + "-" + (i + 1) + ": " + expeditionAll[num * 4 + i].name);
+                target_btn.eq(i * 2).text((num + 1) + "-" + (i + 1) + ": " + expeditionAll[num * 4 + i].name);
+                target_btn.filter('.dropdown-toggle')[i].onclick = (function (k) {
+                    return (function () {
+                        if (picked.length < 4) {
+                            picked.push(expeditionAll[num * 4 + k]);
+                        } else {
+                            picked.splice(0, 1);
+                            picked.push(expeditionAll[num * 4 + k]);
+                        }
+                        display();
+                    });
+                })(i);
             }
             target.show();
         }
     });
 }
+
 $(document).ready(function () {
     var btngroup_1 = $('#firstfleet>button'),
-        selection_1 = $('#firstfleet').nextAll('select'),
-        target_1 = $('#target');
-    radioLogic(btngroup_1, selection_1,target_1);
+        target_1 = $('#target'),
+        target_btn_1 = $('#target>.btn-group>button');
+    radioLogic(btngroup_1, target_1, target_btn_1);
     target_1.hide();
+    $('#displaywindow>thead').hide();
+    $('#displaywindow>tbody>tr').hide();
 });
