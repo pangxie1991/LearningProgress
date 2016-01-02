@@ -72,31 +72,37 @@ var picked = [];
     window.expeditionAll = expeditionAll;
 })();       //expedition object to an array
 
-function refreshData (){
-    var tr = $('#displaywindow>tbody>tr');
-
+function refreshData (num){
+    var tr = $('#displaywindow>tbody>tr'),
+        btn = $('#displaywindow tbody button:even');
+    for(var i=0;i<num;i++){
+        btn.eq(i).text("" + picked[i].chapter + "-" + picked[i].code + " " + picked[i].name);
+        tr.eq(i).children().eq(1).text(picked[i].time);
+        tr.eq(i).children().eq(2).text(picked[i].grade);
+        tr.eq(i).children().eq(3).text(picked[i].number);
+        tr.eq(i).children().eq(4).text(picked[i].require);
+        tr.eq(i).children().eq(5).text(picked[i].fule);
+        tr.eq(i).children().eq(6).text(picked[i].ammunition);
+        tr.eq(i).children().eq(7).text(picked[i].steel);
+        tr.eq(i).children().eq(8).text(picked[i].aluminum);
+        tr.eq(i).children().eq(9).text(picked[i].getRewardName());
+    }
 }
 
-function display (){
+function display (num){
     var total = $('#displaywindow'),
         head = $('#displaywindow>thead'),
         body = $('#displaywindow>tbody'),
         tr = $('#displaywindow>tbody>tr');
-    switch (picked.length){
-        case 1:
-            head.show();
-            tr.eq(0).show();
-            break;
-        case 2:
-            tr.eq(1).show();
-            break;
-        case 3:
-            tr.eq(2).show();
-            break;
-        case 4:
-            tr.eq(3).show();
-            console.log("test");
-            break;
+    if(num!==0){
+        head.show();
+    }else {
+        head.hide();
+    }
+    tr.hide();
+    for (var i = 0;i<num;i++){
+        refreshData(num);
+        tr.eq(i).show();
     }
 }
 
@@ -121,7 +127,7 @@ function radioLogic(btngroup, target, target_btn) {
                             picked.splice(0, 1);
                             picked.push(expeditionAll[num * 4 + k]);
                         }
-                        display();
+                        display(picked.length);
                     });
                 })(i);
             }
@@ -130,11 +136,24 @@ function radioLogic(btngroup, target, target_btn) {
     });
 }
 
+function deleteLogic (delete_btn){
+    for(var i= 0;i<4;i++){
+        (function(i){
+            delete_btn.eq(i).click(function(){
+                picked.splice(i,1);
+                display(picked.length);
+            })
+        })(i);
+    }
+}
+
 $(document).ready(function () {
     var btngroup_1 = $('#firstfleet>button'),
         target_1 = $('#target'),
-        target_btn_1 = $('#target>.btn-group>button');
+        target_btn_1 = $('#target>.btn-group>button'),
+        delete_btn_1 = $('#displaywindow tbody button:odd');
     radioLogic(btngroup_1, target_1, target_btn_1);
+    deleteLogic(delete_btn_1);
     target_1.hide();
     $('#displaywindow>thead').hide();
     $('#displaywindow>tbody>tr').hide();
