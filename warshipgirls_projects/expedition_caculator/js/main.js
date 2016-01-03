@@ -2,10 +2,13 @@
  * Created by Fancy on 2015/12/27 0027.
  */
 
-var picked = [];
+var picked = [],
+    parameter = [0, 0, 0, 0],
+    result = [0, 0, 0, 0, 0, 0, 0, 0];
 
 (function () {
-    function expedition(chapter, code, name, fule, ammunition, steel, aluminum, experience, grade, number, require, time, reward, probability) {
+    function expedition(chapter, code, name, fule, ammunition, steel, aluminum, experience, grade, number, require,
+                        time, reward, probability) {
         this.chapter = chapter;
         this.code = code;
         this.name = name;
@@ -36,6 +39,18 @@ var picked = [];
                     return "舰船蓝图";
                 case 4:
                     return "装备蓝图";
+            }
+        },
+        getExpect: function () {
+            return this.probabilty[1] + 2 * this.probabilty[2];
+        },
+        getGreatExpect: function () {
+            if (this.probabilty[2] !== 0) {
+                return 2;
+            } else if (this.probabilty[1] !== 0) {
+                return 1;
+            } else {
+                return 0;
             }
         }
     }
@@ -72,10 +87,10 @@ var picked = [];
     window.expeditionAll = expeditionAll;
 })();       //expedition object to an array
 
-function refreshData (num){
+function refreshData(num) {
     var tr = $('#displaywindow>tbody>tr'),
         btn = $('#displaywindow tbody button:even');
-    for(var i=0;i<num;i++){
+    for (var i = 0; i < num; i++) {
         btn.eq(i).text("" + picked[i].chapter + "-" + picked[i].code + " " + picked[i].name);
         tr.eq(i).children().eq(1).text(picked[i].time);
         tr.eq(i).children().eq(2).text(picked[i].grade);
@@ -89,21 +104,40 @@ function refreshData (num){
     }
 }
 
-function display (num){
+function display(num) {
     var total = $('#displaywindow'),
         head = $('#displaywindow>thead'),
         body = $('#displaywindow>tbody'),
-        tr = $('#displaywindow>tbody>tr');
-    if(num!==0){
+        tr = $('#displaywindow>tbody>tr'),
+        c_window = $('#caculatewindow'),
+        r_window = $('#result_window');
+    if (num !== 0) {
         head.show();
-    }else {
+        c_window.show();
+    } else {
         head.hide();
+        c_window.hide();
+        r_window.hide();
     }
     tr.hide();
-    for (var i = 0;i<num;i++){
+    for (var i = 0; i < num; i++) {
         refreshData(num);
         tr.eq(i).show();
     }
+}
+
+function resultDisplay() {
+    var contaniner = $('#result_window td'),
+        re = /^[0-9]*\.+[0-9]*$/,
+        i;
+    for (i = 0; i < 8; i++) {
+        if (re.test(result[i].toString())) {
+            result[i] = result[i].toFixed(1);
+        }
+        contaniner.eq(i).text(result[i]);
+        result[i] = 0;
+    }
+    $('#result_window').show();
 }
 
 function radioLogic(btngroup, target, target_btn) {
@@ -111,7 +145,7 @@ function radioLogic(btngroup, target, target_btn) {
         var button = $(this),
             num = $(this).index();
         event.preventDefault();
-        if ($(this).hasClass("active")) {
+        if (button.hasClass("active")) {
             btngroup.removeClass("active");
             target.hide();
         } else {
@@ -136,25 +170,114 @@ function radioLogic(btngroup, target, target_btn) {
     });
 }
 
-function deleteLogic (delete_btn){
-    for(var i= 0;i<4;i++){
-        (function(i){
-            delete_btn.eq(i).click(function(){
-                picked.splice(i,1);
+function deleteLogic(delete_btn) {
+    for (var i = 0; i < 4; i++) {
+        (function (i) {
+            delete_btn.eq(i).click(function () {
+                picked.splice(i, 1);
                 display(picked.length);
             })
         })(i);
     }
 }
 
+function caculateLogic(condition_btn) {
+    condition_btn.click(function (event) {
+        event.preventDefault();
+        var button = $(this);
+        if (button.hasClass("active")) {
+            button.removeClass("active");
+        } else {
+            button.addClass("active")
+        }
+        switch (button.index()) {
+            case 0:
+                if (button.hasClass("active")) {
+                    parameter[1] = 1;
+                } else {
+                    parameter[1] = 0;
+                }
+                break;
+            case 1:
+                if (button.hasClass("active")) {
+                    parameter[2] = 1;
+                } else {
+                    parameter[2] = 0;
+                }
+                break;
+            case 2:
+                if (button.hasClass("active")) {
+                    $('#caculatewindow select').show();
+                } else {
+                    $('#caculatewindow select').hide();
+                }
+                break;
+        }
+    });
+}
+
+function caculate() {
+    $('#caculatewindow button:last').click(function (e) {
+        e.preventDefault();
+        var num = [],
+            button = $('#caculate_condition>button');
+        parameter[0] = Number($('#caculatewindow input:eq(0)').val()) * 24 * 60
+            + Number($('#caculatewindow input:eq(1)').val()) * 60;
+        if (parameter[0] === 0) {
+            $('#caculatewindow input:eq(0)').focus();
+        } else {
+            if (button.eq(2).hasClass("active")) {
+                parameter[3] = Number($('#caculatewindow select').val());
+            } else {
+                parameter[3] = 0;
+            }
+            result[0] += parameter[0] * parameter[1] * 1 + (parameter[0] * parameter[2] * 500 / 24 / 60);
+            result[1] += parameter[0] * parameter[1] * 1 + (parameter[0] * parameter[2] * 500 / 24 / 60);
+            result[2] += parameter[0] * parameter[1] * 1 + (parameter[0] * parameter[2] * 500 / 24 / 60);
+            result[3] += parameter[0] * parameter[1] / 3 + (parameter[0] * parameter[2] * 500 / 24 / 60);
+            for (var i = 0; i < picked.length; i++) {
+                num[i] = parameter[0] / picked[i].time;
+                result[0] += (num[i] * picked[i].fule) * (1 + parameter[3] / 2);
+                result[1] += (num[i] * picked[i].ammunition) * (1 + parameter[3] / 2);
+                result[2] += (num[i] * picked[i].steel) * (1 + parameter[3] / 2);
+                result[3] += (num[i] * picked[i].aluminum) * (1 + parameter[3] / 2);
+                switch (picked[i].reward) {
+                    case 1:
+                        result[4] += num[i] * ((1 - parameter[3]) * picked[i].getExpect()
+                            + parameter[3] * picked[i].getGreatExpect());
+                        break;
+                    case 2:
+                        result[5] += num[i] * ((1 - parameter[3]) * picked[i].getExpect()
+                            + parameter[3] * picked[i].getGreatExpect());
+                        break;
+                    case 3:
+                        result[6] += num[i] * ((1 - parameter[3]) * picked[i].getExpect()
+                            + parameter[3] * picked[i].getGreatExpect());
+                        break;
+                    case 4:
+                        result[7] += num[i] * ((1 - parameter[3]) * picked[i].getExpect()
+                            + parameter[3] * picked[i].getGreatExpect());
+                        break;
+                }
+            }
+            if (button.eq(1).hasClass("active") && parameter[0] >= 1440) {
+                result[5] += parseInt(parameter[0] / 1440);
+            } else if (button.eq(1).hasClass("active")) {
+                result[5] += 1;
+            }
+            resultDisplay();
+        }
+    });
+}
+
 $(document).ready(function () {
     var btngroup_1 = $('#firstfleet>button'),
         target_1 = $('#target'),
         target_btn_1 = $('#target>.btn-group>button'),
-        delete_btn_1 = $('#displaywindow tbody button:odd');
+        delete_btn_1 = $('#displaywindow tbody button:odd'),
+        condition_btn_1 = $('#caculate_condition>button');
     radioLogic(btngroup_1, target_1, target_btn_1);
     deleteLogic(delete_btn_1);
-    target_1.hide();
-    $('#displaywindow>thead').hide();
-    $('#displaywindow>tbody>tr').hide();
+    caculateLogic(condition_btn_1);
+    caculate();
 });

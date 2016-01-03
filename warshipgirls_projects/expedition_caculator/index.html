@@ -31,8 +31,8 @@
                 <h3 class="panel-title">计算一定时间获得的资源、物品</h3>
             </div>
             <div class="panel-body">
-                <form class="form-inline">
-                    <div class="form-group">
+                <form class="form-group">
+                    <div class="form-group text-center">
 
                         <div class="btn-group" id="firstfleet" data-toggle="buttons">
                             <button type="button" class="btn btn-default">第一章</button>
@@ -45,7 +45,7 @@
                         <br>
                         <br>
 
-                        <div id="target">
+                        <div id="target" style="display: none">
                             <div class="btn-group" data-toggle="buttons">
                                 <button type="button" class="btn btn-default" disabled>
                                     SSSS
@@ -87,7 +87,7 @@
                 </form>
                 <br>
                 <table class="table" id="displaywindow">
-                    <thead>
+                    <thead style="display: none">
                     <tr>
                         <th rowspan="2">远征名称</th>
                         <th rowspan="2">时间(min)</th>
@@ -95,7 +95,7 @@
                         <th rowspan="2">舰娘数量</th>
                         <th rowspan="2">舰娘需求</th>
                         <th colspan="4">资源奖励</th>
-                        <th rowspan="2">物资奖励</th>
+                        <th rowspan="2">物品奖励</th>
                     </tr>
                     <tr>
                         <th>油</th>
@@ -105,7 +105,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr style="display: none">
                         <th>
                             <div class="btn-group" data-toggle="buttons">
                                 <button class="btn btn-default" disabled></button>
@@ -125,28 +125,7 @@
                         <td></td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <th>
-                            <div class="btn-group" data-toggle="buttons">
-                                <button class="btn btn-default" disabled></button>
-                                <button type="button" class="btn btn-default dropdown-toggle">
-                                    <span class="glyphicon-minus"></span>
-                                    <span class="sr-only">删除此远征</span>
-                                </button>
-                            </div>
-
-                        </th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
+                    <tr style="display: none">
                         <th>
                             <div class="btn-group" data-toggle="buttons">
                                 <button class="btn btn-default" disabled></button>
@@ -167,7 +146,28 @@
                         <td></td>
                         <td></td>
                     </tr>
-                    <tr>
+                    <tr style="display: none">
+                        <th>
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-default" disabled></button>
+                                <button type="button" class="btn btn-default dropdown-toggle">
+                                    <span class="glyphicon-minus"></span>
+                                    <span class="sr-only">删除此远征</span>
+                                </button>
+                            </div>
+
+                        </th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="display: none">
                         <th>
                             <div class="btn-group" data-toggle="buttons">
                                 <button class="btn btn-default" disabled></button>
@@ -191,7 +191,58 @@
 
                     </tbody>
                 </table>
-
+                <form class="form-inline" id="caculatewindow" style="display: none">
+                    <div class="form-group">
+                        <span>时间:</span>
+                        <input type="text" class="form-control" id="day" placeholder="输入远征天数">
+                        <span>天</span>
+                        <input type="text" class="form-control" id="hour" placeholder="咯吱咯吱">
+                        <span>小时</span>
+                    </div>
+                    <div class="btn-group" data-toggle="buttons" id="caculate_condition">
+                        <button type="button" class="btn btn-default">低保</button>
+                        <button type="button" class="btn btn-default">月卡</button>
+                        <button type="button" class="btn btn-default">大成功</button>
+                    </div>
+                    <select class="form-control" style="display: none">
+                        <option value="0.3">30%</option>
+                        <option value="0.4">40%</option>
+                        <option value="0.5">50%</option>
+                        <option value="0.6">60%</option>
+                    </select>
+                    <br>
+                    <button type="button" class="btn btn-info btn-block">计算</button>
+                </form>
+                <br>
+                <br>
+                <table class="table" id="result_window" style="display: none">
+                    <thead>
+                    <tr>
+                        <th>收益</th>
+                        <th>油</th>
+                        <th>弹</th>
+                        <th>钢</th>
+                        <th>铝</th>
+                        <th>快修</th>
+                        <th>快建</th>
+                        <th>船图</th>
+                        <th>装备图</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
