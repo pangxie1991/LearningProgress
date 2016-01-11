@@ -542,3 +542,150 @@ console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
 // &lt;p class=undefinedgreetingundefined&gt;Hello world!&lt;/p&gt;
 
 // 如果有多个捕获组，则传递给函数的参数应该为模式的匹配项、第一个捕获组的匹配项、第二个……，最后两个参数不变。
+
+/*
+ * split() 方法
+ *
+ * 使用指定的分隔符将字符串分割成一系列子字符串，返回一个数组。
+ * 第一个参数为指定的分隔符，可以是字符串也可以是正则表达式。第二个可选参数为分割后的项数。
+ *
+ * localeCompare() 方法
+ *
+ * 比较两个字符串并返回一个值
+ * 如果输入的参数字符串在字母表中应该排在字符串之前，则输出正数，相同则输出0，之后则输出负数.
+ * 因为其输出的具体值根据实现而定，所以应该判断后再行输出。
+ *
+ * fromCharCode() 方法
+ *
+ * 接收一定的字符串编码作为参数，然后返回一个字符串实现。
+ *
+ * 5.7 单体内置对象
+ *
+ * Global对象
+ *
+ * encodeURI()和encodeURIComponent() 用于操纵URI(统一资源标识符,Uniform Resource Identifier)的方法，前者主要针对整体，后者针对部分。
+ * 针对URI进行转译，前者可以使用在整个URI上，转义范围狭窄，而后者转义范围比较大。
+ *
+ * decodeURI()和decodeURIComponent()则是上述两个方法的反方法。
+ *
+ * eval()方法
+ *
+ * 传入的参数会被当作真正的JS代码被解析器执行，所以一般因为安全性的问题不进行使用。
+ *
+ * Global的属性
+ *
+ * 包括基础构造函数和特殊值，一般用不到。
+ *
+ * window对象
+ *
+ * Web浏览器的常见全局对象。
+ *
+ * 5.7.2 Math对象
+ *
+ * 属性
+ * .E-----------自然对数的底数
+ * .LN10--------10的自然对数
+ * .LN2---------2的自然对数
+ * .LOG2E-------以2为底的E的对数
+ * .LOG10E------以10为底的E的对数
+ * .PI----------圆周率
+ * .SQRT1_2-----根号2的倒数
+ * .SQRT2-------根号2
+ *
+ * min()和max()方法
+ *
+ * 确定一组数值中的最大和最小值
+ */
+var mathValue = [1,2,3,4,5,6,7,8,9],
+    maxValue = Math.max.apply(Math,mathValue);
+/*
+ * 上述代码可以方便的在数组中找到最大值。
+ *
+ * 舍入方法
+ *
+ * ceil() 向上舍入
+ *
+ * floor() 向下舍入
+ *
+ * round() 标准舍入
+ *
+ * 随机方法
+ *
+ * random()可以获得在0到1之间的一个随机数
+ * 常规用法
+ * value = Math.floor(Math.random() * total + minPossibleValue);
+ *
+ * 其他Math的方法------p.136
+ */
+
+
+/*
+ * Chapter6 面向对象的程序设计
+ *
+ * 6.1 理解对象
+ *
+ * 无序属性的集合，其属性可以是基本值、对象、函数。对象由任意一种引用类型(Object, Function, Array, Date, RegExp...)或者自定义类型创建。
+ * 创建对象的方式主要分两种，一种是创建实例然后添加属性，一种是对象字面量。
+ *
+ * 6.1.1 属性类型
+ *
+ * 数据属性
+ *
+ * 数据属性包含一个数据值的位置，可以进行读取和写入操作。
+ *
+ * [[Configurable]]  是否能够通过删除重新定义
+ * [[Enumerable]]    是否能够通过for-in循环显示属性
+ * [[Writable]]      是否能够修改其值
+ * [[Value]]         包含这个属性的数据值，读取值和写入值都操作这个位置，默认undefined
+ * 操作上述这些特性的时候可以通过Object.defineProperty(object,"属性值",{特性字面量})来进行。
+ * 调用后如不指定默认都是false，所以一般没必要用。
+ *
+ * 访问器属性
+ *
+ * 访问器属性不包含数据值；包含一对getter和setter函数，有以下几个特性。
+ *
+ * [[Configurable]]
+ * [[Enumerable]]
+ * [[Get]]
+ * [[Set]]
+ * 用起来需要特殊指定，属性名前有下划线。
+ *
+ * var book = {
+ *     _year: 2004,
+ *     edition: 1
+ * };
+ *
+ * Object.defineProperty(book,"year",{
+ *     get: function (){
+ *         return this._year;
+ *     }
+ *     set: function (){
+ *         if(newValue > 2004) {
+ *             this._year = newValue;
+ *             this.edition += newValue - 2004;
+ *         }
+ *     }
+ * });
+ *
+ * 对上述特性的操作需要IE9+
+ *
+ * 定义多个属性的特性
+ *
+ * Object.defineProperties (object,{
+ *     属性1: {
+ *         特性1: ....,
+ *         特性2: ....
+ *     }
+ *     属性2: ...
+ * });
+ *
+ * 读取属性的特性
+ *
+ * Object.getOwnPropertyDescriptor(object,"属性名");
+ *
+ * 以上特性操作方式为ECMAScript 5
+ *
+ * 6.2 创建对象
+ *
+ *
+ */
