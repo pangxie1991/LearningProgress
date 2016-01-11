@@ -409,4 +409,136 @@ var objectSayColor = sayColor.bind(o);
 
 //toLocaleString()和toString()方法均返回函数的代码，并且实现依浏览器而异。
 
-// 5.6 基本包装类型(boolean,number,string)
+/*
+ * 5.6 基本包装类型(boolean,number,string)
+ *
+ * 最好不要显式的创建基本包装类型，应用方法就好。
+ * 这些基本包装类型的寿命均是暂时的，在应用它们的方法时会创建各自类型的一个实例，应用方法并返回一个基本类型之后会立即销毁这个实例。
+ *
+ * 5.6.1 Boolean 类型
+ *
+ * // 调用构造函数并传入值
+ * var booleanObject = new Boolean(true);
+ *
+ * 重写了valueOf()方法，返回基本类型true或者false,重写了toString()方法，返回"true"或"false"字符串。
+ * 但是由于布尔转型函数对所有非空对象均返回true,所以会造成很大程度的混淆，因此不推荐使用Boolean 包装类型。
+ *
+ * 5.6.2 Number 类型
+ *
+ * 类似Boolean包装类型，重写了三个方法。valueOf()  toString()  toLocaleString()
+ *
+ * 除了上述继承方法，还有特有的数字格式化方法。
+ * toFixed() 以指定的小数位输出数字。
+ * var num = 10;
+ * console.log(toFixed(num));     // 10.00
+ * 会针对位数进行舍入(IE8存在bug，不能够正常舍入(-0.94,-0.5][0.5,0.94)范围内的值，均返回0)
+ *
+ * 类似toFixed()有toExponential()指数科学计数法和toPrecision()有效位数法。
+ *
+ * 5.6.3 String 类型
+ *
+ * 继承方法基本不变，均有一个length属性，表示字符串中字符的个数(包括空格)。
+ *
+ * 字符方法charAt()  charCodeAt() 接收一个参数即基于0的字符位置。
+ * charAt()输出指定位置的字符本身，charCodeAt()输出指定位置的字符的字符编码。
+ * ECMAScript 5添加了一种新的方法，使用字符串方括号加索引的方式去访问具体字符。
+ * var stringValue = "Hello World";
+ * console.log(stringValue[1]);     // "e"
+ *
+ * 操作方法
+ *
+ * concat()   拼接字符串并返回一个新的字符串。
+ *
+ * slice() substr() substring() 均接收一个或者两个参数，第一个指定子字符串开始的位置，第二个用来表示子字符串结束的位置。
+ * stringValue.slice(3);      // "lo World"
+ * stringValue.substring(3);      // "lo World"
+ * stringValue.substr(3);         // "lo World"
+ *
+ * // slice()和substring()的第二个参数表示子字符串结尾后的位置
+ * stringValue.slice(3,7);        // "lo W"
+ * stringValue.substring(3,7);    // "lo W"
+ *
+ * // substr()的第二个参数表示子字符串的长度
+ * stringValue.substr(3,7);       // "lo Worl"
+ *
+ * 传入负值作为参数时，slice()会将传入的负值与字符串长度相加(造成一种从后往前的倒序效果)。
+ * substr()将负的第一个参数与字符串长度相加，第二个参数的负值将会被转换为0。
+ * substring()则会把所有的负值参数转换为0。
+ *
+ * 位置方法
+ *
+ * indexOf()和lastIndexOf() 分别从头和尾检索传入的子字符串并返回其位置。
+ * 这两个方法都可以接收第二个参数，表示开始检索的位置。因此可以通过循环完成所有匹配字符串的检索。
+ */
+var stringValue = "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+    positions = [],
+    pos = stringValue.indexOf("e");
+
+while (pos > -1){
+	positions.push(pos);
+	pos = stringValue.indexOf("e",pos+1);
+}
+
+console.log(positions);
+/*
+ * trim()方法(ECMAScript 5 IE9+)
+ *
+ * 该方法会创建一个字符串的副本并删除前置及后缀的所有空格然后返回结果。
+ *
+ * 大小写转换方法
+ *
+ * toLowerCase() toUpperCase() toLocaleLowerCase() toLocaleUpperCase()
+ *
+ * 模式匹配方法
+ *
+ * match()
+ * 本质上与调用RegExp的exec()方法相同，接收两种参数，正则表达式或者RegExp对象。
+ * 返回一个结果数组
+ *
+ * search()
+ * 参数与match()相同，返回结果的索引(第一次出现的位置)
+ *
+ * replace()
+ * 第一个参数可以是一个RegExp对象也可以是一个字符串，第二个参数可以是一个字符串或者函数。
+ * 第一个参数为字符串则只会替换第一个匹配结果。global属性为true的RegExp对象则会替换全部匹配结果。
+ * 第二个参数可以使用一些特殊的字符序列。
+ * $$----$
+ * $&----整个模式的子字符串(RegExp.lastMatch)
+ * $'----匹配的子字符串之前的子字符串(RegExp.leftContext)
+ * $`----匹配的子字符串之后的子字符串(RegExp.rightContext)
+ * $n----匹配第n个捕获组的子字符串。
+ * $nn---匹配第nn个捕获组的子字符串。
+ */
+var textTest = "cat, bat, sat, fat, rat",
+    replaceTest = /(.at)/g;
+
+textTest.replace(replaceTest,"word($&)");       // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+
+textTest.replace(replaceTest,"word($1)");       // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+
+textTest.replace(replaceTest,"word($')");
+// "word(, bat, sat, fat, rat), word(, sat, fat, rat), word(, fat, rat), word(, rat), word()"
+
+textTest.replace(replaceTest,"word($`)");
+// "word(), word(cat, ), word(cat, bat, ), word(cat, bat, sat, ), word(cat, bat, sat, fat, )"
+
+// 第二个参数为函数的情况。
+function htmlEscape(text){
+	return text.replace(/[<>"&]/g, function(match,pos,originalText){ //参数分别为模式的匹配项、匹配项在字符串的位置和原始字符串
+		switch (match){
+			case "<":
+				return "&lt;";
+			case ">":
+				return "&gt;";
+			case "&":
+				return "&amp;";
+			case "/":
+				return "&quot;";
+		}
+	})
+}
+
+console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
+// &lt;p class=undefinedgreetingundefined&gt;Hello world!&lt;/p&gt;
+
+// 如果有多个捕获组，则传递给函数的参数应该为模式的匹配项、第一个捕获组的匹配项、第二个……，最后两个参数不变。
