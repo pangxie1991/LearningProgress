@@ -846,4 +846,187 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  * 第二段方法部分只有在初始化的时候才会执行。
  *
  * 6.2.6 寄生构造函数模式
+ *
+ * 创建一个函数封装创建对象的代码，然后再返回新创建的对象。可以用来生成不能去修改构造函数的特殊对象。
+ *
+ * function Person (name, age, job){
+ *     var o = new Object();
+ *     o.name = name;
+ *     o.age = age;
+ *     o.job = job;
+ *     o.sayName = function () {
+ *         alert(this.name);
+ *     }
+ *     return o;
+ * }
+ *
+ *
+ * function SpecialArray () {
+ *
+ *     //创建数组
+ *     var values = new Array();
+ *
+ *     //添加值
+ *     values.push.apply(values,arguments);
+ *
+ *     //添加方法
+ *     values.toPipedString = function () {
+ *         return this.jion("|");
+ *     }
+ *
+ *     //返回数组
+ *     return values;
+ * }
+ *
+ * 需要注意的一点就是寄生模式下返回的对象跟构造函数以及构造函数的原型之间没有关系，所以尽量不要使用这种模式。
+ *
+ * 6.2.7 稳妥构造函数模式
+ *
+ * 稳妥对象，没有公共属性，其方法也不引用this对象，主要是为了安全目的
+ *
+ * function Person (name, age, job) {
+ *
+ *     //创建要返回的对象
+ *     var o = new Object();
+ *
+ *     //可以在这里定义私有变量和函数
+ *
+ *     //添加方法
+ *     o.sayName = function () {
+ *         alert(name);
+ *     }
+ *
+ *     //返回对象
+ *     return o;
+ * }
+ *
+ * 在以这种模式创建的对象，除了使用sayName()方法之外无法访问到name值。
+ * 这样使用new操作符定义的变量里保存的就是一个稳妥对象。
+ *
+ * 6.3 继承
+ *
+ * 6.3.1 原型链
+ *
+ * 利用原型，让一个引用类型继承另一个引用类型的属性和方法。
+ * 每个引用类型都有一个原型对象，原型对象包含一个指向构造函数的指针，而所有通过这个构造函数创建的实例都包含一个指向这个原型对象的指针。
+ * 那么我们让一个原型对象成为另外一个对象的实例，则此时的原型对象将包含一个指向另外一个原型的指针，层层递进形成原型链。
+ *
+ * function SuperType(){
+ *     this.property = true;
+ * }
+ *
+ * SuperType.prototype.getSuperValue = function () {
+ *     return this.property;
+ * };
+ *
+ * function SubType () {
+ *     this.subProperty = false;
+ * }
+ *
+ * //形成原型链并继承
+ * SubType.prototype = new SuperType();
+ *
+ * //私有方法
+ * SubType.prototype.getSubValue = function () {
+ *     return this.subProperty;
+ * };
+ *
+ * var instance = new SubType();
+ *
+ * instance.getSuperValue();       //true     从原型链中继承的方法。
+ *
+ * 注意instance.constructor 现在指向SuperType，因为其原型被完全重写了。
+ * 所有的自定义对象都有个默认原型——Object   很多方法都继承自Object。
+ *
+ * 可以使用instanceof操作符来检索一个对象原型链中出现的所有构造函数。
+ * instance instanceof Object             //true
+ * instance instanceof SuperType          //true
+ * instance instanceof SubTypr            //true
+ *
+ * 也可以使用isPrototypeOf()方法，可以检索所有原型链中出现的原型。
+ * Obeject.prototype.isPrototypeOf(instance);       //true
+ * SuperType.prototype.isPrototypeOf(instance);     //true
+ * SubType.prototype.isPrototypeOf(instance);       //true
+ *
+ * 给下级原型添加私有方法和属性以及覆盖上级原型的方法和属性一定要在替换原型语句之前。
+ * //形成原型链并继承
+ * SubType.prototype = new SuperType();
+ *
+ * //私有方法
+ * SubType.prototype.getSubValue = function () {
+ *     return this.subProperty;
+ * };
+ * 而且在添加私有方法或者属性以及覆盖的过程中不能使用字面量方式(相当于重写原型)
+ *
+ * 原型中包含引用类型值(比如数组)的属性会被所有实例共享，在使用原型链实现继承的过程中原先的实例属性会自动变成原型属性。
+ *
+ * 6.3.2 借用构造函数实现继承
+ *
+ * 解决上述问题的一种继承方式。
+ *
+ * function SuperType (name) {
+ *     this.color = ["red","yellow"];
+ *     this.name = name;
+ * }
+ *
+ * function SubType (name) {
+ *
+ *     //继承了 SuperType
+ *     SuperType.call(this,name);
+ * }
+ *
+ * 通过上述方式，下级构造函数借调了上级类型的构造函数。在其中可以传递参数。
+ * 但是这种方式并没有解决函数复用的问题
+ *
+ * 6.3.3 组合继承
+ *
+ * function SuperType (name) {
+ *     this.color = ["red","yellow"];
+ *     this.name = name;
+ * }
+ *
+ * SuperType.prototype.sayName = function () {
+ *     alert(this.name);
+ * };
+ *
+ * function SubType (name，age) {
+ *
+ *     //继承了 SuperType
+ *     SuperType.call(this,name);
+ *
+ *     //下级实例属性
+ *     this.age = age;
+ * }
+ *
+ * //原型链继承方法
+ * SubType.prototype = new SuperType();
+ *
+ * //对原型进行调整，添加私有方法。
+ * SubType.prototype.constructor = SubType;
+ * SubType.prototype.sayAge = function () {
+ *     alert(this.age);
+ * }
+ *
+ * 以上就是最常用的基本继承方法。避免了单独使用原型链以及使用构造函数继承的缺陷。
+ *
+ * 6.3.4 原型式继承
+ *
+ * 借助原型可以基于已有的对象创建新对象，同时不必因此创建自定义类型。
+ *
+ * function object (o){
+ *     function F () {}
+ *     F.prototype = o;
+ *     return new F();
+ * }
+ *
+ * 其内部有一个临时性的构造函数F，然后将传入的对象作为这个构造函数的原型，然后返回这个临时类型的实例。
+ * 整个过程相当于对o执行了一次浅复制，得到的新实例实际上是o的副本，然后可以进行自定义。
+ * 注意得到的这个新实例和原来的对象共享引用类型值属性。
+ *
+ * ECMAScript 5 增加了Object.create()方法规范了原型式继承。其可以通过第二个可选参数实现直接的自定义。
+ *
+ * 6.3.5 寄生式继承
+ *
+ *
+ *
  */
