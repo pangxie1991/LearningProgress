@@ -807,9 +807,43 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  *
  * 6.2.4 组合使用构造函数模式和原型模式
  *
+ * function Person (name, age, job){
+ *     this.name = name;
+ *     this.age = age;
+ *     this.job = job;
+ *     this.friends = ["...","..."];
+ * }
  *
+ * person.prototype = {
+ *     constructor: Person,
+ *     sayName: function () {
+ *         alert("this.name");
+ *     }
+ * }
  *
+ * var person1 = new Person("...",...,"..."),
+ *     person2 = new Person(....);
  *
+ * 6.2.5 动态原型模式
  *
+ * function Person (name, age, job) {
  *
+ *     //属性
+ *     this.name = name;
+ *     this.age = age;
+ *     this.job = job;
+ *
+ *     //方法
+ *     if (typeof this.sayName != "function"){
+ *
+ *         Person.prototype.sayName = function () {
+ *             alert(this.name);
+ *         };
+ *
+ *     }
+ * }
+ *
+ * 第二段方法部分只有在初始化的时候才会执行。
+ *
+ * 6.2.6 寄生构造函数模式
  */
