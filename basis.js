@@ -1160,4 +1160,40 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  * 7.2.1 闭包与变量
  *
  * 作用域链的副作用：闭包只能取得包含函数中任何变量的最后一个值。
+ * function createFunctions () {
+ *     var result = new Array();
+ *
+ *     for (var i = 0; i < 10; i++) {
+ *         result[i] = function () {
+ *             return i;
+ *         };
+ *     }
+ *
+ *     return result;
+ * }
+ *
+ * 返回一个函数数组，理论上每个函数都应该返回自己的索引值，但实际上每个函数都返回10。
+ * 这是因为每个函数的作用域链中都保存着createFunctions()函数的活动对象，所以他们返回的都是同一个变量i。
+ * 我们可以通过创建另一个匿名函数强制让闭包的行为符合预期。
+ *
+ * function createFunctions () {
+ *     var result = new Array();
+ *
+ *     for(var i = 0; i < 10; i++){
+ *         result[i] = function (num) {
+ *             return function () {
+ *                 return num;
+ *             };
+ *         }(i);
+ *     }
+ *
+ *     return result;
+ * }
+ *
+ * 在上述代码中我们没有直接把闭包赋给数组，而是定义了一个匿名函数，并将立即执行这个匿名函数的结果赋给数组。
+ * 这个匿名函数含有一个参数num，也就是最终函数要返回的值。调用这个匿名函数时我们传入了变量i。
+ * 由于参数是按值传递，所以i的当前值就赋给了num，而在这个匿名函数的内部又创建并返回了一个访问num的闭包。
+ * 这样一来，result中的每个函数都有自己num变量的一个副本，因此可以返回索引值。
+ *
+ *
  */
