@@ -68,11 +68,16 @@ Number(someundefined);             //NaN
 parseInt("1245blue");
 parseFloat("1245.1234blue");
 
-//3.4.6 String 类型
-
-//chapter5 引用类型
-
-//5.1 Object类型
+/*
+ * 3.4.6 String 类型
+ *
+ * ---------------------------------------------------------------------------------------------------------
+ *
+ * Chapter5 引用类型
+ *
+ * 5.1 Object类型
+ *
+ */
 var person = new Object();    // 等同于   var person = {};
 person.name = "LinFatZ";
 person.age = 23;
@@ -616,15 +621,15 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  * value = Math.floor(Math.random() * total + minPossibleValue);
  *
  * 其他Math的方法------p.136
- */
-
-
-/*
+ *
+ * -------------------------------------------------------------------------------------------------------------------
+ *
  * Chapter6 面向对象的程序设计
  *
  * 6.1 理解对象
  *
- * 无序属性的集合，其属性可以是基本值、对象、函数。对象由任意一种引用类型(Object, Function, Array, Date, RegExp...)或者自定义类型创建。
+ * 无序属性的集合，其属性可以是基本值、对象、函数。
+ * 对象由任意一种引用类型(Object, Function, Array, Date, RegExp...)或者自定义类型创建。
  * 创建对象的方式主要分两种，一种是创建实例然后添加属性，一种是对象字面量。
  *
  * 6.1.1 属性类型
@@ -1027,6 +1032,132 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  *
  * 6.3.5 寄生式继承
  *
+ * 同样是创建一个仅用于封装继承过程的函数，在函数内部以某种方式来增强对象，最后返回对象。
  *
+ * function createAnother (original) {
+ *     var clone = object (original);
+ *     clone.sayHi = function () {
+ *         alert("hi");
+ *     }
+ *     return clone;
+ * }
  *
+ * 6.3.6 寄生组合式继承
+ *
+ * 组合继承最大的问题在于无论什么情况下都会调用两次上级类型的构造函数，一次是在创建子类型原型的时候，一次是在子类型构造函数内部。
+ *
+ * 而寄生组合式继承，通过借用构造函数来继承属性，通过原型链的混成形式来集成方法。不必为了指定下级类型的原型而调用上级类型构造函数。
+ *
+ * function inheritPrototype (subType, superType){
+ *     var prototype = Object(superType.prototype);
+ *     prototype.constructor = subType;
+ *     subType.prototype = prototype;
+ * }
+ *
+ * 其组合模式如下:
+ * function SuperType (name) {
+ *     this.name = name;
+ *     this.colors = ["...","...","..."];
+ * }
+ *
+ * SuperType.prototype.sayName = function () {
+ *     alert(this.name);
+ * }
+ *
+ * function SubType(name, age){
+ *     SuperType.call(this,name);
+ *
+ *     this.age = age;
+ * }
+ *
+ * inheritPrototype(SubType, SuperType);
+ *
+ * SubType.prototype.sayAge = function () {
+ *     alert(this.age);
+ * }
+ *
+ * 其高效率体现在只调用了一次SuperType的构造函数，并且避免了在SubType.prototype上创建不必要的多余的属性。与此同时原型链保持不变。
+ *
+ * -----------------------------------------------------------------------------------------------
+ *
+ * Chapter 7.函数表达式
+ *
+ * 关于函数声明，有一个重要特征就是函数声明提升，意思是解析器执行代码前会先读取函数声明，也就意味着可以把函数放在调用它的代码后面。
+ *
+ * // Do not do this
+ * if(condition){
+ *     function sayHi () {
+ *         alert("hi");
+ *     }
+ * } else {
+ *     function sayHi () {
+ *         alert("yo!");
+ *     }
+ * }
+ *
+ * 因为函数声明提升的原因，解析器无法执行这种代码。
+ *
+ * 关于匿名函数的作用。可以创建函数赋值给变量也就可以把函数作为其他函数的值返回。
+ * 在任何把函数作为值的情况下，都可以使用匿名函数，当然这仅仅是匿名函数的一个用途。
+ *
+ * 7.1 递归
+ *
+ * 函数名仅仅是一个指针，要解除函数名和递归函数之间的耦合，可以使用arguments.callee这个属性。
+ *
+ * function factorial (num) {
+ *     if (num<1){
+ *         return 1;
+ *     } else {
+ *         return num * arguments.callee(num-1);
+ *     }
+ * }
+ *
+ * 在编写递归时一般不要使用函数名，arguments.callee保险的多。
+ *
+ * 严格模式下不能通过脚本访问arguments.callee属性，下面的方式可以达到同样的效果。
+ *
+ * var factorial = (function f (num) {
+ *     if (num<1){
+ *         return 1;
+ *     } else {
+ *         return num * f(num-1);
+ *     }
+ * });
+ *
+ * 以上代码创建了一个命名函数表达式f(),然后将它赋值给变量，这样即便将函数值赋值给了另外的变量，函数的名字f依然有效。
+ *
+ * 7.2 闭包
+ *
+ * 匿名函数和闭包是不同的两个概念。匿名函数是指函数的name属性为空字符串的函数。
+ * 而闭包是指有权访问另一个函数作用于中的变量的函数。
+ *
+ * 创建闭包的常见方式就是在一个函数内部创建另一个函数。
+ * function createComparisonFunction (propertyName) {
+ *
+ *     return function (object1, object2) {
+ *         var value1 = object1[propertyName],
+ *             value2 = object2[propertyName];
+ *
+ *         if (value1 < value2){
+ *             return -1;
+ *         } else if (value1 > value2){
+ *             return 1;
+ *         } else {
+ *             return 0;
+ *         }
+ *     };
+ * }
+ * 定义value1和value2的那两行代码就访问了外部函数的变量propertyName
+ * 即使这个内部函数被返回了，而且是在其他地方被调用了，但它依然可以访问propertyName。
+ * 其实现原因跟作用域链有关，具体也是通过指针完成的。
+ *
+ * 当函数执行时会穿件一个执行环境和相应的作用域链，然后使用arguments和其他命名参数的值来初始化函数的活动对象。
+ * 在作用域链中，外部函数的活动对象处在第二位，外部函数的外部函数的活动对象处在第三位，以此类推，直到作用域链终结于全局执行环境。
+ * 函数执行过程中为了读取和写入变量的值，就需要在作用域链中查找变量。
+ *
+ * 在另一个函数内部定义的函数会将包含函数(即外部函数)的活动对象添加到它的作用域链中。因此就可以访问外部函数的参数和其中的变量。
+ *
+ * 7.2.1 闭包与变量
+ *
+ * 作用域链的副作用：闭包只能取得包含函数中任何变量的最后一个值。
  */
