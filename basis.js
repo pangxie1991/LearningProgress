@@ -1195,5 +1195,255 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  * 由于参数是按值传递，所以i的当前值就赋给了num，而在这个匿名函数的内部又创建并返回了一个访问num的闭包。
  * 这样一来，result中的每个函数都有自己num变量的一个副本，因此可以返回索引值。
  *
+ * 7.2.2 关于this 对象
+ *
+ * 在闭包中使用this对象可能会导致一些问题，this对象是在运行时基于环境的执行环境绑定的。
+ * 在全局函数中this等于window。而当函数作为某个对象的方法进行调用的时候，this等于那个对象。
+ * 而匿名函数的执行环境具有全局性，所以闭包里的this通常指向window。针对这个特性我们可以调整编写闭包的方式。
+ *
+ * var name = "the window";
+ *
+ * var object = {
+ *     name: ".....",
+ *
+ *     getNameFunc: function () {
+ *         return function () {
+ *             return this.name;
+ *         };
+ *     }
+ * };
+ *
+ * alert (object.getNameFunc()());      //"the window" (在非严格模式下)
+ *
+ * 调用object.getNameFunc()()就是立即调用被返回的匿名函数，此时this对象就指向全局属性"the window"。
+ *
+ * 每个函数在被调用的时候都会自动取得两个特殊变量，this和arguments。
+ * 内部函数在搜索这两个变量时永远不可能直接访问外部函数中的这两个变量。
+ * 但是通过把外部作用域中的this对象保存在一个闭包能够访问到的变量里，就可以实现闭包访问外部函数的this对象。
+ *
+ * getNameFunc: function () {
+ *     var that = this;
+ *     return function () {
+ *         return that.name;
+ *     };
+ * }
+ *
+ * 几种特殊的情况下，this对象的值可能会发生突变。
+ *
+ * var name = "the window";
+ *
+ * var object = {
+ *     name: ".....",
+ *
+ *     getName: function () {
+ *         return this.name;
+ *     }
+ * };
+ *
+ * object.getName();                          //"....."
+ * (object.getName)();                        //"....."
+ * (object.getName = object.getName)();       //"the window"
+ *
+ * 第二种调用方式，像是引用这个函数然后立即执行，此时this的值得到了保存。
+ * 第三行代码先执行了一次赋值，然后再调用赋值后的函数并执行，因为这个赋值表达式的值是函数本事，所以this的值得不到维持。
+ * 即使是语法的细微变化，都有可能意外改变this的值。
+ *
+ * 7.2.3 内存泄漏
+ *
+ * 闭包在IE9以下的版本中会导致一些特殊的问题，具体来说，如果闭包的作用域链中保存了一个HTML元素，则该元素无法被销毁。
+ *
+ * function assignHander () {
+ *     var element = document.getElementById("....");
+ *     element.onclick = function () {
+ *         alert("element.id");
+ *     };
+ * }
+ *
+ * 以上代码创建了一个元素事件处理程序的闭包，且内部包含一个循环引用，即对assignHander()活动对象的引用。
+ * 所以就无法减少element的引用数。因此其内存永远不会被回收。需要改写代码进行解决。
+ *
+ * var id = element.id;
+ * element.onclick = function () {
+ *     alert(id);
+ * };
+ *
+ * element = null;
+ *
+ * 通过把element.id的一个副本保存在一个变量里，在闭包中引用这个变量消除循环引用。
+ * 同时因为闭包会引用包含函数的整个活动对象，其中包含element，因此有必要把elements设置为null，从而解除对DOM对象的引用。
+ *
+ * 7.3 模仿块级作用域
+ *
+ * JS不存在块级作用域。块语句中定义的变量，实际上是在包含函数中而非语句中创建的。
+ *
+ * JS可以多次声明同一个变量，后续声明会被无视，但是会执行后续声明中的变量初始化。
+ *
+ * 用作块级作用域的匿名函数语法如下：
+ *
+ * (function () {
+ *     //这里是块级作用域
+ * })();
+ *
+ * 意思是创建一个匿名函数并且立即执行。
+ * 这种写法常在全局作用域中被用在函数外部从而限制向全局作用域中添加过多的变量和函数。
+ * 同时这种写法也减少了闭包占用内存的问题，因为没有指向匿名函数的引用。函数被立即执行完毕，其作用域链便被直接销毁。
+ *
+ * 7.4 私有变量
+ *
+ * JS中没有私有成员的概念，但是有私有变量。在任何函数中定义的变量，都可以认为是私有变量。
+ * 在函数内部创建一个闭包，那么闭包通过自己的作用域链也可以访问私有变量。
+ * 利用这一点就可以创建用于访问私有变量的公有方法。亦即特权方法(privileged method)。
+ *
+ * function MyObject () {
+ *
+ *     //私有变量和方法
+ *     var privateVariable = 10;
+ *
+ *     function privateFunction () {
+ *         return false;
+ *     }
+ *
+ *     //特权方法
+ *     this.publicMethod = function () {
+ *         privateVariable++;
+ *         return privateFunction();
+ *     };
+ * }
+ *
+ * 利用私有和特权成员可以隐藏那些不应该被直接修改的数据。
+ *
+ * function Person (name) {
+ *
+ *     this.getName = function () {
+ *         return name;
+ *     };
+ *
+ *     this.setName = function (value) {
+ *         name = value;
+ *     };
+ * }
+ *
+ * 以上可以做到对name属性的禁止直接修改操作，存在的问题是必须使用构造函数模式，针对每个实例都会创建同样一组新方法。
+ *
+ * 7.4.1 静态私有变量
+ *
+ * 解决复用问题的一种方法。在私有作用域中定义私有变量或者函数。
+ *
+ * (function () {
+ *
+ *     //私有变量
+ *     var name = "";
+ *
+ *     //构造函数
+ *     Person = function (value) {
+ *         name = value;
+ *     };
+ *
+ *     //特权方法
+ *     Person.prototype.getName = function () {
+ *         return name;
+ *     };
+ *
+ *     Person.prototype.setName = function (value) {
+ *         name = value;
+ *     };
+ * })();
+ *
+ * 以上代码解决了方法的复用，但是每个实例都没有自己的私有变量，公用同一个name，一次单独调用setName会针对所有的实例。
+ *
+ * 7.4.2 模块模式
+ *
+ * 为单例创建私有变量和特权方法。
+ * JS惯例是使用字面量语法来创建单例对象的。
+ *
+ * var singleton = {
+ *     name: value,
+ *     method: function () {
+ *         //这里是方法代码
+ *     }
+ * };
+ *
+ * 模块模式通过为单例添加私有变量和特权方法能够使其得到增强。
+ *
+ * var singleton = function () {
+ *
+ *     //私有变量和方法
+ *     var name = value;
+ *
+ *     function privateFunction () {
+ *         return false;
+ *     }
+ *
+ *     //特权/公有方法
+ *     return {
+ *         publicProperty: true,
+ *
+ *         publicMethod: function () {
+ *             console.log(name);
+ *             return privateFunction();
+ *         }
+ *     };
+ * }();
+ *
+ * 使用了一个返回对象的匿名函数，匿名函数内部定义了私有变量和函数，然后将一个字面量作为函数的值返回。
+ * 本质上讲这个对象字面量定义的是单例的公共接口。这种方式特别适用于需要对单例进行某些初始化，同时又要维护其私有变量的情况。
+ *
+ * var application = function () {
+ *     var components = new Array();
+ *
+ *     //初始化
+ *     components.push(new BaseComponent());
+ *
+ *     //公共
+ *     return {
+ *         getComponentCount: function () {
+ *             return components.length;
+ *         },
+ *
+ *         registerComponent: function (component) {
+ *             if (typeof component == "object"){
+ *                 components.push(component);
+ *             }
+ *         }
+ *     };
+ * }();
+ *
+ * 7.4.3 增强的模块模式
+ *
+ * 返回对象之前加入对其增强的代码，适合那些单例必须是某种类型的实例，同时还必须添加某些属性或方法来对其进行增强的情况。
+ * 例如下面的代码中如果application对象必须是BaseComponent的实例
+ *
+ * var application = function () {
+ *
+ *     //私有变量
+ *     var components = new Array();
+ *
+ *     //初始化
+ *     components.push(new BaseComponent());
+ *
+ *     //创建application的一个局部副本
+ *     var app = new BaseComponent();
+ *
+ *     //公共接口
+ *     app.getComponentCount = function () {
+ *         return components.length;
+ *     };
+ *
+ *     app.registerComponent = function (component) {
+ *         if (typeof component == "object") {
+ *             components.push(component);
+ *         }
+ *     };
+ *
+ *     //返回副本
+ *     return app;
+ * }();
+ *
+ * 返回的对象必须是BaseComponent的实例，app这个实例实际上是其的一个局部变量版。
+ *
+ * ------------------------------------------------------------------------------------------
+ *
+ * Chapter8. BOM(Browser Object Model)
+ *
  *
  */
