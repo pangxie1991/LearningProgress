@@ -1,5 +1,102 @@
-$link-color: red;
+//set the variable
+$font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif;
+$border-color: #e7e7e7;
+$backgroud-color: #fff;
 
-a{
-  color: $link-color;
+//mixin style
+@mixin vertical-center($vertical-padding:8px) {
+  padding: {
+    top: $vertical-padding;
+    bottom: $vertical-padding;
+  }
 }
+
+@mixin horizontal-center($horizontal-margin:auto,$horizontal-padding:15px) {
+  margin: {
+    left: $horizontal-margin;
+    right: $horizontal-margin;
+  }
+  padding: {
+    left: $horizontal-padding;
+    right: $horizontal-padding;
+  }
+}
+
+@mixin border($border-radius:0,$border-width:0 0 1px) {
+  border:{
+    radius: $border-radius;
+    width: $border-width;
+  }
+}
+
+//media
+@mixin min-screen($res) {
+  @media only screen and (min-width: $res) {
+    @content
+  }
+}
+
+//real css
+.custom-navbar {
+  z-index: 9;
+  margin-bottom: 0;
+  opacity: 0.9;
+  background-color: $backgroud-color;
+  width: 100%;
+  @include vertical-center(8px);
+  @include border;
+  .navbar-brand{
+    padding: 5px;
+    .logo{
+      max-width: 102px;
+    }
+  }
+  a{
+    font-size: 16px;
+    >img{
+      border: 0;
+    }
+  }
+  a:link{
+    text-decoration: none;
+  }
+}
+
+.custom-navbar-ul li{
+  @include horizontal-center(auto,15px);
+}
+
+.container-my {
+  @include horizontal-center($horizontal-padding: 15px)
+}
+
+#fp-nav ul li a span{
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+}
+
+#fp-nav ul li a.active span {
+    background: #e0e0e0
+}
+
+//media actual-style
+
+@include min-screen(1200px) {
+  .container-my {
+    width: 1200px;
+  }
+}
+
+@include min-screen(768px) {
+  .custom-navbar {
+    @include vertical-center(15px);
+  }
+}
+
+
+
+
+

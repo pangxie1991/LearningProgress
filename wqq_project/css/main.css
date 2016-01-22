@@ -1,4 +1,61 @@
+@charset "UTF-8";
+.custom-navbar {
+  z-index: 9;
+  margin-bottom: 0;
+  opacity: 0.9;
+  background-color: #fff;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 0;
+  border-width: 0 0 1px; }
+  .custom-navbar .navbar-brand {
+    padding: 5px; }
+    .custom-navbar .navbar-brand .logo {
+      max-width: 102px; }
+  .custom-navbar a {
+    font-size: 16px; }
+    .custom-navbar a > img {
+      border: 0; }
+  .custom-navbar a:link {
+    text-decoration: none; }
+
+.custom-navbar-ul li {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.container-my {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+#fp-nav ul li a span {
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px; }
+
+#fp-nav ul li a.active span {
+  background: #e0e0e0; }
+
+@media only screen and (min-width: 1200px) {
+  .container-my {
+    width: 1200px; } }
+@media only screen and (min-width: 768px) {
+  .custom-navbar {
+    padding-top: 15px;
+    padding-bottom: 15px; } }
+body {
+  font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif; }
+
+.if-need-fix {
+  position: fixed; }
+
 a {
-  color: red; }
+  cursor: pointer; }
 
 /*# sourceMappingURL=main.css.map */
