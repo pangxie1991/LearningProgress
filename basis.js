@@ -1445,5 +1445,70 @@ var mathValue = [1,2,3,4,5,6,7,8,9],
  *
  * Chapter8. BOM(Browser Object Model)
  *
+ * 8.1 window对象
+ *
+ * BOM的核心对象
+ *
+ * 8.1 window对象
+ *
+ * window对象表示浏览器的一个实例。既是通过JavaScript访问浏览器窗口的一个接口，又是ECMAScript规定的Global对象。
+ * 在网页中定义的任何一个对象，变量和函数都以window作为其Global对象，因此有权访问parseInt()等方法。
+ *
+ * 8.1.1 全局作用域
+ *
+ * 因为window扮演着ECMAScript中的Global对象的角色，因此所有在全局作用域中声明的变量、函数都会变成window对象的属性和方法。
+ *
+ * 定义的全局变量与直接定义window对象的属性存在一个区别就是全局对象不能通过delete删除而window对象可以。
+ *
+ * 8.1.2 窗口关系及框架
+ *
+ * 如果页面包括框架，则每个框架都拥有自己的window对象，并且保存在frames集合中。
+ * 框架集通过html中的frameset和frame标签进行定义。
+ * 此时访问全局对象应该通过top.frame[0]这种方式进行。
+ *
+ * 8.1.3 窗口位置
+ *
+ * 因为浏览器差异所以获取窗口位置因为浏览器差异导致需要一定的步骤
+ *
+ * screenLeft&screenTop  : IE Safari Opera Chrome
+ *
+ * screenX&screenY : Firefox Safari Chrome
+ *
+ * var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX,
+ *     topPos = (typeof window.screenTop == "number") ? window.screenTop : window.screenY;
+ *
+ * 同时需要注意的是，IE和Opera上述值表示的是屏幕边缘到页面可见区域的距离，而Chrome、Firefox和Safari则表示屏幕边缘到浏览器窗口的距离。
+ *
+ * 精确的移动窗口一般采用两个方法即moveTo()和moveBy() 均接收两个参数表示X和Y方向的坐标像素值。
+ * 其中moveBy()中的参数为正则表示默认向左向下。
+ *
+ * 8.1.4 窗口大小
+ *
+ * 同样因为跨浏览器实现不同导致了很多问题，常见的属性为innerWidth、innerHeight、outerWidth、outerHeight。
+ * 分别表示页面大小和浏览器窗口大小。
+ *
+ * 页面视口的大小可以通过document.documentElement.clientWidth和document.documentElement.clientHeight来取得。
+ *
+ * 通行的取得视口大小的代码如下
+ *
+ * var pageWidth = window.innerWidth,
+ *     pageHeight = window.innerHeight;
+ *
+ * if (typeof pageWidth != "number"){
+ *     if(document.compatMode == "CSS1Compat"){
+ *         pageWidth = document.documentElement.clientWidth;
+ *         pageHeight = document.documentElement.clientHeight;
+ *     } else {
+ *         pageWidth = document.body.clientWidth;
+ *         pageHeight = document.body.clientHeight;
+ *     }
+ * }
+ *
+ * 调整浏览器窗口大小可以使用两个方法，resizeTo()和resizeBy(),其中后者参数正数为加
+ *
+ * 8.1.5 导航和打开窗口
+ *
+ *
+ *
  *
  */
