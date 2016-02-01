@@ -1,0 +1,100 @@
+.section {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  background: {
+    repeat: no-repeat;
+    position: 30%;
+    size: cover;
+  }
+  padding: 0;
+  width: 100%;
+}
+
+.first-page {
+  color: #fff;
+  z-index: 0;
+  background-color: #000;
+}
+
+.allbg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  .bg1, .bg2, .bg3, .bg4, .bg5 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: {
+      color: #fff;
+      position: center 0;
+      size: cover !important;
+      repeat: no-repeat;
+    }
+    display: none;
+  }
+  .bg1 {
+    background-image: url("../img/banner-1.jpg");
+  }
+  .bg2 {
+    background-image: url("../img/banner-2.jpg");
+  }
+  .bg3 {
+    background-image: url("../img/banner-3.jpg");
+  }
+  .bg4 {
+    background-image: url("../img/banner-4.jpg");
+  }
+  .bg5 {
+    background-image: url("../img/banner-5.jpg");
+  }
+}
+
+.first-container {
+  h4 {
+    font: {
+      weight: lighter;
+      size: 2em;
+    }
+    line-height: 1;
+    margin-bottom: 30px;
+    span{
+      font-weight: 700;
+    }
+  }
+  h1{
+    font-size: 4em;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 6px;
+    color: #fff;
+  }
+}
+
+.hidden-xs .query-form {
+  position: relative;
+  margin-top: 23vh;
+}
+
+.first-line {
+  position: relative;
+  height: 170px;
+  margin-left: 20px;
+  .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  .item:first-child {
+    display: block;
+  }
+}
+
+@include min-screen(768px) {
+  .allbg {
+    .bg1, .bg2, .bg3, .bg4, .bg5 {
+      background-position: 86% 0;
+    }
+  }
+}
