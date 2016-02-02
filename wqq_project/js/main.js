@@ -1,3 +1,8 @@
+var v = $(window).height();
+var h = $(window).width();
+
+
+
 function setFullpage() {
 	$("#fullpage").fullpage({
 		navigation: true,
@@ -35,9 +40,39 @@ function setFade() {
 	}, 5 * 1e3);
 }
 
+function setSecondRow() {
+	var container_2 = $(".second.area");
+	container_2.hover(function () {
+		if (h < 768) {
+			return
+		}
+		var img_1 = $(this).find("img")[0];
+		var img_2 = $(this).find("img")[1];
+		$(img_1).hide();
+		$(img_2).show();
+		$(this).find(".txt").stop().animate({opacity: 0}, 500)
+	}, function () {
+		if (h < 768) {
+			return
+		}
+		var img_1 = $(this).find("img")[0];
+		var img_2 = $(this).find("img")[1];
+		$(img_2).hide();
+		$(img_1).show();
+		$(this).find(".txt").stop().animate({opacity: 1}, 500)
+	});
+	if (g_is_ie) {
+		var c = $(".js-action-second-img-1");
+		var l = $(".js-action-second-img-2");
+		$(l).hide();
+		$(c).show()
+	}
+}
+
 $(document).ready(function () {
 	setFullpage();
 	setFade();
+	setSecondRow();
 });
 
 

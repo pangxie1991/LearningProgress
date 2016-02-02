@@ -118,9 +118,125 @@
   .first-line .item:first-child {
     display: block; }
 
+.second-page {
+  background-color: #fff; }
+  .second-page .three-line button {
+    font-size: 19px;
+    line-height: 19px;
+    background-color: #e9410a;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    padding: 10px 0;
+    width: 230px;
+    position: relative;
+    top: -20px;
+    transition: all .5s; }
+
+#second-container {
+  padding-top: 28px; }
+
+.second.title {
+  margin-bottom: 14px; }
+  .second.title h1 {
+    font-size: 21px;
+    color: #333;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0 0 8px; }
+  .second.title h3 {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0; }
+
+.second-row {
+  margin: 0 auto; }
+
+.second.area {
+  position: relative;
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 0; }
+  .second.area .img-responsive {
+    width: 100%; }
+  .second.area img:first-child {
+    display: none; }
+  .second.area img:last-child {
+    display: block; }
+  .second.area .txt {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%; }
+  .second.area h1 {
+    font-size: 15px;
+    color: #000;
+    font-weight: 400;
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: initial;
+    transition-delay: initial; }
+
 @media only screen and (min-width: 768px) {
   .allbg .bg1, .allbg .bg2, .allbg .bg3, .allbg .bg4, .allbg .bg5 {
-    background-position: 86% 0; } }
+    background-position: 86% 0; }
+
+  #second-container {
+    position: relative;
+    padding-top: 147px;
+    padding-top: 15vh;
+    padding-bottom: 49px;
+    padding-bottom: 5vh; }
+
+  .second.title {
+    margin-bottom: 40px; }
+    .second.title h1 {
+      font-size: 40px;
+      margin-top: 10px;
+      margin-bottom: 10px; }
+    .second.title h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 24px; }
+
+  .second-row {
+    margin: 0 50px;
+    overflow: hidden; }
+
+  .second.area {
+    margin-bottom: 0;
+    padding-right: 15px;
+    padding-left: 15px; }
+    .second.area img:first-child {
+      display: block; }
+    .second.area img:last-child {
+      display: none; }
+    .second.area .txt {
+      top: 36%;
+      bottom: initial; }
+
+  .second-page .three-line {
+    margin-top: 5vh;
+    margin-bottom: 20px; }
+    .second-page .three-line button {
+      margin-top: 5vh;
+      width: 320px;
+      height: 62px;
+      border: 1px solid #e9410a;
+      background-color: #fff;
+      color: #e9410a;
+      font-size: 26px;
+      line-height: 26px;
+      border-radius: 6px;
+      position: static; } }
+@media only screen and (min-width: 992px) {
+  .second.area h1 {
+    font-size: 20px; } }
+@media only screen and (min-width: 1200px) {
+  .second.area h1 {
+    font-size: 26px; } }
 body {
   font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif; }
 
@@ -132,5 +248,12 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0; }
+
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
 
 /*# sourceMappingURL=main.css.map */

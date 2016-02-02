@@ -58,11 +58,11 @@
     }
     line-height: 1;
     margin-bottom: 30px;
-    span{
+    span {
       font-weight: 700;
     }
   }
-  h1{
+  h1 {
     font-size: 4em;
     font-weight: 700;
     line-height: 1;
@@ -91,10 +91,161 @@
   }
 }
 
+.second-page {
+  background-color: #fff;
+  .three-line button {
+    font-size: 19px;
+    line-height: 19px;
+    background-color: #e9410a;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    padding: 10px 0;
+    width: 230px;
+    position: relative;
+    top: -20px;
+    transition: all .5s;
+  }
+}
+
+#second-container {
+  padding-top: 28px;
+}
+
+.second.title {
+  margin-bottom: 14px;
+  h1 {
+    font-size: 21px;
+    color: #333;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0 0 8px;
+  }
+  h3 {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+  }
+}
+
+.second-row {
+  margin: 0 auto;
+}
+
+.second.area {
+  position: relative;
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 0;
+  .img-responsive {
+    width: 100%;
+  }
+  img:first-child {
+    display: none;
+  }
+  img:last-child {
+    display: block;
+  }
+  .txt {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+  }
+  h1 {
+    font-size: 15px;
+    color: #000;
+    font-weight: 400;
+    transition: {
+      property: all;
+      duration: 0.5s;
+      timing-function: initial;
+      delay: initial;
+    }
+  }
+}
+
+// media actual-style
+
 @include min-screen(768px) {
   .allbg {
     .bg1, .bg2, .bg3, .bg4, .bg5 {
       background-position: 86% 0;
+    }
+  }
+  #second-container {
+    position: relative;
+    padding-top: 147px;
+    padding-top: 15vh;
+    padding-bottom: 49px;
+    padding-bottom: 5vh;
+  }
+  .second.title {
+    margin-bottom: 40px;
+    h1 {
+      font-size: 40px;
+      margin: {
+        top: 10px;
+        bottom: 10px;
+      }
+    }
+    h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+  }
+  .second-row {
+    margin: 0 50px;
+    overflow: hidden;
+  }
+  .second.area {
+    margin-bottom: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    img:first-child {
+      display: block;
+    }
+    img:last-child {
+      display: none;
+    }
+    .txt {
+      top: 36%;
+      bottom: initial;
+    }
+  }
+  .second-page .three-line {
+    margin-top: 5vh;
+    margin-bottom: 20px;
+    button {
+      margin-top: 5vh;
+      width: 320px;
+      height: 62px;
+      border: 1px solid #e9410a;
+      background-color: #fff;
+      color: #e9410a;
+      font-size: 26px;
+      line-height: 26px;
+      border-radius: 6px;
+      position: static;
+    }
+  }
+}
+
+@include min-screen(992px) {
+  .second.area {
+    h1 {
+      font-size: 20px;
+    }
+  }
+}
+
+@include min-screen(1200px) {
+  .second.area {
+    h1 {
+      font-size: 26px;
     }
   }
 }
