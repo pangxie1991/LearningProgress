@@ -1,3 +1,5 @@
+// upper layer
+
 .section {
   display: none;
   position: relative;
@@ -10,6 +12,8 @@
   padding: 0;
   width: 100%;
 }
+
+// first-page
 
 .first-page {
   color: #fff;
@@ -91,6 +95,8 @@
   }
 }
 
+// second-page
+
 .second-page {
   background-color: #fff;
   .three-line button {
@@ -158,94 +164,46 @@
     font-size: 15px;
     color: #000;
     font-weight: 400;
-    transition: {
-      property: all;
-      duration: 0.5s;
-      timing-function: initial;
-      delay: initial;
-    }
+    @include transition-all(0.5s);
   }
 }
 
-// media actual-style
+// last-three-page
 
-@include min-screen(768px) {
-  .allbg {
-    .bg1, .bg2, .bg3, .bg4, .bg5 {
-      background-position: 86% 0;
-    }
+.third-page, .forth-page, .fifth-page {
+  cursor: pointer;
+}
+
+.page-3 {
+  position: relative;
+  background: {
+    repeat: no-repeat;
+    position: 30%;
+    size: cover;
   }
-  #second-container {
-    position: relative;
-    padding-top: 147px;
-    padding-top: 15vh;
-    padding-bottom: 49px;
-    padding-bottom: 5vh;
+  h1 {
+    line-height: 1;
+    margin: 20px 0;
+    font-size: 20px;
   }
-  .second.title {
-    margin-bottom: 40px;
-    h1 {
-      font-size: 40px;
-      margin: {
-        top: 10px;
-        bottom: 10px;
-      }
+  .section-bottom {
+    margin-bottom: 20px;
+    > div {
+      z-index: 2 !important;
     }
-    h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-  }
-  .second-row {
-    margin: 0 50px;
-    overflow: hidden;
-  }
-  .second.area {
-    margin-bottom: 0;
-    padding-right: 15px;
-    padding-left: 15px;
-    img:first-child {
-      display: block;
-    }
-    img:last-child {
+    .section-bottom-background {
       display: none;
     }
-    .txt {
-      top: 36%;
-      bottom: initial;
-    }
   }
-  .second-page .three-line {
-    margin-top: 5vh;
-    margin-bottom: 20px;
-    button {
-      margin-top: 5vh;
-      width: 320px;
-      height: 62px;
-      border: 1px solid #e9410a;
-      background-color: #fff;
-      color: #e9410a;
-      font-size: 26px;
-      line-height: 26px;
-      border-radius: 6px;
-      position: static;
-    }
+  .content-xs {
+    position: absolute;
+    left: 8.3333333%;
+    right: 8.3333333%;
+    top: 40%;
+    font-size: 13px;
+    color: #fff;
   }
-}
-
-@include min-screen(992px) {
-  .second.area {
-    h1 {
-      font-size: 20px;
-    }
-  }
-}
-
-@include min-screen(1200px) {
-  .second.area {
-    h1 {
-      font-size: 26px;
-    }
+  content-1-xs {
+    top: 60%;
   }
 }

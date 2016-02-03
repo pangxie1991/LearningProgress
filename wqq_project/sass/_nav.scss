@@ -1,40 +1,4 @@
-//set the variable
-$font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif;
-$border-color: #e7e7e7;
-$backgroud-color: #fff;
 
-//mixin style
-@mixin vertical-center($vertical-padding:8px) {
-  padding: {
-    top: $vertical-padding;
-    bottom: $vertical-padding;
-  }
-}
-
-@mixin horizontal-center($horizontal-margin:auto,$horizontal-padding:15px) {
-  margin: {
-    left: $horizontal-margin;
-    right: $horizontal-margin;
-  }
-  padding: {
-    left: $horizontal-padding;
-    right: $horizontal-padding;
-  }
-}
-
-@mixin border($border-radius:0,$border-width:0 0 1px) {
-  border:{
-    radius: $border-radius;
-    width: $border-width;
-  }
-}
-
-//media
-@mixin min-screen($res) {
-  @media only screen and (min-width: $res) {
-    @content
-  }
-}
 
 //real css
 .custom-navbar {
@@ -84,17 +48,7 @@ $backgroud-color: #fff;
 
 //media actual-style
 
-@include min-screen(1200px) {
-  .container-my {
-    width: 1200px;
-  }
-}
 
-@include min-screen(768px) {
-  .custom-navbar {
-    @include vertical-center(15px);
-  }
-}
 
 
 

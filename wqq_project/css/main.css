@@ -42,13 +42,6 @@
 #fp-nav ul li a.active span {
   background: #e0e0e0; }
 
-@media only screen and (min-width: 1200px) {
-  .container-my {
-    width: 1200px; } }
-@media only screen and (min-width: 768px) {
-  .custom-navbar {
-    padding-top: 15px;
-    padding-bottom: 15px; } }
 .section {
   display: none;
   position: relative;
@@ -179,7 +172,65 @@
     transition-timing-function: initial;
     transition-delay: initial; }
 
+.third-page, .forth-page, .fifth-page {
+  cursor: pointer; }
+
+.page-3 {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 30%;
+  background-size: cover; }
+  .page-3 h1 {
+    line-height: 1;
+    margin: 20px 0;
+    font-size: 20px; }
+  .page-3 .section-bottom {
+    margin-bottom: 20px; }
+    .page-3 .section-bottom > div {
+      z-index: 2 !important; }
+    .page-3 .section-bottom .section-bottom-background {
+      display: none; }
+  .page-3 .content-xs {
+    position: absolute;
+    left: 8.3333333%;
+    right: 8.3333333%;
+    top: 40%;
+    font-size: 13px;
+    color: #fff; }
+  .page-3 content-1-xs {
+    top: 60%; }
+
+body {
+  font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif; }
+
+.if-need-fix {
+  position: fixed; }
+
+a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  cursor: pointer; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+.lh1 {
+  line-height: 1; }
+
 @media only screen and (min-width: 768px) {
+  .custom-navbar {
+    padding-top: 15px;
+    padding-bottom: 15px; }
+
   .allbg .bg1, .allbg .bg2, .allbg .bg3, .allbg .bg4, .allbg .bg5 {
     background-position: 86% 0; }
 
@@ -230,30 +281,59 @@
       font-size: 26px;
       line-height: 26px;
       border-radius: 6px;
-      position: static; } }
+      position: static; }
+
+  .web-lazy-index .third-page {
+    background-image: url("../img/bg-third.jpg"); }
+  .web-lazy-index .fourth-page {
+    background-image: url("../img/bg-fourth.jpg"); }
+
+  .page-3 h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    white-space: nowrap;
+    color: #fff; }
+    .page-3 h1 span {
+      font-weight: lighter; }
+  .page-3 h5 {
+    margin-top: 0;
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff; }
+  .page-3 h6 {
+    margin-top: 35px;
+    font-size: 18px;
+    color: #fff; }
+    .page-3 h6 a {
+      color: #fff;
+      transition-property: all;
+      transition-duration: 0.3s;
+      transition-timing-function: initial;
+      transition-delay: initial; }
+  .page-3 .section-bottom {
+    position: absolute;
+    bottom: 0;
+    padding: 15px 0;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    color: #fff;
+    font-size: 20px; }
+    .page-3 .section-bottom .border-lr {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff; }
+  .page-3 .content {
+    margin-top: 30vh; }
+  .page-3 .img {
+    display: none; } }
 @media only screen and (min-width: 992px) {
   .second.area h1 {
     font-size: 20px; } }
 @media only screen and (min-width: 1200px) {
+  .container-my {
+    width: 1200px; }
+
   .second.area h1 {
     font-size: 26px; } }
-body {
-  font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif; }
-
-.if-need-fix {
-  position: fixed; }
-
-a {
-  cursor: pointer; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0; }
-
-.clearfix:before, .clearfix:after {
-  content: " ";
-  display: table; }
-
-.clearfix:after {
-  clear: both; }
 
 /*# sourceMappingURL=main.css.map */
