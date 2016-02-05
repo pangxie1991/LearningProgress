@@ -102,7 +102,7 @@
   .three-line button {
     font-size: 19px;
     line-height: 19px;
-    background-color: #e9410a;
+    background-color: #f08080;
     color: #fff;
     border-radius: 3px;
     border: 0;
@@ -111,6 +111,11 @@
     position: relative;
     top: -20px;
     transition: all .5s;
+  }
+  .fa{
+    display: none;
+    margin-top: 30px;
+    color:#f08080;
   }
 }
 
@@ -194,6 +199,11 @@
     .section-bottom-background {
       display: none;
     }
+    .fa{
+      color: #fff;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
   .content-xs {
     position: absolute;
@@ -206,4 +216,38 @@
   content-1-xs {
     top: 60%;
   }
+  a:hover{
+    color: #f08080;
+  }
+  .fa{
+    vertical-align: middle;
+  }
 }
+
+// fp-footer
+
+.common-footer{
+  background-color: #fff;
+  padding-top: 40px;
+  border-top: 1px solid #ebebeb;
+  li{
+    margin-bottom: 10px;
+    white-space: nowrap;
+  }
+  .footer-title{
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  h6{
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    color: #787878;
+  }
+}
+
+

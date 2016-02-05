@@ -15,6 +15,11 @@
       background-position: 86% 0;
     }
   }
+  .second{
+    .fa{
+      display: inline-block;
+    }
+  }
   #second-container {
     position: relative;
     padding-top: 147px;
@@ -63,22 +68,25 @@
       margin-top: 5vh;
       width: 320px;
       height: 62px;
-      border: 1px solid #e9410a;
+      border: 1px solid #f08080;
       background-color: #fff;
-      color: #e9410a;
+      color: #f08080;
       font-size: 26px;
       line-height: 26px;
       border-radius: 6px;
       position: static;
     }
   }
-  // third-page
+  // last-three-page
   .web-lazy-index {
     .third-page {
       background-image: url("../img/bg-third.jpg");
     }
     .fourth-page{
       background-image: url("../img/bg-fourth.jpg");
+    }
+    .fifth-page{
+      background-image: url("../img/bg-fifth.jpg");
     }
   }
 
@@ -129,8 +137,13 @@
     .img {
       display: none;
     }
-
+    .text-right{
+      padding-right: 40px;
+    }
   }
+
+  // fp-footer
+
 }
 
 @include min-screen(992px) {
