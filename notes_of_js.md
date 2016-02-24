@@ -547,219 +547,244 @@ caller中保存有调用当前函数的函数的引用。
 
 **5.5.5 Function的属性和方法**
 
- * function.length    希望接收的命名参数的个数(函数声明或者函数表达式中包含的参数个数)。
- *
- * function.apply()
- * 被用来在特定的作用域中调用函数，等于设置函数体内this的值。
- */
-function test (num1, num2){
-	return num1 + num2;
-}
+* `function.length` 希望接收的命名参数的个数(函数声明或者函数表达式中包含的参数个数)。
 
-// 传入arguments对象，并在自己的执行环境中执行test()。
-function callTest1 (num1, num2){
-	return test.apply(this,arguments);
-}
+* `function.apply()` 被用来在特定的作用域中调用函数，等于设置函数体内this的值。
 
-// 传入参数数组，并在自己的执行环境中执行test()。
-function callTest2 (num1, num2){
-	return test.apply(this, [num1,num2]);
-}
+        function test (num1, num2){
+        	return num1 + num2;
+        }
 
-// function.call()
+        // 传入arguments对象，并在自己的执行环境中执行test()。
+        function callTest1 (num1, num2){
+        	return test.apply(this,arguments);
+        }
 
-// 传参方式和apply()不同，需要将传递参数逐个列举。
-function callTest3 (num1, num2){
-	return test.call(this,num1,num2);
-}
+        // 传入参数数组，并在自己的执行环境中执行test()。
+        function callTest2 (num1, num2){
+        	return test.apply(this, [num1,num2]);
+        }
 
-// apply()和call()的作用。
+* `function.call()` 传参方式和apply()不同，需要将传递参数逐个列举。
 
-// 扩充函数的作用域。
-window.color = "red";
-var o = {color: "blue"};
+        function callTest3 (num1, num2){
+	        return test.call(this,num1,num2);
+        }
 
-function sayColor (){
-	console.log(this.color);
-}
+* `apply()`和`call()`的作用
 
-sayColor();        //"red"
-sayColor.call(this);      //"red"
-sayColor.call(window);        //"red"
-sayColor.call(o);       //"blue"
+        //扩充函数的作用域。
+        window.color = "red";
+        var o = {color: "blue"};
 
-// bind()方法(IE9+)
+        function sayColor (){
+        	console.log(this.color);
+        }
 
-// 创建一个副本并直接指定其作用域。
-var objectSayColor = sayColor.bind(o);
+        sayColor();        //"red"
+        sayColor.call(this);      //"red"
+        sayColor.call(window);        //"red"
+        sayColor.call(o);       //"blue"
 
-//toLocaleString()和toString()方法均返回函数的代码，并且实现依浏览器而异。
+* bind()方法(IE9+)
 
-/*
- * 5.6 基本包装类型(boolean,number,string)
- *
- * 最好不要显式的创建基本包装类型，应用方法就好。
- * 这些基本包装类型的寿命均是暂时的，在应用它们的方法时会创建各自类型的一个实例，应用方法并返回一个基本类型之后会立即销毁这个实例。
- *
- * 5.6.1 Boolean 类型
- *
- * // 调用构造函数并传入值
- * var booleanObject = new Boolean(true);
- *
- * 重写了valueOf()方法，返回基本类型true或者false,重写了toString()方法，返回"true"或"false"字符串。
- * 但是由于布尔转型函数对所有非空对象均返回true,所以会造成很大程度的混淆，因此不推荐使用Boolean 包装类型。
- *
- * 5.6.2 Number 类型
- *
- * 类似Boolean包装类型，重写了三个方法。valueOf()  toString()  toLocaleString()
- *
- * 除了上述继承方法，还有特有的数字格式化方法。
- * toFixed() 以指定的小数位输出数字。
- * var num = 10;
- * console.log(toFixed(num));     // 10.00
- * 会针对位数进行舍入(IE8存在bug，不能够正常舍入(-0.94,-0.5][0.5,0.94)范围内的值，均返回0)
- *
- * 类似toFixed()有toExponential()指数科学计数法和toPrecision()有效位数法。
- *
- * 5.6.3 String 类型
- *
- * 继承方法基本不变，均有一个length属性，表示字符串中字符的个数(包括空格)。
- *
- * 字符方法charAt()  charCodeAt() 接收一个参数即基于0的字符位置。
- * charAt()输出指定位置的字符本身，charCodeAt()输出指定位置的字符的字符编码。
- * ECMAScript 5添加了一种新的方法，使用字符串方括号加索引的方式去访问具体字符。
- * var stringValue = "Hello World";
- * console.log(stringValue[1]);     // "e"
- *
- * 操作方法
- *
- * concat()   拼接字符串并返回一个新的字符串。
- *
- * slice() substr() substring() 均接收一个或者两个参数，第一个指定子字符串开始的位置，第二个用来表示子字符串结束的位置。
- * stringValue.slice(3);      // "lo World"
- * stringValue.substring(3);      // "lo World"
- * stringValue.substr(3);         // "lo World"
- *
- * // slice()和substring()的第二个参数表示子字符串结尾后的位置
- * stringValue.slice(3,7);        // "lo W"
- * stringValue.substring(3,7);    // "lo W"
- *
- * // substr()的第二个参数表示子字符串的长度
- * stringValue.substr(3,7);       // "lo Worl"
- *
- * 传入负值作为参数时，slice()会将传入的负值与字符串长度相加(造成一种从后往前的倒序效果)。
- * substr()将负的第一个参数与字符串长度相加，第二个参数的负值将会被转换为0。
- * substring()则会把所有的负值参数转换为0。
- *
- * 位置方法
- *
- * indexOf()和lastIndexOf() 分别从头和尾检索传入的子字符串并返回其位置。
- * 这两个方法都可以接收第二个参数，表示开始检索的位置。因此可以通过循环完成所有匹配字符串的检索。
- */
-var stringValue = "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-    positions = [],
-    pos = stringValue.indexOf("e");
+        // 创建一个副本并直接指定其作用域。
+        var objectSayColor = sayColor.bind(o);
 
-while (pos > -1){
-	positions.push(pos);
-	pos = stringValue.indexOf("e",pos+1);
-}
+        //toLocaleString()和toString()方法均返回函数的代码，并且实现依浏览器而异。
 
-console.log(positions);
-/*
- * trim()方法(ECMAScript 5 IE9+)
- *
- * 该方法会创建一个字符串的副本并删除前置及后缀的所有空格然后返回结果。
- *
- * 大小写转换方法
- *
- * toLowerCase() toUpperCase() toLocaleLowerCase() toLocaleUpperCase()
- *
- * 模式匹配方法
- *
- * match()
- * 本质上与调用RegExp的exec()方法相同，接收两种参数，正则表达式或者RegExp对象。
- * 返回一个结果数组
- *
- * search()
- * 参数与match()相同，返回结果的索引(第一次出现的位置)
- *
- * replace()
- * 第一个参数可以是一个RegExp对象也可以是一个字符串，第二个参数可以是一个字符串或者函数。
- * 第一个参数为字符串则只会替换第一个匹配结果。global属性为true的RegExp对象则会替换全部匹配结果。
- * 第二个参数可以使用一些特殊的字符序列。
- * $$----$
- * $&----整个模式的子字符串(RegExp.lastMatch)
- * $'----匹配的子字符串之前的子字符串(RegExp.leftContext)
- * $`----匹配的子字符串之后的子字符串(RegExp.rightContext)
- * $n----匹配第n个捕获组的子字符串。
- * $nn---匹配第nn个捕获组的子字符串。
- */
-var textTest = "cat, bat, sat, fat, rat",
-    replaceTest = /(.at)/g;
 
-textTest.replace(replaceTest,"word($&)");       // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+## 5.6 基本包装类型(boolean,number,string)
 
-textTest.replace(replaceTest,"word($1)");       // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+最好不要显式的创建基本包装类型，应用方法就好。
+这些基本包装类型的寿命均是暂时的，在应用它们的方法时会创建各自类型的一个实例，应用方法并返回一个基本类型之后会立即销毁这个实例。
 
-textTest.replace(replaceTest,"word($')");
-// "word(, bat, sat, fat, rat), word(, sat, fat, rat), word(, fat, rat), word(, rat), word()"
+**5.6.1 Boolean 类型**
 
-textTest.replace(replaceTest,"word($`)");
-// "word(), word(cat, ), word(cat, bat, ), word(cat, bat, sat, ), word(cat, bat, sat, fat, )"
+    // 调用构造函数并传入值
+    var booleanObject = new Boolean(true);
 
-// 第二个参数为函数的情况。
-function htmlEscape(text){
-	return text.replace(/[<>"&]/g, function(match,pos,originalText){ //参数分别为模式的匹配项、匹配项在字符串的位置和原始字符串
-		switch (match){
-			case "<":
-				return "&lt;";
-			case ">":
-				return "&gt;";
-			case "&":
-				return "&amp;";
-			case "/":
-				return "&quot;";
-		}
-	})
-}
+* 重写了`valueOf()`方法，返回基本类型true或者false
+* 重写了`toString()`方法，返回"true"或"false"字符串。
 
-console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
-// &lt;p class=undefinedgreetingundefined&gt;Hello world!&lt;/p&gt;
+由于布尔转型函数对所有非空对象均返回true,所以会造成很大程度的混淆，因此不推荐使用Boolean包装类型。
 
-// 如果有多个捕获组，则传递给函数的参数应该为模式的匹配项、第一个捕获组的匹配项、第二个……，最后两个参数不变。
+**5.6.2 Number 类型**
 
-/*
- * split() 方法
- *
- * 使用指定的分隔符将字符串分割成一系列子字符串，返回一个数组。
- * 第一个参数为指定的分隔符，可以是字符串也可以是正则表达式。第二个可选参数为分割后的项数。
- *
- * localeCompare() 方法
- *
- * 比较两个字符串并返回一个值
- * 如果输入的参数字符串在字母表中应该排在字符串之前，则输出正数，相同则输出0，之后则输出负数.
- * 因为其输出的具体值根据实现而定，所以应该判断后再行输出。
- *
- * fromCharCode() 方法
- *
- * 接收一定的字符串编码作为参数，然后返回一个字符串实现。
- *
- * 5.7 单体内置对象
- *
- * Global对象
- *
- * encodeURI()和encodeURIComponent() 用于操纵URI(统一资源标识符,Uniform Resource Identifier)的方法，前者主要针对整体，后者针对部分。
- * 针对URI进行转译，前者可以使用在整个URI上，转义范围狭窄，而后者转义范围比较大。
- *
- * decodeURI()和decodeURIComponent()则是上述两个方法的反方法。
- *
- * eval()方法
- *
- * 传入的参数会被当作真正的JS代码被解析器执行，所以一般因为安全性的问题不进行使用。
- *
- * Global的属性
- *
+类似Boolean包装类型，重写了三个方法。`valueOf()` `toString()` `toLocaleString()`
+
+除了上述继承方法，还有特有的数字格式化方法。
+* `toFixed()` 以指定的小数位输出数字。
+
+        var num = 10;
+        console.log(toFixed(num));     // 10.00
+  会针对位数进行舍入(IE8存在bug，不能够正常舍入(-0.94,-0.5][0.5,0.94)范围内的值，均返回0)
+
+* 类似`toFixed()`有`toExponential()`指数科学计数法和`toPrecision()`有效位数法。
+
+**5.6.3 String 类型**
+
+* 继承方法基本不变，均有一个length属性，表示字符串中字符的个数(包括空格)。
+
+* 字符方法`charAt()` `charCodeAt()`接收一个参数即基于0的字符位置。
+
+  `charAt()`输出指定位置的字符本身，`charCodeAt()`输出指定位置的字符的字符编码。
+* ECMAScript 5添加了一种新的方法，使用字符串方括号加索引的方式去访问具体字符。
+
+        var stringValue = "Hello World";
+        console.log(stringValue[1]);     // "e"
+
+**操作方法**
+
+* `concat()`   拼接字符串并返回一个新的字符串。
+
+* `slice()` `substr()` `substring()` 均接收一个或者两个参数，第一个指定子字符串开始的位置，第二个用来表示子字符串结束的位置。
+
+        stringValue.slice(3);      // "lo World"
+        stringValue.substring(3);      // "lo World"
+        stringValue.substr(3);         // "lo World"
+
+        // slice()和substring()的第二个参数表示子字符串结尾后的位置
+        stringValue.slice(3,7);        // "lo W"
+        stringValue.substring(3,7);    // "lo W"
+
+        // substr()的第二个参数表示子字符串的长度
+        stringValue.substr(3,7);       // "lo Worl"
+
+  传入负值作为参数时，`slice()`会将传入的负值与字符串长度相加(造成一种从后往前的倒序效果)。
+
+  `substr()`将负的第一个参数与字符串长度相加，第二个参数的负值将会被转换为0。
+
+  `substring()`则会把所有的负值参数转换为0。
+
+**位置方法**
+
+* `indexOf()`和`lastIndexOf()` 分别从头和尾检索传入的子字符串并返回其位置。
+
+  这两个方法都可以接收第二个参数，表示开始检索的位置。因此可以通过循环完成所有匹配字符串的检索。
+
+        var stringValue = "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+            positions = [],
+            pos = stringValue.indexOf("e");
+
+        while (pos > -1){
+        	positions.push(pos);
+        	pos = stringValue.indexOf("e",pos+1);
+        }
+
+        console.log(positions);
+
+* trim()方法(ECMAScript 5 IE9+)
+
+  该方法会创建一个字符串的副本并删除前置及后缀的所有空格然后返回结果。
+
+**大小写转换方法**
+
+  + `toLowerCase()`
+  + `toUpperCase()`
+  + `toLocaleLowerCase()`
+  + `toLocaleUpperCase()`
+
+
+**模式匹配方法**
+
+* `match()`
+
+  本质上与调用RegExp的`exec()`方法相同，接收两种参数，正则表达式或者RegExp对象。
+  返回一个结果数组
+
+* `search()`
+
+  参数与`match()`相同，返回结果的索引(第一次出现的位置)
+
+* `replace()`
+
+  第一个参数可以是一个RegExp对象也可以是一个字符串，第二个参数可以是一个字符串或者函数。
+
+  第一个参数为字符串则只会替换第一个匹配结果。global属性为true的RegExp对象则会替换全部匹配结果。
+
+    + $$----$
+    + $&----整个模式的子字符串(RegExp.lastMatch)
+    + $'----匹配的子字符串之前的子字符串(RegExp.leftContext)
+    + $`----匹配的子字符串之后的子字符串(RegExp.rightContext)
+    + $n----匹配第n个捕获组的子字符串。
+    + $nn---匹配第nn个捕获组的子字符串。
+
+  第二个参数可以使用上述一些特殊的字符序列。
+
+        var textTest = "cat, bat, sat, fat, rat",
+            replaceTest = /(.at)/g;
+
+        textTest.replace(replaceTest,"word($&)");
+        // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+
+        textTest.replace(replaceTest,"word($1)");
+        // "word(cat), word(bat), word(sat), word(fat), word(rat)"
+
+        textTest.replace(replaceTest,"word($')");
+        // "word(, bat, sat, fat, rat), word(, sat, fat, rat), word(, fat, rat), word(, rat), word()"
+
+        textTest.replace(replaceTest,"word($`)");
+        // "word(), word(cat, ), word(cat, bat, ), word(cat, bat, sat, ), word(cat, bat, sat, fat, )"
+
+        // 第二个参数为函数的情况。
+        function htmlEscape(text){
+            return text.replace(/[<>"&]/g, function(match,pos,originalText){ //参数分别为模式的匹配项、匹配项在字符串的位置和原始字符串
+                switch (match){
+                    case "<":
+                        return "&lt;";
+                    case ">":
+                        return "&gt;";
+                    case "&":
+                        return "&amp;";
+                    case "/":
+                        return "&quot;";
+                }
+            })
+        }
+
+        console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
+        // &lt;p class=undefinedgreetingundefined&gt;Hello world!&lt;/p&gt;
+
+        // 如果有多个捕获组，则传递给函数的参数应该为模式的匹配项、第一个捕获组的匹配项、第二个……，最后两个参数不变。
+
+
+* `split()` 方法
+
+  使用指定的分隔符将字符串分割成一系列子字符串，返回一个数组。
+
+  第一个参数为指定的分隔符，可以是字符串也可以是正则表达式。第二个可选参数为分割后的项数。
+
+* `localeCompare()` 方法
+
+  比较两个字符串并返回一个值
+
+  如果输入的参数字符串在字母表中应该排在字符串之前，则输出正数，相同则输出0，之后则输出负数.
+
+  因为其输出的具体值根据实现而定，所以应该判断后再行输出。
+
+* `fromCharCode()` 方法
+
+  接收一定的字符串编码作为参数，然后返回一个字符串实现。
+
+#### 5.7 单体内置对象
+
+**Global对象**
+
+* `encodeURI()`和`encodeURIComponent()`
+
+  用于操纵URI(统一资源标识符,Uniform Resource Identifier)的方法，前者主要针对整体，后者针对部分。
+
+  针对URI进行转译，前者可以使用在整个URI上，转义范围狭窄，而后者转义范围比较大。
+
+* `decodeURI()`和`decodeURIComponent()`则是上述两个方法的反方法。
+
+* `eval()`方法
+
+  传入的参数会被当作真正的JS代码被解析器执行，所以一般因为安全性的问题不进行使用。
+
+**Global的属性**
+
  * 包括基础构造函数和特殊值，一般用不到。
  *
  * window对象
