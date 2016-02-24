@@ -785,15 +785,15 @@ caller中保存有调用当前函数的函数的引用。
 
 **Global的属性**
 
- * 包括基础构造函数和特殊值，一般用不到。
- *
- * window对象
- *
- * Web浏览器的常见全局对象。
- *
- * 5.7.2 Math对象
- *
- * 属性
+包括基础构造函数和特殊值，一般用不到。
+
+**window对象**
+
+Web浏览器的常见全局对象。
+
+**5.7.2 Math对象**
+
+属性
  * .E-----------自然对数的底数
  * .LN10--------10的自然对数
  * .LN2---------2的自然对数
@@ -802,319 +802,344 @@ caller中保存有调用当前函数的函数的引用。
  * .PI----------圆周率
  * .SQRT1_2-----根号2的倒数
  * .SQRT2-------根号2
- *
- * min()和max()方法
- *
- * 确定一组数值中的最大和最小值
- */
-var mathValue = [1,2,3,4,5,6,7,8,9],
-    maxValue = Math.max.apply(Math,mathValue);
-/*
- * 上述代码可以方便的在数组中找到最大值。
- *
- * 舍入方法
- *
- * ceil() 向上舍入
- *
- * floor() 向下舍入
- *
- * round() 标准舍入
- *
- * 随机方法
- *
- * random()可以获得在0到1之间的一个随机数
- * 常规用法
- * value = Math.floor(Math.random() * total + minPossibleValue);
- *
- * 其他Math的方法------p.136
- *
- * -------------------------------------------------------------------------------------------------------------------
- *
- * Chapter6 面向对象的程序设计
- *
- * 6.1 理解对象
- *
+
+`min()`和`max()`方法
+
+确定一组数值中的最大和最小值
+
+    var mathValue = [1,2,3,4,5,6,7,8,9],
+        maxValue = Math.max.apply(Math,mathValue);
+
+上述代码可以方便的在数组中找到最大值。
+
+舍入方法
+
+ * `ceil()` 向上舍入
+
+ * `floor()` 向下舍入
+
+ * `round()` 标准舍入
+
+随机方法
+
+ * `random()`可以获得在0到1之间的一个随机数
+
+   常规用法
+
+        value = Math.floor(Math.random() * total + minPossibleValue);
+
+其他Math的方法------p.136
+
+*****
+
+## Chapter6 面向对象的程序设计
+
+#### 6.1 理解对象
+
  * 无序属性的集合，其属性可以是基本值、对象、函数。
  * 对象由任意一种引用类型(Object, Function, Array, Date, RegExp...)或者自定义类型创建。
  * 创建对象的方式主要分两种，一种是创建实例然后添加属性，一种是对象字面量。
- *
- * 6.1.1 属性类型
- *
- * 数据属性
- *
- * 数据属性包含一个数据值的位置，可以进行读取和写入操作。
- *
- * [[Configurable]]  是否能够通过删除重新定义
- * [[Enumerable]]    是否能够通过for-in循环显示属性
- * [[Writable]]      是否能够修改其值
- * [[Value]]         包含这个属性的数据值，读取值和写入值都操作这个位置，默认undefined
- * 操作上述这些特性的时候可以通过Object.defineProperty(object,"属性值",{特性字面量})来进行。
- * 调用后如不指定默认都是false，所以一般没必要用。
- *
- * 访问器属性
- *
- * 访问器属性不包含数据值；包含一对getter和setter函数，有以下几个特性。
- *
- * [[Configurable]]
- * [[Enumerable]]
- * [[Get]]
- * [[Set]]
- * 用起来需要特殊指定，属性名前有下划线。
- *
- * var book = {
- *     _year: 2004,
- *     edition: 1
- * };
- *
- * Object.defineProperty(book,"year",{
- *     get: function (){
- *         return this._year;
- *     }
- *     set: function (){
- *         if(newValue > 2004) {
- *             this._year = newValue;
- *             this.edition += newValue - 2004;
- *         }
- *     }
- * });
- *
- * 对上述特性的操作需要IE9+
- *
- * 定义多个属性的特性
- *
- * Object.defineProperties (object,{
- *     属性1: {
- *         特性1: ....,
- *         特性2: ....
- *     }
- *     属性2: ...
- * });
- *
- * 读取属性的特性
- *
- * Object.getOwnPropertyDescriptor(object,"属性名");
- *
- * 以上特性操作方式为ECMAScript 5
- *
- * 6.2 创建对象
- *
- * 6.2.1 工厂模式
- *
- * 工厂模式抽象了创建具体对象的过程，用函数来封装以特定接口创建对象的细节。
- *
- * function createPerson (name, age, job){
- *     var o = new Object;
- *     o.name = name;
- *     o.age = age;
- *     o.job = job;
- *     o.sayName = function (){
- *         alert(this.name);
- *     };
- *     return o;
- * }
- *
- * var person1 = createPerson(....),
- *     person2 = createPerson(....);
- *
- * 工厂模式解决了创建多个相似对象的问题，但是没有解决对象识别的问题。
- *
- * 6.2.2 构造函数模式
- *
- * function Person(name, age, job){
- *     this.name = name;
- *     this.age = age;
- *     this.job = job;
- *     this.sayName = function () {
- *         alert(this.name);
- *     };
- * }
- *
- * var person1 = new Person(....),
- *     person2 = new Person(....);
- *
- * 构造函数模式没有显示的创建对象，直接把属性和方法赋给了this对象，没有return语句。
- * 其工作模式为创建一个对象；把构造函数(Person(),pascal命名)作用域赋给新对象；执行构造函数里的代码，添加属性和方法；返回这个新对象。
- * 创建出来的对象都会有一个constructor属性，指向Person，而且同时是Object和Person的实例。
- * 由构造函数模式创建的对象，都是这个构造函数的实例，就实现了对象识别的功能。
- *
- * 构造函数可以被直接当作函数使用，可以作为普通函数调用也可以在指定作用域中调用。
- * Person(....);
- * window.sayName();   //可以执行。
- * Person.call(o,....);
- * o.sayName();        //可以执行。
- *
- * 构造函数模式存在的问题在于每一个实例都独享一个方法(sayName,Function实例)。
- * person1.sayName === person2.sayName     // false
- * 可以把这个Function实例拿出来写成一个全局函数，但是这样会影响封装性。
- *
- * 6.2.3 原型模式
- *
- * 原型模式的基本构造如下：
- * function Person (){
- * }
- *
- * Person.prototype.name = "...";
- * Person.prototype.age = ...;
- * Person.prototype.job = "...";
- * Person.prototype.sayName = function (){
- *     alert(this.name);
- * };
- *
- * var person1 = new Person();
- * var person2 = new Person();
- *
- * 理解原型。
- * 创建任何函数都会有一个prototype属性，这个属性指向函数的原型对象。
- * 创建了构造函数之后原型对象只会默认获得constuctor属性，其余属性继承自Object.
- * 在通过构造函数创建了新的实例之后，每一个实例都存在一个指针指向原型对象，通过原型对象我们就可以调用保存在原型中的属性和方法。(查找对象属性)
- * Person.prototype.isPrototypeOf(person1)     // true
- * Object.getPrototypeOf(person2) == Person.prototype;   // true
- *
- * 改写原型对象的属性。
- * 可以直接在实例中改写属性，根据查找的方式，只有在实例中查找不到才会上述到原型。
- * 使用hasOwnProperty()可以检测属性是存在于实例还是原型。
- * person1.hasOwnProperty("name")    // false
- *
- * 通过in操作符可以检查通过对象能够访问到的属性，无论存储在哪里。
- * "name" in person1;   // true
- * function hasPrototypeProperty (object,name){
- *     return !object.hasOwnProperty(name) && (name in object);
- * }
- * 可以使用上述函数判断属性是否保存在原型里。并不保存在实例中，而且可以访问到，所以一定在原型里。
- * IE8 之前屏蔽不可枚举属性的实例属性不会出现在for-in循环中。
- *
- * ECMAScript5则添加了一个方法可以查询存储在对象里的属性和方法。
- * var keys = Object.keys(Person.prototype);   //["name","age","job","sayName"]
- * 上述方法都存在于Object类型里，这个方法返回一个字符串数组。
- *
- * 使用字面量语法修改原型。
- *
- * 使用字面量修改原型,本质上是完全重写，会使得其constructor属性不再指向构造函数，而是指向Object函数。
- * 解决这个问题可以在字面量中专门指定constructor，但是会使得constructor的枚举特性被设置为true。
- * 此时可以直接使用ECMA5中的Object.defineProperty()
- * function Person (){
- * }
- *
- * Person.prototype = {
- *     name: ...,
- *     age: ...,
- *     job: ...,
- *     sayName: function () {
- *         ....;
- *     }
- * };
- *
- * Object.defineProperty(Person.prototype , "constructor",{
- *     enumerable: false,
- *     value: Person
- * };
- *
- * 原型的动态性
- *
- * 在重写原型对象之前创建的实例中的原型指针会指向旧的原型。
- *
- * 原型模式存在的问题：
- * 方便的共享方法，通过实例的同名属性可以屏蔽原型中的包含基本值的属性继承，但是对于引用类型比如数组就比较麻烦。
- *
- * 6.2.4 组合使用构造函数模式和原型模式
- *
- * function Person (name, age, job){
- *     this.name = name;
- *     this.age = age;
- *     this.job = job;
- *     this.friends = ["...","..."];
- * }
- *
- * person.prototype = {
- *     constructor: Person,
- *     sayName: function () {
- *         alert("this.name");
- *     }
- * }
- *
- * var person1 = new Person("...",...,"..."),
- *     person2 = new Person(....);
- *
- * 6.2.5 动态原型模式
- *
- * function Person (name, age, job) {
- *
- *     //属性
- *     this.name = name;
- *     this.age = age;
- *     this.job = job;
- *
- *     //方法
- *     if (typeof this.sayName != "function"){
- *
- *         Person.prototype.sayName = function () {
- *             alert(this.name);
- *         };
- *
- *     }
- * }
- *
- * 第二段方法部分只有在初始化的时候才会执行。
- *
- * 6.2.6 寄生构造函数模式
- *
- * 创建一个函数封装创建对象的代码，然后再返回新创建的对象。可以用来生成不能去修改构造函数的特殊对象。
- *
- * function Person (name, age, job){
- *     var o = new Object();
- *     o.name = name;
- *     o.age = age;
- *     o.job = job;
- *     o.sayName = function () {
- *         alert(this.name);
- *     }
- *     return o;
- * }
- *
- *
- * function SpecialArray () {
- *
- *     //创建数组
- *     var values = new Array();
- *
- *     //添加值
- *     values.push.apply(values,arguments);
- *
- *     //添加方法
- *     values.toPipedString = function () {
- *         return this.jion("|");
- *     }
- *
- *     //返回数组
- *     return values;
- * }
- *
- * 需要注意的一点就是寄生模式下返回的对象跟构造函数以及构造函数的原型之间没有关系，所以尽量不要使用这种模式。
- *
- * 6.2.7 稳妥构造函数模式
- *
- * 稳妥对象，没有公共属性，其方法也不引用this对象，主要是为了安全目的
- *
- * function Person (name, age, job) {
- *
- *     //创建要返回的对象
- *     var o = new Object();
- *
- *     //可以在这里定义私有变量和函数
- *
- *     //添加方法
- *     o.sayName = function () {
- *         alert(name);
- *     }
- *
- *     //返回对象
- *     return o;
- * }
- *
- * 在以这种模式创建的对象，除了使用sayName()方法之外无法访问到name值。
- * 这样使用new操作符定义的变量里保存的就是一个稳妥对象。
- *
- * 6.3 继承
+
+**6.1.1 属性类型**
+
+* 数据属性
+
+  数据属性包含一个数据值的位置，可以进行读取和写入操作。
+
+        [[Configurable]]  是否能够通过删除重新定义
+        [[Enumerable]]    是否能够通过for-in循环显示属性
+        [[Writable]]      是否能够修改其值
+        [[Value]]         包含这个属性的数据值，读取值和写入值都操作这个位置，默认undefined
+
+  操作上述这些特性的时候可以通过Object.defineProperty(object,"属性值",{特性字面量})来进行。
+  调用后如不指定默认都是false，所以一般没必要用。
+
+* 访问器属性
+
+  访问器属性不包含数据值；包含一对getter和setter函数，有以下几个特性。
+
+        [[Configurable]]
+        [[Enumerable]]
+        [[Get]]
+        [[Set]]
+
+  用起来需要特殊指定，属性名前有下划线。
+
+        var book = {
+            _year: 2004,
+            edition: 1
+        };
+
+        Object.defineProperty(book,"year",{
+            get: function (){
+                return this._year;
+            }
+            set: function (){
+                if(newValue > 2004) {
+                    this._year = newValue;
+                    this.edition += newValue - 2004;
+                }
+            }
+        });
+
+        //对上述特性的操作需要IE9+
+
+* 定义多个属性的特性
+
+        Object.defineProperties (object,{
+            属性1: {
+                特性1: ....,
+                特性2: ....
+            }
+            属性2: ...
+        });
+
+* 读取属性的特性
+
+        //特性操作方式为ECMAScript 5
+        Object.getOwnPropertyDescriptor(object,"属性名");
+
+
+
+#### 6.2 创建对象
+
+* **6.2.1 工厂模式**
+
+  工厂模式抽象了创建具体对象的过程，用函数来封装以特定接口创建对象的细节。
+
+        function createPerson (name, age, job){
+            var o = new Object;
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function (){
+                alert(this.name);
+            };
+            return o;
+        }
+
+        var person1 = createPerson(....),
+            person2 = createPerson(....);
+  工厂模式解决了创建多个相似对象的问题，但是没有解决对象识别的问题。
+
+* **6.2.2 构造函数模式**
+
+        function Person(name, age, job){
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName = function () {
+                alert(this.name);
+            };
+        }
+
+        var person1 = new Person(....),
+            person2 = new Person(....);
+
+  + 构造函数模式没有显示的创建对象，直接把属性和方法赋给了this对象，没有return语句。
+
+    其工作模式为创建一个对象；把构造函数(Person(),pascal命名)作用域赋给新对象；执行构造函数里的代码，添加属性和方法；返回这个新对象。
+
+    创建出来的对象都会有一个constructor属性，指向Person，而且同时是Object和Person的实例。
+
+    由构造函数模式创建的对象，都是这个构造函数的实例，就实现了对象识别的功能。
+
+    构造函数可以被直接当作函数使用，可以作为普通函数调用也可以在指定作用域中调用。
+
+        Person(....);
+        window.sayName();   //可以执行。
+        Person.call(o,....);
+        o.sayName();        //可以执行。
+
+  + 构造函数模式存在的问题在于每一个实例都独享一个方法(sayName,Function实例)。
+
+        person1.sayName === person2.sayName     // false
+
+    可以把这个Function实例拿出来写成一个全局函数，但是这样会影响封装性。
+
+* **6.2.3 原型模式**
+
+  + 原型模式的基本构造如下：
+
+        function Person (){
+        }
+
+        Person.prototype.name = "...";
+        Person.prototype.age = ...;
+        Person.prototype.job = "...";
+        Person.prototype.sayName = function (){
+            alert(this.name);
+        };
+
+        var person1 = new Person();
+        var person2 = new Person();
+
+  + 理解原型
+
+    创建任何函数都会有一个prototype属性，这个属性指向函数的原型对象。
+
+    创建了构造函数之后原型对象只会默认获得constructor属性，其余属性继承自Object.
+
+    在通过构造函数创建了新的实例之后，每一个实例都存在一个指针指向原型对象，通过原型对象我们就可以调用保存在原型中的属性和方法。(查找对象属性)
+
+        Person.prototype.isPrototypeOf(person1)     // true
+        Object.getPrototypeOf(person2) == Person.prototype;   // true
+
+  + 改写原型对象的属性。
+
+    可以直接在实例中改写属性，根据查找的方式，只有在实例中查找不到才会上述到原型。
+
+    使用`hasOwnProperty()`可以检测属性是存在于实例还是原型。
+
+        person1.hasOwnProperty("name")    // false
+
+  + 通过in操作符可以检查通过对象能够访问到的属性，无论存储在哪里。
+
+        "name" in person1;   // true
+        function hasPrototypeProperty (object,name){
+            return !object.hasOwnProperty(name) && (name in object);
+        }
+
+  + 可以使用上述函数判断属性是否保存在原型里。并不保存在实例中，而且可以访问到，所以一定在原型里。
+
+    IE8 之前屏蔽不可枚举属性的实例属性不会出现在for-in循环中。
+
+  + ECMAScript5则添加了一个方法可以查询存储在对象里的属性和方法。
+
+        var keys = Object.keys(Person.prototype);   //["name","age","job","sayName"]
+    上述方法都存在于Object类型里，这个方法返回一个字符串数组。
+
+  + 使用字面量语法修改原型。
+
+    使用字面量修改原型,本质上是完全重写，会使得其constructor属性不再指向构造函数，而是指向Object函数。
+
+    解决这个问题可以在字面量中专门指定constructor，但是会使得constructor的枚举特性被设置为true。
+
+    此时可以直接使用ECMA5中的`Object.defineProperty()`
+
+        function Person (){
+        }
+         *
+        Person.prototype = {
+            name: ...,
+            age: ...,
+            job: ...,
+            sayName: function () {
+                ....;
+            }
+        };
+
+        Object.defineProperty(Person.prototype , "constructor",{
+            enumerable: false,
+            value: Person
+        };
+
+  + 原型的动态性
+
+    在重写原型对象之前创建的实例中的原型指针会指向旧的原型。
+
+  + 原型模式存在的问题：
+
+    方便的共享方法，通过实例的同名属性可以屏蔽原型中的包含基本值的属性继承，但是对于引用类型比如数组就比较麻烦。
+
+* **6.2.4 组合使用构造函数模式和原型模式**
+
+        function Person (name, age, job){
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.friends = ["...","..."];
+        }
+
+        person.prototype = {
+            constructor: Person,
+            sayName: function () {
+                alert("this.name");
+            }
+        }
+
+        var person1 = new Person("...",...,"..."),
+            person2 = new Person(....);
+
+* **6.2.5 动态原型模式**
+
+        function Person (name, age, job) {
+
+            //属性
+            this.name = name;
+            this.age = age;
+            this.job = job;
+
+            //方法
+            if (typeof this.sayName != "function"){
+
+                Person.prototype.sayName = function () {
+                    alert(this.name);
+                };
+
+            }
+        }
+        //第二段方法部分只有在初始化的时候才会执行。
+
+* **6.2.6 寄生构造函数模式**
+
+  创建一个函数封装创建对象的代码，然后再返回新创建的对象。可以用来生成不能去修改构造函数的特殊对象。
+
+        function Person (name, age, job){
+            var o = new Object();
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function () {
+                alert(this.name);
+            }
+            return o;
+        }
+
+        function SpecialArray () {
+
+            //创建数组
+            var values = new Array();
+
+            //添加值
+            values.push.apply(values,arguments);
+
+            //添加方法
+            values.toPipedString = function () {
+                return this.jion("|");
+            }
+
+            //返回数组
+            return values;
+        }
+
+  需要注意的一点就是寄生模式下返回的对象跟构造函数以及构造函数的原型之间没有关系，所以尽量不要使用这种模式。
+
+* **6.2.7 稳妥构造函数模式**
+
+  稳妥对象，没有公共属性，其方法也不引用this对象，主要是为了安全目的
+
+        function Pers  (name, age, job) {
+
+            //创建要返回的对象
+            var o = new Object();
+
+            //可以在这里定义私有变量和函数
+
+            //添加方法
+            o.sayName = function () {
+                alert(name);
+            }
+
+            //返回对象
+            return o;
+        }
+
+  在以这种模式创建的对象，除了使用sayName()方法之外无法访问到name值。
+
+  这样使用new操作符定义的变量里保存的就是一个稳妥对象。
+
+#### 6.3 继承
  *
  * 6.3.1 原型链
  *
