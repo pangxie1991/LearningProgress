@@ -1140,636 +1140,797 @@ Web浏览器的常见全局对象。
   这样使用new操作符定义的变量里保存的就是一个稳妥对象。
 
 #### 6.3 继承
- *
- * 6.3.1 原型链
- *
- * 利用原型，让一个引用类型继承另一个引用类型的属性和方法。
- * 每个引用类型都有一个原型对象，原型对象包含一个指向构造函数的指针，而所有通过这个构造函数创建的实例都包含一个指向这个原型对象的指针。
- * 那么我们让一个原型对象成为另外一个对象的实例，则此时的原型对象将包含一个指向另外一个原型的指针，层层递进形成原型链。
- *
- * function SuperType(){
- *     this.property = true;
- * }
- *
- * SuperType.prototype.getSuperValue = function () {
- *     return this.property;
- * };
- *
- * function SubType () {
- *     this.subProperty = false;
- * }
- *
- * //形成原型链并继承
- * SubType.prototype = new SuperType();
- *
- * //私有方法
- * SubType.prototype.getSubValue = function () {
- *     return this.subProperty;
- * };
- *
- * var instance = new SubType();
- *
- * instance.getSuperValue();       //true     从原型链中继承的方法。
- *
- * 注意instance.constructor 现在指向SuperType，因为其原型被完全重写了。
- * 所有的自定义对象都有个默认原型——Object   很多方法都继承自Object。
- *
- * 可以使用instanceof操作符来检索一个对象原型链中出现的所有构造函数。
- * instance instanceof Object             //true
- * instance instanceof SuperType          //true
- * instance instanceof SubTypr            //true
- *
- * 也可以使用isPrototypeOf()方法，可以检索所有原型链中出现的原型。
- * Obeject.prototype.isPrototypeOf(instance);       //true
- * SuperType.prototype.isPrototypeOf(instance);     //true
- * SubType.prototype.isPrototypeOf(instance);       //true
- *
- * 给下级原型添加私有方法和属性以及覆盖上级原型的方法和属性一定要在替换原型语句之前。
- * //形成原型链并继承
- * SubType.prototype = new SuperType();
- *
- * //私有方法
- * SubType.prototype.getSubValue = function () {
- *     return this.subProperty;
- * };
- * 而且在添加私有方法或者属性以及覆盖的过程中不能使用字面量方式(相当于重写原型)
- *
- * 原型中包含引用类型值(比如数组)的属性会被所有实例共享，在使用原型链实现继承的过程中原先的实例属性会自动变成原型属性。
- *
- * 6.3.2 借用构造函数实现继承
- *
- * 解决上述问题的一种继承方式。
- *
- * function SuperType (name) {
- *     this.color = ["red","yellow"];
- *     this.name = name;
- * }
- *
- * function SubType (name) {
- *
- *     //继承了 SuperType
- *     SuperType.call(this,name);
- * }
- *
- * 通过上述方式，下级构造函数借调了上级类型的构造函数。在其中可以传递参数。
- * 但是这种方式并没有解决函数复用的问题
- *
- * 6.3.3 组合继承
- *
- * function SuperType (name) {
- *     this.color = ["red","yellow"];
- *     this.name = name;
- * }
- *
- * SuperType.prototype.sayName = function () {
- *     alert(this.name);
- * };
- *
- * function SubType (name，age) {
- *
- *     //继承了 SuperType
- *     SuperType.call(this,name);
- *
- *     //下级实例属性
- *     this.age = age;
- * }
- *
- * //原型链继承方法
- * SubType.prototype = new SuperType();
- *
- * //对原型进行调整，添加私有方法。
- * SubType.prototype.constructor = SubType;
- * SubType.prototype.sayAge = function () {
- *     alert(this.age);
- * }
- *
- * 以上就是最常用的基本继承方法。避免了单独使用原型链以及使用构造函数继承的缺陷。
- *
- * 6.3.4 原型式继承
- *
- * 借助原型可以基于已有的对象创建新对象，同时不必因此创建自定义类型。
- *
- * function object (o){
- *     function F () {}
- *     F.prototype = o;
- *     return new F();
- * }
- *
- * 其内部有一个临时性的构造函数F，然后将传入的对象作为这个构造函数的原型，然后返回这个临时类型的实例。
- * 整个过程相当于对o执行了一次浅复制，得到的新实例实际上是o的副本，然后可以进行自定义。
- * 注意得到的这个新实例和原来的对象共享引用类型值属性。
- *
- * ECMAScript 5 增加了Object.create()方法规范了原型式继承。其可以通过第二个可选参数实现直接的自定义。
- *
- * 6.3.5 寄生式继承
- *
- * 同样是创建一个仅用于封装继承过程的函数，在函数内部以某种方式来增强对象，最后返回对象。
- *
- * function createAnother (original) {
- *     var clone = object (original);
- *     clone.sayHi = function () {
- *         alert("hi");
- *     }
- *     return clone;
- * }
- *
- * 6.3.6 寄生组合式继承
- *
- * 组合继承最大的问题在于无论什么情况下都会调用两次上级类型的构造函数，一次是在创建子类型原型的时候，一次是在子类型构造函数内部。
- *
- * 而寄生组合式继承，通过借用构造函数来继承属性，通过原型链的混成形式来集成方法。不必为了指定下级类型的原型而调用上级类型构造函数。
- *
- * function inheritPrototype (subType, superType){
- *     var prototype = Object(superType.prototype);
- *     prototype.constructor = subType;
- *     subType.prototype = prototype;
- * }
- *
- * 其组合模式如下:
- * function SuperType (name) {
- *     this.name = name;
- *     this.colors = ["...","...","..."];
- * }
- *
- * SuperType.prototype.sayName = function () {
- *     alert(this.name);
- * }
- *
- * function SubType(name, age){
- *     SuperType.call(this,name);
- *
- *     this.age = age;
- * }
- *
- * inheritPrototype(SubType, SuperType);
- *
- * SubType.prototype.sayAge = function () {
- *     alert(this.age);
- * }
- *
- * 其高效率体现在只调用了一次SuperType的构造函数，并且避免了在SubType.prototype上创建不必要的多余的属性。与此同时原型链保持不变。
- *
- * -----------------------------------------------------------------------------------------------
- *
- * Chapter 7.函数表达式
- *
- * 关于函数声明，有一个重要特征就是函数声明提升，意思是解析器执行代码前会先读取函数声明，也就意味着可以把函数放在调用它的代码后面。
- *
- * // Do not do this
- * if(condition){
- *     function sayHi () {
- *         alert("hi");
- *     }
- * } else {
- *     function sayHi () {
- *         alert("yo!");
- *     }
- * }
- *
- * 因为函数声明提升的原因，解析器无法执行这种代码。
- *
- * 关于匿名函数的作用。可以创建函数赋值给变量也就可以把函数作为其他函数的值返回。
- * 在任何把函数作为值的情况下，都可以使用匿名函数，当然这仅仅是匿名函数的一个用途。
- *
- * 7.1 递归
- *
- * 函数名仅仅是一个指针，要解除函数名和递归函数之间的耦合，可以使用arguments.callee这个属性。
- *
- * function factorial (num) {
- *     if (num<1){
- *         return 1;
- *     } else {
- *         return num * arguments.callee(num-1);
- *     }
- * }
- *
- * 在编写递归时一般不要使用函数名，arguments.callee保险的多。
- *
- * 严格模式下不能通过脚本访问arguments.callee属性，下面的方式可以达到同样的效果。
- *
- * var factorial = (function f (num) {
- *     if (num<1){
- *         return 1;
- *     } else {
- *         return num * f(num-1);
- *     }
- * });
- *
- * 以上代码创建了一个命名函数表达式f(),然后将它赋值给变量，这样即便将函数值赋值给了另外的变量，函数的名字f依然有效。
- *
- * 7.2 闭包
- *
- * 匿名函数和闭包是不同的两个概念。匿名函数是指函数的name属性为空字符串的函数。
- * 而闭包是指有权访问另一个函数作用于中的变量的函数。
- *
- * 创建闭包的常见方式就是在一个函数内部创建另一个函数。
- * function createComparisonFunction (propertyName) {
- *
- *     return function (object1, object2) {
- *         var value1 = object1[propertyName],
- *             value2 = object2[propertyName];
- *
- *         if (value1 < value2){
- *             return -1;
- *         } else if (value1 > value2){
- *             return 1;
- *         } else {
- *             return 0;
- *         }
- *     };
- * }
- * 定义value1和value2的那两行代码就访问了外部函数的变量propertyName
- * 即使这个内部函数被返回了，而且是在其他地方被调用了，但它依然可以访问propertyName。
- * 其实现原因跟作用域链有关，具体也是通过指针完成的。
- *
- * 当函数执行时会穿件一个执行环境和相应的作用域链，然后使用arguments和其他命名参数的值来初始化函数的活动对象。
- * 在作用域链中，外部函数的活动对象处在第二位，外部函数的外部函数的活动对象处在第三位，以此类推，直到作用域链终结于全局执行环境。
- * 函数执行过程中为了读取和写入变量的值，就需要在作用域链中查找变量。
- *
- * 在另一个函数内部定义的函数会将包含函数(即外部函数)的活动对象添加到它的作用域链中。因此就可以访问外部函数的参数和其中的变量。
- *
- * 7.2.1 闭包与变量
- *
- * 作用域链的副作用：闭包只能取得包含函数中任何变量的最后一个值。
- * function createFunctions () {
- *     var result = new Array();
- *
- *     for (var i = 0; i < 10; i++) {
- *         result[i] = function () {
- *             return i;
- *         };
- *     }
- *
- *     return result;
- * }
- *
- * 返回一个函数数组，理论上每个函数都应该返回自己的索引值，但实际上每个函数都返回10。
- * 这是因为每个函数的作用域链中都保存着createFunctions()函数的活动对象，所以他们返回的都是同一个变量i。
- * 我们可以通过创建另一个匿名函数强制让闭包的行为符合预期。
- *
- * function createFunctions () {
- *     var result = new Array();
- *
- *     for(var i = 0; i < 10; i++){
- *         result[i] = function (num) {
- *             return function () {
- *                 return num;
- *             };
- *         }(i);
- *     }
- *
- *     return result;
- * }
- *
- * 在上述代码中我们没有直接把闭包赋给数组，而是定义了一个匿名函数，并将立即执行这个匿名函数的结果赋给数组。
- * 这个匿名函数含有一个参数num，也就是最终函数要返回的值。调用这个匿名函数时我们传入了变量i。
- * 由于参数是按值传递，所以i的当前值就赋给了num，而在这个匿名函数的内部又创建并返回了一个访问num的闭包。
- * 这样一来，result中的每个函数都有自己num变量的一个副本，因此可以返回索引值。
- *
- * 7.2.2 关于this 对象
- *
- * 在闭包中使用this对象可能会导致一些问题，this对象是在运行时基于环境的执行环境绑定的。
- * 在全局函数中this等于window。而当函数作为某个对象的方法进行调用的时候，this等于那个对象。
- * 而匿名函数的执行环境具有全局性，所以闭包里的this通常指向window。针对这个特性我们可以调整编写闭包的方式。
- *
- * var name = "the window";
- *
- * var object = {
- *     name: ".....",
- *
- *     getNameFunc: function () {
- *         return function () {
- *             return this.name;
- *         };
- *     }
- * };
- *
- * alert (object.getNameFunc()());      //"the window" (在非严格模式下)
- *
- * 调用object.getNameFunc()()就是立即调用被返回的匿名函数，此时this对象就指向全局属性"the window"。
- *
- * 每个函数在被调用的时候都会自动取得两个特殊变量，this和arguments。
- * 内部函数在搜索这两个变量时永远不可能直接访问外部函数中的这两个变量。
- * 但是通过把外部作用域中的this对象保存在一个闭包能够访问到的变量里，就可以实现闭包访问外部函数的this对象。
- *
- * getNameFunc: function () {
- *     var that = this;
- *     return function () {
- *         return that.name;
- *     };
- * }
- *
- * 几种特殊的情况下，this对象的值可能会发生突变。
- *
- * var name = "the window";
- *
- * var object = {
- *     name: ".....",
- *
- *     getName: function () {
- *         return this.name;
- *     }
- * };
- *
- * object.getName();                          //"....."
- * (object.getName)();                        //"....."
- * (object.getName = object.getName)();       //"the window"
- *
- * 第二种调用方式，像是引用这个函数然后立即执行，此时this的值得到了保存。
- * 第三行代码先执行了一次赋值，然后再调用赋值后的函数并执行，因为这个赋值表达式的值是函数本事，所以this的值得不到维持。
- * 即使是语法的细微变化，都有可能意外改变this的值。
- *
- * 7.2.3 内存泄漏
- *
- * 闭包在IE9以下的版本中会导致一些特殊的问题，具体来说，如果闭包的作用域链中保存了一个HTML元素，则该元素无法被销毁。
- *
- * function assignHander () {
- *     var element = document.getElementById("....");
- *     element.onclick = function () {
- *         alert("element.id");
- *     };
- * }
- *
- * 以上代码创建了一个元素事件处理程序的闭包，且内部包含一个循环引用，即对assignHander()活动对象的引用。
- * 所以就无法减少element的引用数。因此其内存永远不会被回收。需要改写代码进行解决。
- *
- * var id = element.id;
- * element.onclick = function () {
- *     alert(id);
- * };
- *
- * element = null;
- *
- * 通过把element.id的一个副本保存在一个变量里，在闭包中引用这个变量消除循环引用。
- * 同时因为闭包会引用包含函数的整个活动对象，其中包含element，因此有必要把elements设置为null，从而解除对DOM对象的引用。
- *
- * 7.3 模仿块级作用域
- *
- * JS不存在块级作用域。块语句中定义的变量，实际上是在包含函数中而非语句中创建的。
- *
- * JS可以多次声明同一个变量，后续声明会被无视，但是会执行后续声明中的变量初始化。
- *
- * 用作块级作用域的匿名函数语法如下：
- *
- * (function () {
- *     //这里是块级作用域
- * })();
- *
- * 意思是创建一个匿名函数并且立即执行。
- * 这种写法常在全局作用域中被用在函数外部从而限制向全局作用域中添加过多的变量和函数。
- * 同时这种写法也减少了闭包占用内存的问题，因为没有指向匿名函数的引用。函数被立即执行完毕，其作用域链便被直接销毁。
- *
- * 7.4 私有变量
- *
- * JS中没有私有成员的概念，但是有私有变量。在任何函数中定义的变量，都可以认为是私有变量。
- * 在函数内部创建一个闭包，那么闭包通过自己的作用域链也可以访问私有变量。
- * 利用这一点就可以创建用于访问私有变量的公有方法。亦即特权方法(privileged method)。
- *
- * function MyObject () {
- *
- *     //私有变量和方法
- *     var privateVariable = 10;
- *
- *     function privateFunction () {
- *         return false;
- *     }
- *
- *     //特权方法
- *     this.publicMethod = function () {
- *         privateVariable++;
- *         return privateFunction();
- *     };
- * }
- *
- * 利用私有和特权成员可以隐藏那些不应该被直接修改的数据。
- *
- * function Person (name) {
- *
- *     this.getName = function () {
- *         return name;
- *     };
- *
- *     this.setName = function (value) {
- *         name = value;
- *     };
- * }
- *
- * 以上可以做到对name属性的禁止直接修改操作，存在的问题是必须使用构造函数模式，针对每个实例都会创建同样一组新方法。
- *
- * 7.4.1 静态私有变量
- *
- * 解决复用问题的一种方法。在私有作用域中定义私有变量或者函数。
- *
- * (function () {
- *
- *     //私有变量
- *     var name = "";
- *
- *     //构造函数
- *     Person = function (value) {
- *         name = value;
- *     };
- *
- *     //特权方法
- *     Person.prototype.getName = function () {
- *         return name;
- *     };
- *
- *     Person.prototype.setName = function (value) {
- *         name = value;
- *     };
- * })();
- *
- * 以上代码解决了方法的复用，但是每个实例都没有自己的私有变量，公用同一个name，一次单独调用setName会针对所有的实例。
- *
- * 7.4.2 模块模式
- *
- * 为单例创建私有变量和特权方法。
- * JS惯例是使用字面量语法来创建单例对象的。
- *
- * var singleton = {
- *     name: value,
- *     method: function () {
- *         //这里是方法代码
- *     }
- * };
- *
- * 模块模式通过为单例添加私有变量和特权方法能够使其得到增强。
- *
- * var singleton = function () {
- *
- *     //私有变量和方法
- *     var name = value;
- *
- *     function privateFunction () {
- *         return false;
- *     }
- *
- *     //特权/公有方法
- *     return {
- *         publicProperty: true,
- *
- *         publicMethod: function () {
- *             console.log(name);
- *             return privateFunction();
- *         }
- *     };
- * }();
- *
- * 使用了一个返回对象的匿名函数，匿名函数内部定义了私有变量和函数，然后将一个字面量作为函数的值返回。
- * 本质上讲这个对象字面量定义的是单例的公共接口。这种方式特别适用于需要对单例进行某些初始化，同时又要维护其私有变量的情况。
- *
- * var application = function () {
- *     var components = new Array();
- *
- *     //初始化
- *     components.push(new BaseComponent());
- *
- *     //公共
- *     return {
- *         getComponentCount: function () {
- *             return components.length;
- *         },
- *
- *         registerComponent: function (component) {
- *             if (typeof component == "object"){
- *                 components.push(component);
- *             }
- *         }
- *     };
- * }();
- *
- * 7.4.3 增强的模块模式
- *
- * 返回对象之前加入对其增强的代码，适合那些单例必须是某种类型的实例，同时还必须添加某些属性或方法来对其进行增强的情况。
- * 例如下面的代码中如果application对象必须是BaseComponent的实例
- *
- * var application = function () {
- *
- *     //私有变量
- *     var components = new Array();
- *
- *     //初始化
- *     components.push(new BaseComponent());
- *
- *     //创建application的一个局部副本
- *     var app = new BaseComponent();
- *
- *     //公共接口
- *     app.getComponentCount = function () {
- *         return components.length;
- *     };
- *
- *     app.registerComponent = function (component) {
- *         if (typeof component == "object") {
- *             components.push(component);
- *         }
- *     };
- *
- *     //返回副本
- *     return app;
- * }();
- *
- * 返回的对象必须是BaseComponent的实例，app这个实例实际上是其的一个局部变量版。
- *
- * ------------------------------------------------------------------------------------------
- *
- * Chapter8. BOM(Browser Object Model)
- *
- * 8.1 window对象
- *
- * BOM的核心对象
- *
- * 8.1 window对象
- *
- * window对象表示浏览器的一个实例。既是通过JavaScript访问浏览器窗口的一个接口，又是ECMAScript规定的Global对象。
- * 在网页中定义的任何一个对象，变量和函数都以window作为其Global对象，因此有权访问parseInt()等方法。
- *
- * 8.1.1 全局作用域
- *
- * 因为window扮演着ECMAScript中的Global对象的角色，因此所有在全局作用域中声明的变量、函数都会变成window对象的属性和方法。
- *
- * 定义的全局变量与直接定义window对象的属性存在一个区别就是全局对象不能通过delete删除而window对象可以。
- *
- * 8.1.2 窗口关系及框架
- *
- * 如果页面包括框架，则每个框架都拥有自己的window对象，并且保存在frames集合中。
- * 框架集通过html中的frameset和frame标签进行定义。
- * 此时访问全局对象应该通过top.frame[0]这种方式进行。
- *
- * 8.1.3 窗口位置
- *
- * 因为浏览器差异所以获取窗口位置因为浏览器差异导致需要一定的步骤
- *
+
+**6.3.1 原型链**
+
+利用原型，让一个引用类型继承另一个引用类型的属性和方法。
+
+每个引用类型都有一个原型对象，原型对象包含一个指向构造函数的指针，而所有通过这个构造函数创建的实例都包含一个指向这个原型对象的指针。
+
+那么我们让一个原型对象成为另外一个对象的实例，则此时的原型对象将包含一个指向另外一个原型的指针，层层递进形成原型链。
+
+
+    function SuperType(){
+        this.property = true;
+    }
+
+    SuperType.prototype.getSuperValue = function () {
+        return this.property;
+    };
+
+    function SubType () {
+        this.subProperty = false;
+    }
+
+    //形成原型链并继承
+    SubType.prototype = new SuperType();
+
+    //私有方法
+    SubType.prototype.getSubValue = function () {
+        return this.subProperty;
+    };
+
+    var instance = new SubType();
+
+    instance.getSuperValue();       //true     从原型链中继承的方法。
+
+注意`instance.constructor` 现在指向SuperType，因为其原型被完全重写了。
+
+所有的自定义对象都有个默认原型——Object   很多方法都继承自Object。
+
+
+可以使用instanceof操作符来检索一个对象原型链中出现的所有构造函数。
+
+    instance instanceof Object             //true
+    instance instanceof SuperType          //true
+    instance instanceof SubTypr            //true
+
+也可以使用`isPrototypeOf()`方法，可以检索所有原型链中出现的原型。
+
+    Obeject.prototype.isPrototypeOf(instance);       //true
+    SuperType.prototype.isPrototypeOf(instance);     //true
+    SubType.prototype.isPrototypeOf(instance);       //true
+
+给下级原型添加私有方法和属性以及覆盖上级原型的方法和属性一定要在替换原型语句之前。
+
+    //形成原型链并继承
+    SubType.prototype = new SuperType();
+
+    //私有方法
+    SubType.prototype.getSubValue = function () {
+        return this.subProperty;
+    };
+而且在添加私有方法或者属性以及覆盖的过程中不能使用字面量方式(相当于重写原型)
+
+原型中包含引用类型值(比如数组)的属性会被所有实例共享，在使用原型链实现继承的过程中原先的实例属性会自动变成原型属性。
+
+**6.3.2 借用构造函数实现继承**
+
+解决上述问题的一种继承方式。
+
+    function SuperType (name) {
+        this.color = ["red","yellow"];
+        this.name = name;
+    }
+
+    function SubType (name) {
+
+        //继承了 SuperType
+        SuperType.call(this,name);
+    }
+
+通过上述方式，下级构造函数借调了上级类型的构造函数。在其中可以传递参数。
+
+但是这种方式并没有解决函数复用的问题
+
+**6.3.3 组合继承**
+
+     function SuperType (name) {
+         this.color = ["red","yellow"];
+         this.name = name;
+     }
+
+     SuperType.prototype.sayName = function () {
+         alert(this.name);
+     };
+
+     function SubType (name，age) {
+
+         //继承了 SuperType
+         SuperType.call(this,name);
+
+         //下级实例属性
+         this.age = age;
+     }
+
+     //原型链继承方法
+     SubType.prototype = new SuperType();
+
+     //对原型进行调整，添加私有方法。
+     SubType.prototype.constructor = SubType;
+     SubType.prototype.sayAge = function () {
+         alert(this.age);
+     }
+
+以上就是最常用的基本继承方法。避免了单独使用原型链以及使用构造函数继承的缺陷。
+
+**6.3.4 原型式继承**
+
+借助原型可以基于已有的对象创建新对象，同时不必因此创建自定义类型。
+
+     function object (o){
+         function F () {}
+         F.prototype = o;
+         return new F();
+     }
+
+其内部有一个临时性的构造函数`F()`，然后将传入的对象作为这个构造函数的原型，然后返回这个临时类型的实例。
+
+整个过程相当于对o执行了一次浅复制，得到的新实例实际上是o的副本，然后可以进行自定义。
+
+注意得到的这个新实例和原来的对象共享引用类型值属性。
+
+ECMAScript 5 增加了`Object.create()`方法规范了原型式继承。其可以通过第二个可选参数实现直接的自定义。
+
+**6.3.5 寄生式继承**
+
+同样是创建一个仅用于封装继承过程的函数，在函数内部以某种方式来增强对象，最后返回对象。
+
+     function createAnother (original) {
+         var clone = object (original);
+         clone.sayHi = function () {
+             alert("hi");
+         }
+         return clone;
+     }
+
+**6.3.6 寄生组合式继承**
+
+组合继承最大的问题在于无论什么情况下都会调用两次上级类型的构造函数，一次是在创建子类型原型的时候，一次是在子类型构造函数内部。
+
+而寄生组合式继承，通过借用构造函数来继承属性，通过原型链的混成形式来集成方法。不必为了指定下级类型的原型而调用上级类型构造函数。
+
+     function inheritPrototype (subType, superType){
+         var prototype = Object(superType.prototype);
+         prototype.constructor = subType;
+         subType.prototype = prototype;
+     }
+
+其组合模式如下:
+
+     function SuperType (name) {
+         this.name = name;
+         this.colors = ["...","...","..."];
+     }
+
+     SuperType.prototype.sayName = function () {
+         alert(this.name);
+     }
+
+     function SubType(name, age){
+         SuperType.call(this,name);
+
+         this.age = age;
+     }
+
+     inheritPrototype(SubType, SuperType);
+
+     SubType.prototype.sayAge = function () {
+         alert(this.age);
+     }
+
+其高效率体现在只调用了一次SuperType的构造函数，并且避免了在SubType.prototype上创建不必要的多余的属性。与此同时原型链保持不变。
+
+-----------------
+
+## Chapter 7.函数表达式
+
+关于函数声明，有一个重要特征就是函数声明提升，意思是解析器执行代码前会先读取函数声明，也就意味着可以把函数放在调用它的代码后面。
+
+     // Do not do this
+     if(condition){
+         function sayHi () {
+             alert("hi");
+         }
+     } else {
+         function sayHi () {
+             alert("yo!");
+         }
+     }
+
+因为函数声明提升的原因，解析器无法执行这种代码。
+
+关于匿名函数的作用。可以创建函数赋值给变量也就可以把函数作为其他函数的值返回。
+
+在任何把函数作为值的情况下，都可以使用匿名函数，当然这仅仅是匿名函数的一个用途。
+
+#### 7.1 递归
+
+函数名仅仅是一个指针，要解除函数名和递归函数之间的耦合，可以使用arguments.callee这个属性。
+
+     function factorial (num) {
+         if (num<1){
+             return 1;
+         } else {
+             return num * arguments.callee(num-1);
+         }
+     }
+
+在编写递归时一般不要使用函数名，arguments.callee保险的多。
+
+严格模式下不能通过脚本访问arguments.callee属性，下面的方式可以达到同样的效果。
+
+    var factorial = (function f (num) {
+        if (num<1){
+            return 1;
+        } else {
+            return num * f(num-1);
+        }
+    });
+
+以上代码创建了一个命名函数表达式`f()`,然后将它赋值给变量，这样即便将函数值赋值给了另外的变量，函数的名字f依然有效。
+
+#### 7.2 闭包
+
+匿名函数和闭包是不同的两个概念。匿名函数是指函数的name属性为空字符串的函数。
+
+而闭包是指有权访问另一个函数作用于中的变量的函数。
+
+创建闭包的常见方式就是在一个函数内部创建另一个函数。
+
+    function createComparisonFunction (propertyName) {
+
+        return function (object1, object2) {
+            var value1 = object1[propertyName],
+                value2 = object2[propertyName];
+
+            if (value1 < value2){
+                return -1;
+            } else if (value1 > value2){
+                return 1;
+            } else {
+                return 0;
+            }
+        };
+    }
+
+定义value1和value2的那两行代码就访问了外部函数的变量propertyName
+
+即使这个内部函数被返回了，而且是在其他地方被调用了，但它依然可以访问propertyName。
+
+其实现原因跟作用域链有关，具体也是通过指针完成的。
+
+当函数执行时会穿件一个执行环境和相应的作用域链，然后使用arguments和其他命名参数的值来初始化函数的活动对象。
+
+在作用域链中，外部函数的活动对象处在第二位，外部函数的外部函数的活动对象处在第三位，以此类推，直到作用域链终结于全局执行环境。
+
+函数执行过程中为了读取和写入变量的值，就需要在作用域链中查找变量。
+
+在另一个函数内部定义的函数会将包含函数(即外部函数)的活动对象添加到它的作用域链中。因此就可以访问外部函数的参数和其中的变量。
+
+**7.2.1 闭包与变量**
+
+作用域链的副作用：闭包只能取得包含函数中任何变量的最后一个值。
+
+    function createFunctions () {
+        var result = new Array();
+
+        for (var i = 0; i < 10; i++) {
+            result[i] = function () {
+                return i;
+            };
+        }
+
+        return result;
+    }
+
+返回一个函数数组，理论上每个函数都应该返回自己的索引值，但实际上每个函数都返回10。
+
+这是因为每个函数的作用域链中都保存着`createFunctions()`函数的活动对象，所以他们返回的都是同一个变量i。
+
+我们可以通过创建另一个匿名函数强制让闭包的行为符合预期。
+
+    function createFunctions () {
+        var result = new Array();
+
+        for(var i = 0; i < 10; i++){
+            result[i] = function (num) {
+                return function () {
+                    return num;
+                };
+            }(i);
+        }
+
+        return result;
+    }
+
+在上述代码中我们没有直接把闭包赋给数组，而是定义了一个匿名函数，并将立即执行这个匿名函数的结果赋给数组。
+
+这个匿名函数含有一个参数num，也就是最终函数要返回的值。调用这个匿名函数时我们传入了变量i。
+
+由于参数是按值传递，所以i的当前值就赋给了num，而在这个匿名函数的内部又创建并返回了一个访问num的闭包。
+
+这样一来，result中的每个函数都有自己num变量的一个副本，因此可以返回索引值。
+
+**7.2.2 关于this 对象**
+
+在闭包中使用this对象可能会导致一些问题，this对象是在运行时基于环境的执行环境绑定的。
+
+在全局函数中this等于window。而当函数作为某个对象的方法进行调用的时候，this等于那个对象。
+
+而匿名函数的执行环境具有全局性，所以闭包里的this通常指向window。针对这个特性我们可以调整编写闭包的方式。
+
+    var name = "the window";
+
+    var object = {
+        name: ".....",
+
+        getNameFunc: function () {
+            return function () {
+                return this.name;
+            };
+        }
+    };
+
+    alert (object.getNameFunc()());      //"the window" (在非严格模式下)
+
+调用`object.getNameFunc()()`就是立即调用被返回的匿名函数，此时this对象就指向全局属性"the window"。
+
+每个函数在被调用的时候都会自动取得两个特殊变量，this和arguments。
+
+内部函数在搜索这两个变量时永远不可能直接访问外部函数中的这两个变量。
+
+但是通过把外部作用域中的this对象保存在一个闭包能够访问到的变量里，就可以实现闭包访问外部函数的this对象。
+
+    getNameFunc: function () {
+        var that = this;
+        return function () {
+            return that.name;
+        };
+    }
+
+几种特殊的情况下，this对象的值可能会发生突变。
+
+    var name = "the window";
+
+    var object = {
+        name: ".....",
+
+        getName: function () {
+            return this.name;
+        }
+    };
+
+    object.getName();                          //"....."
+    (object.getName)();                        //"....."
+    (object.getName = object.getName)();       //"the window"
+
+第二种调用方式，像是引用这个函数然后立即执行，此时this的值得到了保存。
+
+第三行代码先执行了一次赋值，然后再调用赋值后的函数并执行，因为这个赋值表达式的值是函数本身，所以this的值得不到维持。
+
+即使是语法的细微变化，都有可能意外改变this的值。
+
+**7.2.3 内存泄漏**
+
+闭包在IE9以下的版本中会导致一些特殊的问题，具体来说，如果闭包的作用域链中保存了一个HTML元素，则该元素无法被销毁。
+
+    function assignHander () {
+        var element = document.getElementById("....");
+        element.onclick = function () {
+            alert("element.id");
+        };
+    }
+
+以上代码创建了一个元素事件处理程序的闭包，且内部包含一个循环引用，即对`assignHander()`活动对象的引用。
+
+所以就无法减少element的引用数。因此其内存永远不会被回收。需要改写代码进行解决。
+
+    var id = element.id;
+    element.onclick = function () {
+        alert(id);
+    };
+
+    element = null;
+
+通过把element.id的一个副本保存在一个变量里，在闭包中引用这个变量消除循环引用。
+
+同时因为闭包会引用包含函数的整个活动对象，其中包含element，因此有必要把elements设置为null，从而解除对DOM对象的引用。
+
+#### 7.3 模仿块级作用域
+
+JS不存在块级作用域。块语句中定义的变量，实际上是在包含函数中而非语句中创建的。
+
+JS可以多次声明同一个变量，后续声明会被无视，但是会执行后续声明中的变量初始化。
+
+用作块级作用域的匿名函数语法如下：
+
+    (function () {
+        //这里是块级作用域
+    })();
+
+意思是创建一个匿名函数并且立即执行。
+
+这种写法常在全局作用域中被用在函数外部从而限制向全局作用域中添加过多的变量和函数。
+
+同时这种写法也减少了闭包占用内存的问题，因为没有指向匿名函数的引用。函数被立即执行完毕，其作用域链便被直接销毁。
+
+#### 7.4 私有变量
+
+JS中没有私有成员的概念，但是有私有变量。在任何函数中定义的变量，都可以认为是私有变量。
+
+在函数内部创建一个闭包，那么闭包通过自己的作用域链也可以访问私有变量。
+
+利用这一点就可以创建用于访问私有变量的公有方法。亦即特权方法(privileged method)。
+
+    function MyObject () {
+
+        //私有变量和方法
+        var privateVariable = 10;
+
+        function privateFunction () {
+            return false;
+        }
+
+        //特权方法
+        this.publicMethod = function () {
+            privateVariable++;
+            return privateFunction();
+        };
+    }
+
+利用私有和特权成员可以隐藏那些不应该被直接修改的数据。
+
+    function Person (name) {
+
+        this.getName = function () {
+            return name;
+        };
+
+        this.setName = function (value) {
+            name = value;
+        };
+    }
+
+以上可以做到对name属性的禁止直接修改操作，存在的问题是必须使用构造函数模式，针对每个实例都会创建同样一组新方法。
+
+**7.4.1 静态私有变量**
+
+解决复用问题的一种方法。在私有作用域中定义私有变量或者函数。
+
+    (function () {
+
+        //私有变量
+        var name = "";
+
+        //构造函数
+        Person = function (value) {
+            name = value;
+        };
+
+        //特权方法
+        Person.prototype.getName = function () {
+            return name;
+        };
+
+        Person.prototype.setName = function (value) {
+            name = value;
+        };
+    })();
+
+以上代码解决了方法的复用，但是每个实例都没有自己的私有变量，公用同一个name，一次单独调用setName会针对所有的实例。
+
+**7.4.2 模块模式**
+
+为单例创建私有变量和特权方法。
+
+JS惯例是使用字面量语法来创建单例对象的。
+
+    var singleton = {
+        name: value,
+        method: function () {
+            //这里是方法代码
+        }
+    };
+
+模块模式通过为单例添加私有变量和特权方法能够使其得到增强。
+
+    var singleton = function () {
+
+        //私有变量和方法
+        var name = value;
+
+        function privateFunction () {
+            return false;
+        }
+
+        //特权/公有方法
+        return {
+            publicProperty: true,
+
+            publicMethod: function () {
+                console.log(name);
+                return privateFunction();
+            }
+        };
+    }();
+
+使用了一个返回对象的匿名函数，匿名函数内部定义了私有变量和函数，然后将一个字面量作为函数的值返回。
+
+本质上讲这个对象字面量定义的是单例的公共接口。这种方式特别适用于需要对单例进行某些初始化，同时又要维护其私有变量的情况。
+
+    var application = function () {
+        var components = new Array();
+
+        //初始化
+        components.push(new BaseComponent());
+
+        //公共
+        return {
+            getComponentCount: function () {
+                return components.length;
+            },
+
+            registerComponent: function (component) {
+                if (typeof component == "object"){
+                    components.push(component);
+                }
+            }
+        };
+    }();
+
+**7.4.3 增强的模块模式**
+
+返回对象之前加入对其增强的代码，适合那些单例必须是某种类型的实例，同时还必须添加某些属性或方法来对其进行增强的情况。
+
+例如下面的代码中如果application对象必须是BaseComponent的实例
+
+    var application = function () {
+
+        //私有变量
+        var components = new Array();
+
+        //初始化
+        components.push(new BaseComponent());
+
+        //创建application的一个局部副本
+        var app = new BaseComponent();
+
+        //公共接口
+        app.getComponentCount = function () {
+            return components.length;
+        };
+
+        app.registerComponent = function (component) {
+            if (typeof component == "object") {
+                components.push(component);
+            }
+        };
+
+        //返回副本
+        return app;
+    }();
+
+返回的对象必须是BaseComponent的实例，app这个实例实际上是其的一个局部变量版。
+
+----------
+
+## Chapter8. BOM(Browser Object Model)
+
+#### 8.1 window对象
+
+BOM的核心对象
+
+window对象表示浏览器的一个实例。既是通过JavaScript访问浏览器窗口的一个接口，又是ECMAScript规定的Global对象。
+
+在网页中定义的任何一个对象，变量和函数都以window作为其Global对象，因此有权访问`parseInt()`等方法。
+
+**8.1.1 全局作用域**
+
+因为window扮演着ECMAScript中的Global对象的角色，因此所有在全局作用域中声明的变量、函数都会变成window对象的属性和方法。
+
+定义的全局变量与直接定义window对象的属性存在一个区别就是全局对象不能通过delete删除而window对象可以。
+
+**8.1.2 窗口关系及框架**
+
+如果页面包括框架，则每个框架都拥有自己的window对象，并且保存在frames集合中。
+
+框架集通过html中的frameset和frame标签进行定义。
+
+此时访问全局对象应该通过`top.frame[0]`这种方式进行。
+
+**8.1.3 窗口位置**
+
+因为浏览器差异所以获取窗口位置因为浏览器差异导致需要一定的步骤
+
  * screenLeft&screenTop  : IE Safari Opera Chrome
- *
+
  * screenX&screenY : Firefox Safari Chrome
- *
- * var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX,
- *     topPos = (typeof window.screenTop == "number") ? window.screenTop : window.screenY;
- *
- * 同时需要注意的是，IE和Opera上述值表示的是屏幕边缘到页面可见区域的距离，而Chrome、Firefox和Safari则表示屏幕边缘到浏览器窗口的距离。
- *
- * 精确的移动窗口一般采用两个方法即moveTo()和moveBy() 均接收两个参数表示X和Y方向的坐标像素值。
- * 其中moveBy()中的参数为正则表示默认向左向下。
- *
- * 8.1.4 窗口大小
- *
- * 同样因为跨浏览器实现不同导致了很多问题，常见的属性为innerWidth、innerHeight、outerWidth、outerHeight。
- * 分别表示页面大小和浏览器窗口大小。
- *
- * 页面视口的大小可以通过document.documentElement.clientWidth和document.documentElement.clientHeight来取得。
- *
- * 通行的取得视口大小的代码如下
- *
- * var pageWidth = window.innerWidth,
- *     pageHeight = window.innerHeight;
- *
- * if (typeof pageWidth != "number"){
- *     if(document.compatMode == "CSS1Compat"){
- *         pageWidth = document.documentElement.clientWidth;
- *         pageHeight = document.documentElement.clientHeight;
- *     } else {
- *         pageWidth = document.body.clientWidth;
- *         pageHeight = document.body.clientHeight;
- *     }
- * }
- *
- * 调整浏览器窗口大小可以使用两个方法，resizeTo()和resizeBy(),其中后者参数正数为加
- *
- * 8.1.5 导航和打开窗口
- *
- * window.open()方法可以导航到一个特定的URL，这个方法接受4个参数，要加载的URL、窗口目标、一个特性字符串、一个表示是否取代浏览器历史记录中当前加
- * 载页面的布尔值(不打开新窗口)。一般会使用1和4。
- *
- * 如果传递了第二个参数，且参数是已有窗口或者框架的名称，则就会在指定的窗口或者框架里加载指定的URL。
- * window.open("http://www.......","topFrame");      // 等同于<a href="http://......" target="topFrame">...</a>
- * 第二个参数还可以是_top/_self/_parent/_blank等特殊的窗口名称。
- *
- * 1.弹出窗口
- * 如果传入的第二个参数并不是已存在的窗口或者框架，则会根据第三个参数传入的字符串创建一个新窗口或者新标签页。如果没有第三个参数则会打开一个全默认的
- * 新浏览器窗口。
- *
- * 第三个字符串是一个逗号分隔的设置字符串，常见的设置选项有fullscreen/height/left/location(地址栏)/menubar/resizable/
- * scrollbars/status(状态栏)/toolbar/top/width..
- *
- * window.open()方法会返回一个指向新窗口的引用，引用的对象与其他window对象大致类似。通过这个返回的对象我们可以调整其弹出的窗口
- * var wroxWin = window.open(......);
- *
- * //调整大小
- * wroxWin.resizeTo(...,....);
- *
- * //移动位置
- * wroxWin.moveTo(...,...);
- *
- * //关闭
- * wroxWin.close();
- * 关闭之后会存在一个wroxWin.closed属性，是一个表示关闭与否的布尔值。当然这个对象也存在一个opener属性，一般是window。
- *
- * 2.安全限制
- * 广告商对弹出窗口的滥用十分严重，从IE6开始各大浏览器厂商的各代的浏览器都对弹出窗口的安全设置进行了很多限制。
- *
- */
+
+        var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX,
+            topPos = (typeof window.screenTop == "number") ? window.screenTop : window.screenY;
+
+同时需要注意的是，IE和Opera上述值表示的是屏幕边缘到页面可见区域的距离，而Chrome、Firefox和Safari则表示屏幕边缘到浏览器窗口的距离。
+
+精确的移动窗口一般采用两个方法即`moveTo()`和`moveBy()`均接收两个参数表示X和Y方向的坐标像素值。
+
+其中`moveBy()`中的参数为正则表示默认向左向下。
+
+**8.1.4 窗口大小**
+
+同样因为跨浏览器实现不同导致了很多问题，常见的属性为innerWidth、innerHeight、outerWidth、outerHeight。
+
+分别表示页面大小和浏览器窗口大小。
+
+页面视口的大小可以通过`document.documentElement.clientWidth`和`document.documentElement.clientHeight`来取得。
+
+通行的取得视口大小的代码如下
+
+    var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
+
+    if (typeof pageWidth != "number"){
+        if(document.compatMode == "CSS1Compat"){
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.clientHeight;
+        } else {
+            pageWidth = document.body.clientWidth;
+            pageHeight = document.body.clientHeight;
+        }
+    }
+
+调整浏览器窗口大小可以使用两个方法，`resizeTo()`和`resizeBy()`,其中后者参数正数为加
+
+**8.1.5 导航和打开窗口**
+
+`window.open()`方法可以导航到一个特定的URL，这个方法接受4个参数，要加载的URL、窗口目标、一个特性字符串、一个表示是否取代浏览器历史记录中当前加
+
+载页面的布尔值(不打开新窗口)。一般会使用1和4。
+
+如果传递了第二个参数，且参数是已有窗口或者框架的名称，则就会在指定的窗口或者框架里加载指定的URL。
+
+    window.open("http://www.......","topFrame");      // 等同于<a href="http://......" target="topFrame">...</a>
+
+第二个参数还可以是_top、_self、_parent、_blank等特殊的窗口名称。
+
+* 弹出窗口
+
+  如果传入的第二个参数并不是已存在的窗口或者框架，则会根据第三个参数传入的字符串创建一个新窗口或者新标签页。如果没有第三个参数则会打开一个全默认的新浏览器窗口。
+
+  第三个字符串是一个逗号分隔的设置字符串，常见的设置选项有fullscreen/height/left/location(地址栏)/menubar/resizable/scrollbars/status(状态栏)/toolbar/top/width..
+
+  `window.open()`方法会返回一个指向新窗口的引用，引用的对象与其他window对象大致类似。通过这个返回的对象我们可以调整其弹出的窗口
+
+        var wroxWin = window.open(......);
+
+        //调整大小
+        wroxWin.resizeTo(...,....);
+
+        //移动位置
+        wroxWin.moveTo(...,...);
+
+        //关闭
+        wroxWin.close();
+        关闭之后会存在一个wroxWin.closed属性，是一个表示关闭与否的布尔值。当然这个对象也存在一个opener属性，一般是window。
+
+* 安全限制
+
+  广告商对弹出窗口的滥用十分严重，从IE6开始各大浏览器厂商的各代的浏览器都对弹出窗口的安全设置进行了很多限制。
+
+* 弹出窗口屏蔽程序
+
+  + 如果弹出窗口被浏览器屏蔽，则`window.open()`会返回null，可以通过下面的代码进行检测。
+
+        var wroxWin = window.open("http://www.balabala.com","_blank");
+        if (wroxWin == null) {
+            ...do something...
+        }
+
+  + 如果弹出窗口被浏览器插件或者其他软件屏蔽，则`window.open()`会抛出一个错误，可以修正代码为下面的形式进行检测。
+
+        var blocked = false;
+
+        try {
+            var wroxWin = window.open(....);
+            if(wroxWin == null){
+                blocked = true;
+            }
+        } catch {
+            blocked = true;
+        }
+
+        if (blocked == true) {
+            ....do something..
+        }
+
+**8.1.6 间歇调用和超时调用**
+
+JavaScript是单线程语言，但它允许通过设置超时值和间歇时间值来调度代码在特定的时刻执行。
+
+* 超时调用
+
+  其使用的是window对象的`setTimeOut()`方法，接受两个参数，要执行的代码和以毫秒表示的时间。
+
+  一般第一个参数我们使用一个函数，而不使用类似`eval()`方法所使用的JavaScript代码构成的字符串。其一般形式如下：
+
+        setTimeOut(function () {
+            ...do something..
+        }, 1000);
+
+  因为JavaScript的单线程特性，只有在延时时间到了之后，任务队列为空时任务才会立即执行，并返回一个数值ID表示超时调用。
+
+  这个超时ID可以用来取消还没有进行的超时调用，使用`clearTimeOut()`方法，一般形式如下：
+
+        var timeOutID = setTimeOut(function () {
+            // do something
+        }, 1000);
+
+        // 取消调用
+        clearTimeOut(timeOutID);
+
+* 间歇调用
+
+  和超时调用类似，只是会按照指定时间间隔重复执行代码，直到其被取消或者页面被卸载。按照其特性，一般使用形式如下：
+
+        var num = 0;
+        var max = 10;
+        var intervalID = null;
+
+        function incrementNumber () {
+            num++;
+            // do something A
+
+            if (num == max) {
+                clearInterval(intervalID);
+                // do something B
+            }
+        }
+
+        intervalID = setInterval(incrementNumber, 500);
+
+  上面的代码可以执行10次A后自定停止并执行一次B，类似的形式也可以使用超时调用进行实现。代码如下：
+
+        var num = 0;
+        var max = 10;
+
+        function incrementNumber () {
+            num++;
+            // do something A
+
+            if (num < max) {
+                setTimeOut(incrementNumber, 500);
+            } else {
+                // do something B
+            }
+        }
+
+        setTimeOut(incrementNumber, 500);
+
+**8.1.7 系统对话框**
+
+系统对话框的显示模式由系统和浏览器决定，和网页没有关系，也不包含HTML，其打开是同步和模态的，显示系统对话框时代码会停止执行。
+
+* `alert()`
+
+  警告对话框，最常见的对话框，接受并将一个字符串显示给用户，其包含一个OK按钮，点击即可关闭。
+
+* `confirm()`
+
+  显示一个确认对话框，包含一个OK和一个Cancel按钮，会根据点击返回布尔值。
+
+* `prompt()`
+
+  显示一个提示框，除了显示确认对话框的两个按钮外还会提供一个文本输入区域，以供用户输入文本。
+
+  同时它接受两个参数，第一个是显示给用户的字符串，第二个是文本输入区域的默认内容。
+
+* 两个异步的对话框`window.print()`和`window.find()`
+
+  异步执行，所以会将控制权直接还给脚本，不会就用户在对话框中的操作给出任何信息，因此用处有限。
+
+#### 8.2 location对象
+
+号称最有用的BOM对象，提供了与当前窗口中加载的文档有关的信息
 
 
 
@@ -1779,17 +1940,3 @@ Web浏览器的常见全局对象。
 
 
 
-
-
-#### 私有库安装
-```{bash}
-
-```
-
-## API
-
-## demo
-
-## License
-
-private
