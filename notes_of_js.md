@@ -2092,6 +2092,182 @@ location.search返回?号后的所有内容，但没有办法逐个访问其中�
 
 **8.3.2 注册处理程序**
 
+`registerContentHandler()`和`registerProtocolHandler()`是Firefox专属的navigator对象的属性。
+
+这两个方法可以可以让一个站点指明它可以处理特定类型的信息。
+
+#### 8.4 screen对象
+
+其在编程中用处不大，基本上只用来表明客户端的能力，包括浏览器外部的显示器的信息，比如像素宽度和高度等。
+
+而且其根据浏览器的不同，支持的属性也不尽相同，详见p-214。
+
+#### 8.5 history对象
+
+history对象保存着用户上网的历史记录。
+
+因为它算是window对象的属性，所以用户的每个浏览器窗口，每个标签页，乃至每个框架都有自己的history对象(与特定的window对象关联)。
+
+出于安全考虑，开发者无法得知用户浏览过的URL。不过借由用户访问过的列表，可以实现前进和后退。
+
+**`go()`方法**
+
+使用`history.go()`方法可以在用户的历史记录里任意跳转，这个方法接收一个参数。
+
+* 接收数字参数
+
+  正数表示向前(类似前进按钮)，负数表示向后(类似后退按钮)：
+
+        //后退一页
+        history.go(-1);
+
+        //前进两页
+        history.go(2);
+
+* 传递字符串参数
+
+  接收字符串参数时，浏览器会跳转到历史记录里包含该字符串的第一个位置，可能前进也可能后退，如果不存在这样的历史记录则什么也不做。
+
+        //跳转到最近的baidu页面
+        history.go("baidu");
+
+**简写方法\*2**
+
+* `back()`
+
+  简单模拟后退
+* `forward()`
+
+  简单模拟前进
+
+**history的length属性**
+
+`history.length`里保存着从窗口打开以来的所有历史记录。也可以同来导航。
+
+    if (history.length == 0) {
+        //这应该是用户打开窗口之后的第一个页面
+    }
+
+-----------
+
+## Chapter 9.客户端检测
+
+-----------
+
+## Chapter 10.DOM
+
+DOM(Document Object Model)，文档对象模型，是针对HTML和XML文档的一个API(Application Program Interface)，即应用程序编程接口。
+
+DOM描绘了一个层次化的节点树，其脱胎于远古时期的DHTML(动态HTML)，现在已经成为一种表现和操作页面标记的真正的跨平台、语言中立的方式。
+
+#### 10.1 节点层次
+
+文档节点是每个文档的根节点，在HTML页面中一般只有html可以作为根节点，所以其也被称为为文档元素。
+
+每一段标记都可以通过一个节点进行表示，HTML元素通过元素节点表示，特性通过特性节点表示，文档类型通过文档类型节点表示，注释则通过注释节点表示。
+
+总共有12种节点类型，这些类型都继承自一个基类型——node类型。
+
+**10.1.1 Node类型**
+
+DOM1级定义了一个Node接口，该接口将有DOM中的所有类型实现，其在JavaScript中是作为Node类型实现的。
+
+JS中的所有节点类型都继承自这个类型，除IE外所有浏览器都可以访问到Node类型。
+
+
+* nodeType属性
+  每个节点都有一个nodeType属性，对应于定义在Node类型下的12个数值常量，任何节点必居其一。
+
+  1. Node.ELEMENT_NODE(1)
+  2. Node.ATTRIBUTE_NODE(2)
+  3. Node.TEXT_NODE(3)
+  4. Node.CDATA_SECTION_NODE(4)
+  5. Node.ENTITY_REFERENCE_NODE(5)
+  6. Node.ENTITY_NODE(6)
+  7. Node.PROCESSING_INSTRUCTION_NODE(7)
+  8. Node.COMMENT_NODE(8)
+  9. Node.DOCUMENT_NODE(9)
+  10. Node.DOCUMENT_TYPE_NODE(10)
+  11. Node.DOCUMENT_FRAGMENT_NODE(11)
+  12. Node.NOTATION_NODE(12)
+
+  这些数字值和节点类型一一对应。具体使用如下：
+
+        if (someNode.nodeType = 1) {
+            console.log("this node is an element");
+        }
+
+* nodeName和nodeValue属性
+
+  可以使用这两个属性来了解节点的具体信息，这两个属性的值完全取决于节点的类型，所以在使用前最好进行检测。
+
+        if (someNode.nodeType == 1) {
+            value = someNode.nodeName;         //对于element元素来说nodeName是标签名
+        }
+
+  对于元素节点，nodeName中保存的是标签名，而nodeValue始终等于null。
+
+* 节点关系
+
+  + childNodes
+
+    每个节点都有一个childNodes属性，其中保存着一个NodeList对象。
+
+    NodeList对象是一种类数组对象，用于保存一组有序的节点，可以通过位置来访问这些节点。要注意的是虽然它有length属性，
+    可以使用方括号语法，但是NodeList并不是Array的实例。
+
+    NodeList的独特在于它是基于DOM结构动态执行查询的结果，DOM结构的变化能够直接的反映在NodeList对象中。
+
+          var firstChild = someNode.childNodes[0],
+              secondChild = someNode.childNodes.item(1),
+              count = someNode.childNodes.length;
+    对arguments对象使用`Array.prototype.slice()`方法可以将其转化成数组，使用这种方法也可以将childNodes对象转化为数组
+
+          //这种方法在IE8以及之前的版本中无效
+          var arrayOfNodes = Array.prototype.slice.call(someNode.childNodes,0);
+
+          //以下代码可以在任何浏览器中运行
+          function convertToArray (nodes) {
+              var array = null;
+              try {
+                  array = Array.prototype.slice.call(nodes,0);
+              } catch (ex){
+                  array = new Array();
+                  for (var i = 0; i < nodes.length; i++) {
+                      array.push(nodes[i]);
+                  }
+              }
+
+              return array;
+          }
+  + parentNode
+
+    这个属性指向自己的父节点。
+  + previousSibling和nextSibling属性
+
+    这两个属性分别指向自己的前一个和后一个同胞节点。如果不存在，则为null。
+  + firstChild和lastChild
+    分别指向第一个和最后一个子节点也就是`someNode.childNodes[0]`和`someNode.childNodes[someNode.childNodes.length-1]`。
+
+    如果不存在子节点，则两者都为null。
+  + `hasChildNodes()`方法
+
+    如果节点有一个或者多个子节点就返回true。
+  + ownerDocument属性
+
+    这个属性指向表示整个文档的文档节点(例如html节点)
+
+* 操作节点
+
+
+
+
+
+
+
+
+
+
 
 
 
