@@ -139,6 +139,13 @@ TO DO
 
 #### 12.2 样式
 
+* link标签
+* style标签
+* style特性
+
+针对定义样式的三种方式，DOM2级样式提供了一套API。要确定浏览器是否支持DOM2级定义的CSS能力，可以使用以下代码。
+
+    var supportDOM2CSS =
 
 
 
