@@ -139,14 +139,94 @@ TO DO
 
 #### 12.2 样式
 
-* link标签
-* style标签
+* link标签  外部样式表
+* style标签  嵌入样式表
 * style特性
 
 针对定义样式的三种方式，DOM2级样式提供了一套API。要确定浏览器是否支持DOM2级定义的CSS能力，可以使用以下代码。
 
-    var supportDOM2CSS =
+    var supportDOM2CSS = document.implementation.hasFeature("CSS", "2.0");
+    var supportDOM2CSS2 = document.implementation.hasFeature("CSS2", "2.0");
 
+**12.2.1 访问元素的样式**
+
+任何支持style特性的HTML元素在JavaScript中都有一个对应的style属性，这个style对象是CSSStyleDeclaration的实例，包含着通过HTML的
+style特性指定的所有样式信息，但是不包含与外部样式表和嵌入样式表经层叠得来的样式。在style特性中指定的任何CSS属性都将表现为这个style
+对象的相应属性。
+
+对于使用短划线(backgroud-image等)的CSS属性，则必须把它们改写为驼峰大小写形式(element.style.backgroudImage)。
+
+还有一个比较特殊的CSS属性就是float，因为float是JS的保留字，所以需要改写为cssFloat或者styleFloat(IE)。
+
+* DOM样式属性和方法
+
+  DOM2Style为style对象定义了一些属性和方法。可以提供元素的style特性值以及修改样式。
+  + cssText：可以访问到style特性中的CSS代码
+
+    读模式下返回完整的style特性中的字符串，写模式下则会完全重写style特性。
+  + length：应用给元素的CSS属性的数量
+
+    主要用来和`item()`方法一起实现迭代。
+  + parentRule：表示CSS信息的CSSRule对象
+  + `getPropertyCSSValue(propertyName)`：返回包含给定值的CSSValue对象
+
+    此处使用的propertyName是原本的CSS属性名，一般可以通过`item()`方法返回。
+
+    CSSValue对象包含两个属性，一个是和`getPropertyValue()`返回的cssText，一个是cssValueType数值常量(0-继承，1-基本，
+    2-值列表，3-自定义)。
+  + `getPropertyPriority(propertyName)`：如果给定的属性使用了!important设置则返回"!important"否则返回空字符串。
+  + `getPropertyValue(propertyName)`：返回给定属性的字符串值
+  + `item(index)`：返回给定位置的CSS属性的名称
+
+    可以和length属性一起实现迭代，支持方括号语法。
+  + `removeProperty(propertyName)`：从样式中删除给定属性
+  + `setProperty(propertyName, value, priority)`：将给定属性设置为相应的值并加上优先权标志("!important"或者空字符串)
+
+        //html 部分
+        <div  id = "myDiv" style = "backgrounf-image:blue; width:10px; height:25px"></div>
+
+        //js 部分
+        var div = document.getElementById("myDiv");
+        console.log(div.style.backgrounImage);      //"blue"
+        console.log(div.style.cssText);     //"backgrounf-image:blue; width:10px; height:25px"
+        var prop, value , i, len;
+        for (i = 0, len = div.style.length; i < len; i++) {
+            prop = div.style[i];
+            value = div.style.getPropertyCSSValue(prop);
+            console.log(prop + ":" + value.cssText + "(" + value.cssValueType + ")");
+        }
+  在实际开发中，`getPropertyValue()`用的远比`getPropertyCSSValue()`要多。
+
+* 计算的样式
+
+  虽然style能够提供支持style特性的任何元素的样式信息，但是不包含从其他样式表层叠而来并影响到当前元素样式的样式信息。
+
+  DOM2Style增强了document.defaultView，提供了`getComputedStyle()`方法，这个方法接收两个参数，要取得计算样式的元素和一个伪元素
+  字符串(例如:after)。如果不需要伪元素信息，第二个参数可以是null。这个方法返回一个CSSDeclaration对象，其中包含当前元素的所有计算
+  样式。
+
+        var computedStyle = document.defaultView.getComputedStyle(div,null);
+  IE并不支持这个方法，但是有个类似的概念。在IE中每个具有style的元素还有一个currentStyle属性。这个属性也是CSSDeclaration的实例，
+  包含当前元素所有计算后的样式。
+
+        var computedStyle = div.currentStyle;
+  无论在哪个浏览器中，最重要的是所有计算样式都是只读的，不能修改计算后样式对象中的CSS属性。
+
+**12.2.2 操作样式表**
+
+CSSStyleSheet类型表示的是样式表，包括link标签和style标签。这两个元素分别是由HTMLLinkElement和HTMLStyleElement类型表示的。但是
+CSSStyleSheet类型更加通用一些。两个针对元素的类型允许修改HTML特性，而CSSStyleSheet类型则是一套只读的接口。
+
+使用以下代码可以确定浏览器是否支持DOM2级样式表。
+
+    var supportDOM2StyleSheets = document.implementation.hasFeature("StyleSheets", "2.0");
+CSSStyleSheet类型继承自StyleSheet，后者可以作为一个基础类型来定义非CSS样式表
+
+--------
+
+TO DO
+
+--------
 
 
 

@@ -159,7 +159,7 @@ JS中的所有节点类型都继承自这个类型，除IE外所有浏览器都�
         </ul>
 
         //js部分
-        var myList = document.getElementByID("my_ul"),
+        var myList = document.getElementById("my_ul"),
             deepList = myList.cloneNode(true);
         console.log(deepList.childNodes.length);       //3(IE<9)或者7(其他浏览器)
 
@@ -240,7 +240,7 @@ JavaScript通过Document类型来表示文档。在浏览器中，document对象
   取得特定元素的操作由document对象的几种方法来完成。
 
   其中Document对象提供了两种：
-  + `getElementByID()`
+  + `getElementById()`
 
     接收一个字符串参数，必须要与html元素的id特性(attribute)严格匹配，包括大小写，然后如果找到则返回这个元素，否则返回null。
 
@@ -376,7 +376,7 @@ Web编程中最常用的类型，主要用于表现HTML或者XML元素，提供�
 
         <div id = "my_id" align = "left" data-my-special-attribute = "hello!"></div>
 
-        var div = document.getElementByID("my_id");
+        var div = document.getElementById("my_id");
         console.log(div.getAttribute("align"));    //"left"
         console.log(div.align);       //"left"
         console.log(div.getAttribute("data-my-special-attribute"));    //"hello!"
@@ -576,7 +576,7 @@ IE并不支持DocumentType对象，IE9会给document.doctype赋予正确的对�
         //JS部分，假设我们想给这个ul元素添加三个子元素li
 
         var fragment = document.createDocumentFragement();
-        var ul = document.getElementByID("my_ul");
+        var ul = document.getElementById("my_ul");
         var li = null
 
         //使用一个fragment做为仓库然后创建一个循环。
