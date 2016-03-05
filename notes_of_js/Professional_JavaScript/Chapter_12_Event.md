@@ -39,7 +39,37 @@ DOM2Event规定的事件流包括三个阶段，事件捕获阶段、处于目�
 
 #### 13.2 事件处理程序
 
+事件就是用户或者浏览器执行的某种动作，诸如click、load、mouseover等，都是事件的名字。而响应某种事件的函数就叫做事件处理程序。事件处理
+程序的名字一般以"on"开头，为事件指定处理程序的方式有很多种。
 
+**13.2.1 HTML事件处理程序**
 
+在HTML中直接写入事件处理程序有以下集中形式。
 
+    //在代码部分使用单引号避免使用HTML实体
+    <input type="button" value="Click me" onclick="alert('Clicked')" />
+
+    //也可以使用如下转义方式
+    <input type="button" value="Click me" onclick="alert(&quot;Clicked&quot;)" />
+
+    //调用页面其他位置的脚本
+    <script>
+        function showMessage () {
+            alert("Clicked");
+        }
+    </script>
+    <input type="button" value="Click me" onclick="showMessage()" />
+最后一个例子中的函数是独立定义的，也可以来自外部js文件，当事件处理程序中的代码执行时，有权访问全局作用域中的任何代码。
+
+通过直接写入HTML指定事件处理程序有一些优势：
+
+* 首先这样会创建一个封装着元素属性值的函数，这个函数中又一个局部变量event，也就是事件对象。
+  通过event变量可以直接访问事件对象，你并不用手动定义它，也不用从函数的参数列表中读取它。
+
+        <input type="button" value="Click me" onclick="alert(event.type)" />      //输出click
+  在这个函数的内部，this的值等于事件的目标元素。
+
+        <input type="button" value="Click me" onclick="alert(this.value)" />      //输出"Click me"
+
+* 关于这个动态创建的函数，另一个重要的优势是它扩展作用域的方式。
 
