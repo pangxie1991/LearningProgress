@@ -19,9 +19,17 @@
   .carousel-indicators {
     bottom: 20px;
   }
+  .row.wrapper {
+    .carousel-inner {
+      height: 343px;
+    }
+  }
+  .info-content {
+    img {
+      margin-top: 60px;
+    }
+  }
 }
-
-
 
 @include min-screen(1200px) {
   .container-my {
@@ -30,19 +38,24 @@
 }
 
 @include max-screen(960px) {
-  .custom-navbar-ul li{
-    @include horizontal-center(auto,8px);
+  .custom-navbar-ul li {
+    @include horizontal-center(auto, 8px);
+  }
+  .site-footer {
+    h4 {
+      margin-top: 20px;
+    }
   }
 }
 
 @include max-screen(860px) {
-  .custom-navbar-ul li{
-    @include horizontal-center(auto,4px);
+  .custom-navbar-ul li {
+    @include horizontal-center(auto, 4px);
   }
 }
 
 @include max-screen(800px) {
-  .custom-navbar-ul li{
-    @include horizontal-center(auto,0px);
+  .custom-navbar-ul li {
+    @include horizontal-center(auto, 0px);
   }
 }

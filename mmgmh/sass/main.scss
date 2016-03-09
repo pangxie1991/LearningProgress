@@ -1,3 +1,6 @@
+//got the mixin library
+@import "ea_animation";
+
 //set the variable
 $font-family: "微软雅黑", Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", SimSun, "宋体", Heiti, "黑体", sans-serif;
 $border-color: #e7e7e7;
@@ -36,6 +39,28 @@ $backgroud-color: #fff;
     duration: $durantion-time;
     timing-function: initial;
     delay: initial;
+  }
+}
+
+@mixin transform-origin($position-x,$position-y){
+  transform-origin: $position-x $position-y;
+  -moz-transform-origin: $position-x $position-y;
+  -webkit-transform-origin: $position-x $position-y;
+  -ms-transform-origin: $position-x $position-y;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
   }
 }
 
@@ -91,4 +116,6 @@ ul {
 
 @import "nav";
 @import "content";
+@import "footer";
 @import "media";
+
