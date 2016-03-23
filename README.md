@@ -1,6 +1,8 @@
 # LearningProgress
 
-As a test of my own ability.
+###与其感慨路难行，不如马上出发。
+
+As a test of ability.
 
 ## 2015
 
