@@ -69,3 +69,15 @@ Tools has a great part of front-end engineering. So much documents need to be re
 #### 3.22
 
 Netease? I think it is not going to pass.
+
+#### 4.03
+
+Tencent? Not going to pass too...
+
+The flu and the headache with it almost kill me..
+
+The Tomb-sweeping Day Vacation of 2016 is the worst vacation I ever have. Seeing to much about the difficulties of being
+
+a front-end engineer, honestly, I am kind of frustrated.
+
+Doing a little diary work, to maintain my current streak. Vain creature!
