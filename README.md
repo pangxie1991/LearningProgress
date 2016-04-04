@@ -80,4 +80,4 @@ The Tomb-sweeping Day Vacation of 2016 is the worst vacation I ever have. Seeing
 
 a front-end engineer, honestly, I am kind of frustrated.
 
-Doing a little diary work, to maintain my current streak. Vain creature!
+Doing a little diary work to maintain my current streak. Vain creature!
