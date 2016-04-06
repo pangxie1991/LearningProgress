@@ -81,3 +81,13 @@ The Tomb-sweeping Day Vacation of 2016 is the worst vacation I ever have. Seeing
 a front-end engineer, honestly, I am kind of frustrated.
 
 Doing a little diary work to maintain my current streak. Vain creature!
+
+#### 04.06
+
+MicroSoft! Got a big 0 after 150min.
+
+The algorithm of 1st and 2nd is not very hard. But I can't do them with JavaScript.
+
+It's time to learn some C++? And maybe do some ACM also.
+
+The study of ES6 has no progress today. Bad mood!
