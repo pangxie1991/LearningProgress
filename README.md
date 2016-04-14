@@ -91,3 +91,10 @@ The algorithm of 1st and 2nd is not very hard. But I can't do them with JavaScri
 It's time to learn some C++? And maybe do some ACM also.
 
 The study of ES6 has no progress today. Bad mood!
+
+#### 04.14
+
+PC crushed when I want to get a Win10 insider preview edition to try some UNIX features in Windows.
+
+Bad luck without backup.
+
