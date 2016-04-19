@@ -98,3 +98,11 @@ PC crushed when I want to get a Win10 insider preview edition to try some UNIX f
 
 Bad luck without backup.
 
+#### 04.19
+
+Being a lab rat is the most sad thing happened on me ever!
+
+I think a week rest is needed.
+
+Learn something instead of ratting.
+
