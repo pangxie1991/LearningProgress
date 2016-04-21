@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test File</title>
+</head>
+<body>
+<canvas width="600" height="600" id="myDraw">This is a canvas draw</canvas>
+<script>
+    var img = document.createElement('img');
+    img.src = './img/XH.jpg'
+    var drawing = document.getElementById('myDraw');
+    if (drawing.getContext) {
+        var context = drawing.getContext('2d');
+    }
+    img.onload = function() {
+        context.drawImage(img, 0, 10, 100, 100, 100, 100, 100, 100);
+    }
+</script>
+</body>
+</html>
