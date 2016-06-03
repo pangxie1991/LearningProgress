@@ -246,7 +246,115 @@ client.on('data', function(data) {
     console.log(data);
 });
 ```
-#### 
+#### exec方法开启子进程
+
+`child_process.exec(command, [options], [callback]);`
+
+* options-object
+  + cwd
+  + env
+  + encoding
+  + timeout
+  + maxbuffer: 指定用于缓存标准输出的缓存区的最大长度
+  + killSignal: 指定关闭子进程的信号, 默认为'SIGTERM';
+
+* 和spawn的区别
+  
+  spawn可以在父进程中实时的接收子进程的输出, 而exec必须等子进程的输出全部缓存完毕之后才能接收. 一个异步一个同步
+
+* 实例
+```js
+// *
+// main.js
+// --------------------------------------------------------------------------------
+var cp = require('child_process');
+var sp1 = cp.exec('node test1.js one two three four', {cwd: './test'}, function (err, stdout, stderr) {
+    if (err) {        
+        console.log(`子进程开启失败, 错误信息:${err}`);
+        process.exit();
+    } else {
+        console.log(`子进程标准输出: ${stdout.toString()}`);
+        sp2.stdin.write(stdout.toString());
+    }
+});
+var sp2 = cp.exec('node test2.js', function (err, stdout, stderr) {
+    process.exit();
+});
+```
+#### execFile创建子进程
+
+`child_process.execFile(file, [args], [options], [callback]);`
+
+## 多子进程的Node程序(cluster)
+
+#### fork方法创建worker对象
+
+`cluster.fork([env]);`
+
+* cluster的fork方法返回一个worker对象, 代表使用fork方法开启的子进程中运行的node应用程序实例对象.
+* 主从鉴别方法, `cluster.isMaster()`和`cluster.isWorker()`
+* 实例
+```js
+var cluster = require('cluster');
+var http = require('http');
+if (cluster.isMaster) {        
+    cluster.fork();
+    console.log('这段代码被运行在主进程中');
+} else {
+    http.createServer(function (req, res) {
+        if (req.url !== '/favicon.ico') {        
+            res.writeHead(200, {'ContentType': 'text/html'});
+            res.write('<head><meta charset = "utf-8"/></head>');
+            res.end('hello\n');
+            console.log('这段代码被运行在子进程中');
+        }
+    }).listen(1337);
+}
+```
+* 事件监听
+```js
+cluster.on('fork', function (worker) {
+    console.log(`子进程${worker.id}正在开启`);
+});
+cluster.on('online', function(work) {
+    console.log(`子进程${worker.id}已经上线`);
+});
+cluster.on('listening', function(worker, address) {
+    // address.address 子进程中服务监听的地址
+    // address.port
+    // address.addressType(4/6) 子进程监听的地址类型
+});
+```
+* setupMaster
+  
+  子进程中的node应用程序默认运行正在运行的node程序中的主模版文件, 可以使用setupMaster方法修改子进程中运行的模块文件, 或者修改子进程中
+  运行的应用程序的其他默认行为.
+  
+  参数setting为一个对象, 包含以下属性
+  + exec: 子进程运行模版文件的完整路径和文件名
+  + args: 运行参数, 使用字符串数组作为格式
+  + silent: 默认false, 此时子进程和父进程共享标准输入输出
+```js
+cluster.setupMaster([settings]);
+
+var cluster = require('cluster');
+cluster.setupMaster({exec: './child.js'});
+cluster.fork();
+```
+#### worker对象
+
+worker对象是在主程序中被cluster模块的fork方法返回的对象.
+
+* 主进程向子进程发送信息
+
+  `worker.send(message, [sendHandle]);` 
+* 子进程向主进程发送信息
+
+  `process.send(message, [sendHandle]);`
+* worker对象有一系列和cluster对象一样的事件, 包括listening和online, 另外自己还有exit等事件
+* worker独有`kill(signal)`和`worker.disconnect()`方法
+
+
 
 
 
