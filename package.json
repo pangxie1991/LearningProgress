@@ -1,0 +1,25 @@
+{
+  "name": "LearningProgress",
+  "version": "1.0.0",
+  "description": "As a test of ability.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasIcarus/LearningProgress.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasIcarus/LearningProgress/issues"
+  },
+  "homepage": "https://github.com/LucasIcarus/LearningProgress#readme",
+  "dependencies": {
+    "co": "^4.6.0",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.19"
+  }
+}
