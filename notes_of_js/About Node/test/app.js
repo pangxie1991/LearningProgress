@@ -15,22 +15,37 @@ mongo.connectTest = function *() {
     }
 
     mongo.tests = db.collection('tests');
-
-    co(seed).catch(function (err) {
-        console.log(err.stack);
-    });
 };
 
-co(mongo.connectTest()).catch(function (err) {
-    console.log(err.stack);
-});
 
 function *seed () {
     var seed = {name: 'fancy', age: 25};
-    // var count = yield mongo.tests.count({}, {limit: 1});
-    yield mongo.tests.insert(seed);
-    console.log('test');
+    var count = yield mongo.tests.count({}, {limit: 1});
+    if (!count) {
+        yield mongo.tests.insert(seed);
+        console.log('mongoDB::seed insert');
+    }
 }
+
+function *inset (obj) {
+    yield mongo.tests.insert(obj);
+}
+
+function *find (selector, options = {}) {
+    return yield mongo.tests.find(selector, options).toArray();
+}
+
+var test = co.wrap(function *() {
+    yield mongo.connectTest();
+    yield seed();
+    var all = yield find({}, {sort: [['age', -1]]});
+    console.log(all);
+});
+
+test().catch(function (err) {
+    console.log(err.stack);
+    process.exit(0);
+});
 
 
 
