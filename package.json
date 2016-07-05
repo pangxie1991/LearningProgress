@@ -20,6 +20,7 @@
   "dependencies": {
     "co": "^4.6.0",
     "mongodb": "^2.1.21",
-    "mongoose": "^4.4.19"
+    "mongoose": "^4.4.19",
+    "socket.io": "^1.4.6"
   }
 }
