@@ -50,6 +50,10 @@ class List {
 			return false;
 		}
 	}
+	
+	map(callback) {
+		return this._dataStore.map(callback);
+	}
 
 	remove(element, deleteAll = false) {
 		if (this.has(element)) {
@@ -94,11 +98,11 @@ class List {
 	}
 
 	hasNext() {
-		return this._pos < this._listSize - 1;
+		return this._pos < this._listSize;
 	}
 	
 	hasPrev() {
-		return this._pos > 0;
+		return this._pos >= 0;
 	}
 
 	moveTo(pos) {
@@ -113,20 +117,16 @@ class List {
 	}
 
 	next() {
-		this._pos = this._pos === this._listSize - 1 ? this._pos : this._pos + 1;
+		if (this.pos < this._listSize) {        
+		    ++this.pos;
+		}
 		return this;
 	}
 
 	prev() {
-		this._pos = this._pos !== 0 ? this._pos - 1 : this._pos;
+		--this._pos;
 		return this;
 	}
 }
 
 export default List
-
-const a = new List();
-
-const b = new List();
-
-console.log(a._dataStore === b._dataStore);
