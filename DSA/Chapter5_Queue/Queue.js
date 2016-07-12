@@ -4,7 +4,8 @@ class Queue {
 	}
 	
 	enqueue(element) {
-		return this._dataStore.push(element);
+		this._dataStore.push(element);
+		return this;
 	}
 	
 	dequeue() {
@@ -29,6 +30,10 @@ class Queue {
 	
 	isEmpty() {
 		return this._dataStore.length === 0;
+	}
+	
+	getLength() {
+		return this._dataStore.length;
 	}
 }
 

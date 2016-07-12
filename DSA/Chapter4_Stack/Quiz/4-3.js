@@ -22,7 +22,7 @@ const originalBox = getBox(20);
 const transitBox = new Stack();
 
 for (let i = 0, l = originalBox.getLength(); i < l; i++) {
-    let temp = originalBox.pop();
+    let temp = originalBox.dequeueFromBack();
 	if (temp.color !== 'yellow') {        
 	    transitBox.push(temp);
 	}
@@ -31,7 +31,7 @@ for (let i = 0, l = originalBox.getLength(); i < l; i++) {
 const revert = function (stack) {
 	const result = new Stack();
 	for (let i = 0, l = stack.getLength(); i < l; i++) {
-	    result.push(stack.pop());
+	    result.push(stack.dequeueFromBack());
 	}
 	return result;
 };

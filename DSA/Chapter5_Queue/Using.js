@@ -91,14 +91,14 @@ let r = radixSort(numbers, boxes, 3);
 
 console.log(r);
 
-class Patient {
+export class Patient {
 	constructor(name, code) {
 		this.name = name;
 		this.code = code;
 	}
 }
 
-class PriorityQueue extends Queue {
+export class PriorityQueue extends Queue {
 	constructor() {
 		super();
 	}
@@ -115,5 +115,6 @@ class PriorityQueue extends Queue {
 	}
 
 }
+
 
 
