@@ -24,11 +24,11 @@ class Graph extends Base {
 			    console.log(`Visited vertex: ${v}`);
 			}
 			for (let w of this._adj[v]) {
-			    if (!this._marked[w]) {        
-			        this._marked[w] = true;
+			  if (!this._marked[w]) {
+			    this._marked[w] = true;
 					this._edgeTo[w] = v;
 					queue.push(w);
-			    }
+			  }
 			}
 		}
 	}
@@ -40,7 +40,7 @@ class Graph extends Base {
 	pathTo(v) {
 		let source = 0;
 		if (!this.hasPathTo(v)) {        
-		    return undefined;
+		    return
 		}
 		var path = [];
 		for (let i = v; i !== source; i = this._edgeTo[i]) {
