@@ -36,6 +36,12 @@ function MiniPromise(executor) {
     executor(resolve, reject)
 }
 
+/**
+ * [then function binded with MiniPromise]
+ * @param  {[type]} resolvedCallback [description]
+ * @param  {[type]} rejectedCallback [description]
+ * @return {[type]}                  [description]
+ */
 MiniPromise.prototype.then = function(resolvedCallback, rejectedCallback) {
     let promise2 = new MiniPromise(() => {})
 
@@ -82,6 +88,13 @@ function settlePromise(promise, executedState, executedData) {
     }
 }
 
+/**
+ * [asyncProcessCallback description]
+ * @param  {[type]}   promise  [description]
+ * @param  {[type]}   promise2 [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
 function asyncProcessCallback(promise, promise2, callback) {
     asyncFunc(() => {
         if (!callback) {
@@ -101,6 +114,12 @@ function asyncProcessCallback(promise, promise2, callback) {
     })
 }
 
+/**
+ * [settleWidthX description]
+ * @param  {[type]} p [description]
+ * @param  {[type]} x [description]
+ * @return {[type]}   [description]
+ */
 function settleWidthX(p, x) {
     if (x === p && x) {
         settlePromise(p, REJECTED, new TypeError('promise_circular_chain'))
@@ -128,6 +147,13 @@ function settleWidthX(p, x) {
     return p
 }
 
+/**
+ * [settleXThen description]
+ * @param  {[type]} p    [description]
+ * @param  {[type]} x    [description]
+ * @param  {[type]} then [description]
+ * @return {[type]}      [description]
+ */
 function settleXThen(p, x, then) {
     try {
         xthen.call(x, function(y) {
@@ -150,8 +176,16 @@ function settleXThen(p, x, then) {
 
 new MiniPromise((resolve) => {
     console.log('a')
-    resolve('b')
-    console.log('c')
-}).then(data => {
-    console.log(data)
+    resolve(new MiniPromise((resolve) => {
+        console.log('b')
+        resolve('c')
+        console.log('d')
+    }))
+    console.log('e')
+}).then((p) => {
+    console.log('f')
+    p.then((data) => {
+        console.log(data)
+    })
+    console.log('g')
 })
