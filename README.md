@@ -1,6 +1,6 @@
 # LearningProgress
 
-###与其感慨路难行，不如马上出发。
+### 与其感慨路难行，不如马上出发。
 
 As a test of ability.
 
@@ -14,27 +14,27 @@ Hope it will be a fresh button of my life.
 test test lol~
 
 
-####11.18
+#### 11.18
 
 merge two branches to have a better mood of learning.
 
-####11.30
+#### 11.30
 
 End of November, Realize that the efficiency of learning from the video site is too low, then get some books of JavaScript from the library. Thanks to XMU. lol~
 
-####12.1
+#### 12.1
 
 Get the "Professional JavaScript for Web Development" as a present from my GF. Happy day.
 
-####12.10
+#### 12.10
 
 Find an impressive jekyll theme made by Hux, hope can be that level someday.
 
-####12.30
+#### 12.30
 
 Get a demo request from WQQ. Prepare to do it when I am free.
 
-####End of the year
+#### End of the year
 
 Actually through the less than 2 month learning, I realize that coding is hard. Learning a code language as a ME guraduated has so many unknown CS basis is hard. Using the Linux, getting and congfiguring a suitable IDE is hard. Building a demo, then publishing it edured the shy is hard.
 
